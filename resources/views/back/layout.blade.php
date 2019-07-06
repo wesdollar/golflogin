@@ -1,23 +1,17 @@
 <?php
-
 use Illuminate\Support\Facades\Auth;
 use App\Services\LayoutService;
 
 $user = Auth::user();
-
 $userName = $user->first_name . ' ' . $user->last_name;
-
 $activeGroup = $user->activeGroup->first();
-
 $mainMenuItems = LayoutService::mainNavItems();
-
 ?>
 
 @include('back.shared.header')
 
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
-
         <div class="navbar-header">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
@@ -32,9 +26,7 @@ $mainMenuItems = LayoutService::mainNavItems();
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
-
                 @foreach ($mainMenuItems as $item)
-
                     <li<?= (isset($item['subNav']) > 0) ? ' class="menu-item-has-children dropdown"' : '' ?>>
                         <a href="{{ LayoutService::printHref($item['route']) }}"
                            @if (isset($item['subNav']))
@@ -49,43 +41,31 @@ $mainMenuItems = LayoutService::mainNavItems();
                         </a>
 
                         @if (isset($item['subNav']))
-
                             <ul class="sub-menu children dropdown-menu">
-
                                 @foreach ($item['subNav'] as $subNav)
-
                                     <li>
                                         <i class="fa fa-{{ $subNav['icon'] }}"></i>
                                         <a href="{{ LayoutService::printHref($subNav['route']) }}">
                                             {{ $subNav['title'] }}
                                         </a>
                                     </li>
-
                                 @endforeach
-
                             </ul>
-
                         @endif
                     </li>
-
                 @endforeach
-
             </ul>
         </div><!-- // .navbar-collapse -->
     </nav>
 </aside><!-- // left-panel -->
 
 <div id="right-panel" class="right-panel">
-
     <header id="header" class="header">
-
         <div class="header-menu">
-
             <div class="col-sm-7">
                 <a id="menuToggle" class="menutoggle pull-left">
                     <i class="fa fa fa-hand-o-left"></i>
                 </a>
-
                 <div class="header-left">
                     @if(isset($showSearch) && $showSearch === true)
                         <button class="search-trigger">
@@ -135,7 +115,6 @@ $mainMenuItems = LayoutService::mainNavItems();
 
             </div>
         </div>
-
     </header>
 
     <div class="breadcrumbs">
@@ -146,21 +125,6 @@ $mainMenuItems = LayoutService::mainNavItems();
                 </div>
             </div>
         </div>
-
-        <div class="col-sm-8">
-            <div class="page-header float-right">
-                <div class="page-title">
-                    {{--<ol class="breadcrumb text-right">--}}
-                        {{--<li class="active">--}}
-                            {{--<small>--}}
-                                {{--Dashboard--}}
-                            {{--</small>--}}
-                        {{--</li>--}}
-                    {{--</ol>--}}
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <div class="content mt-3">
@@ -168,9 +132,7 @@ $mainMenuItems = LayoutService::mainNavItems();
 
             @if (session('alert-success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-
                     {{ session('alert-success') }}
-
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -179,9 +141,7 @@ $mainMenuItems = LayoutService::mainNavItems();
 
             @if (session('alert-error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-
                     {{ session('alert-error') }}
-
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -190,9 +150,7 @@ $mainMenuItems = LayoutService::mainNavItems();
 
             @if (session('alert-info'))
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
-
                     {{ session('alert-info') }}
-
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -203,9 +161,7 @@ $mainMenuItems = LayoutService::mainNavItems();
     </div>
 
     <div class="content mt-30">
-
         @yield('content')
-
     </div>
 </div><!-- // right-panel -->
 

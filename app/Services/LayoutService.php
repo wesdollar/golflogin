@@ -5,7 +5,6 @@ namespace App\Services;
 class LayoutService {
 
     public static function mainNavItems() {
-
         $items = [
             [
                 'title' => 'Dashboard',
@@ -48,11 +47,9 @@ class LayoutService {
     public static function printHref($route = false) {
 
         if ($route === false) {
-
             return '#';
         }
         else {
-
             return route($route);
         }
     }
