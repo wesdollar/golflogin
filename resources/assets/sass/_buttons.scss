@@ -1,0 +1,20 @@
+.btn-fixed-width {
+  width: 240px;
+}
+
+.text-link {
+  cursor: pointer;
+}
+
+.btn.disabled {
+  cursor: not-allowed;
+}
+
+.card-action-button,
+.card-wizard-button {
+  margin-top: $small-gutter;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}

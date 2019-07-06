@@ -1,0 +1,113 @@
+.gutter-top {
+  margin-top: 60px;
+}
+
+.half-gutter-top {
+  margin-top: 30px;
+}
+
+.quarter-gutter-top {
+  margin-top: 15px;
+}
+
+.small-gutter-top {
+  margin-top: 12px;
+}
+
+.gutter-bottom {
+  margin-bottom: 60px;
+}
+
+.half-gutter-bottom {
+  margin-bottom: 30px;
+}
+
+.quarter-gutter-bottom {
+  margin-bottom: 15px;
+}
+
+.small-gutter-bottom {
+  margin-bottom: 12px;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.auto-center {
+  margin: 0 auto;
+}
+
+.display-block {
+  display: block;
+}
+
+.center {
+  text-align: center;
+}
+
+.background-white {
+  background-color: #fff;
+}
+
+.beer-card-thumbnail {
+  width: 50px;
+  height: 50px;
+  margin-right: 19px;
+  float: left;
+}
+
+.beer-card-top {
+  margin-bottom: 10px;
+}
+
+.card-button-right {
+  font-size: 0.8em;
+  float: right;
+}
+
+.selectable-card:hover {
+  cursor: pointer;
+  background-color: #f8f8f8;
+}
+
+.small-text {
+  font-size: 0.85em;
+}
+
+.smaller-text {
+  font-size: 0.7em;
+}
+
+.smallest-text {
+  font-size: 0.55em;
+}
+
+.btn-fixed-width {
+  width: 240px;
+}
+
+.text-link {
+  cursor: pointer;
+}
+
+.btn.disabled {
+  cursor: not-allowed;
+}
+
+.card-action-button,
+.card-wizard-button {
+  margin-top: 12px;
+}
+
+.card-action-button:first-of-type,
+.card-wizard-button:first-of-type {
+  margin-top: 0;
+}
+
+.btn {
+  border-radius: 100px;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
