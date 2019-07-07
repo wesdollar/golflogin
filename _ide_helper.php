@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.0 on 2019-07-06 14:43:35.
+ * Generated for Laravel 5.8.0 on 2019-07-07 08:17:25.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14390,6 +14390,42 @@ namespace Illuminate\Support\Facades {
  
 }
 
+namespace Laracasts\Utilities\JavaScript { 
+
+    /**
+     * 
+     *
+     */ 
+    class JavaScriptFacade {
+        
+        /**
+         * Bind the given array of variables to the view.
+         *
+         * @static 
+         */ 
+        public static function put()
+        {
+                        /** @var \Laracasts\Utilities\JavaScript\Transformers\Transformer $instance */
+                        return $instance->put();
+        }
+        
+        /**
+         * Translate the array of PHP variables to a JavaScript syntax.
+         *
+         * @param array $variables
+         * @return array 
+         * @static 
+         */ 
+        public static function constructJavaScript($variables)
+        {
+                        /** @var \Laracasts\Utilities\JavaScript\Transformers\Transformer $instance */
+                        return $instance->constructJavaScript($variables);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -16999,6 +17035,8 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
 
     class View extends \Illuminate\Support\Facades\View {}
+
+    class JavaScript extends \Laracasts\Utilities\JavaScript\JavaScriptFacade {}
  
 }
 

@@ -21,4 +21,22 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <link href='{{ asset('/css/app.css') }}' rel='stylesheet' type='text/css'>
 </head>
-<body @if (isset($bodyClass)) class="{{ $bodyClass }}" @endif>
+<body>
+
+<div id="app"></div>
+@include('footer')
+
+<script src="{{ asset('js/sufee/vendor/jquery-2.1.4.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="{{ asset('js/sufee/plugins.js') }}"></script>
+<script src="{{ asset('js/sufee/main.js') }}"></script>
+<script src="{{ asset('js/sufee/dashboard.js') }}"></script>
+<script src="{{ asset('js/sufee/widgets.js') }}"></script>
+{{--<script src="{{ asset('js/sufee/lib/vector-map/jquery.vmap.js') }}"></script>--}}
+{{--<script src="{{ asset('js/sufee/lib/vector-map/jquery.vmap.min.js') }}"></script>--}}
+{{--<script src="{{ asset('js/sufee/lib/vector-map/jquery.vmap.sampledata.js') }}"></script>--}}
+{{--<script src="{{ asset('js/sufee/lib/vector-map/country/jquery.vmap.world.js') }}"></script>--}}
+<script src="{{ asset('js/app.js') }}"></script>
+
+</body>
+</html>

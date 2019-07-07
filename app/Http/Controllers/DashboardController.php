@@ -30,4 +30,12 @@ class DashboardController extends Controller
 
         return view('back.dashboard', $data);
     }
+
+    public function react() {
+        \JavaScript::put([
+            'www' => env('APP_URL')
+        ]);
+
+        return view('back.app');
+    }
 }

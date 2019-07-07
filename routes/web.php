@@ -12,9 +12,6 @@
 */
 
 Route::get('/', function () {
-
-    $helloWorld = 'hello world!';
-
     return view('welcome');
 });
 
@@ -23,7 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/subscribe', 'SubscriptionsController@createNoCcSubscription')->name('subscribeNoCc');
 
@@ -44,3 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('rounds/create', 'RoundsController@createGui')->name('rounds.createGui');
     Route::post('rounds/create', 'RoundsController@create')->name('rounds.create');
 });
+
+Route::get('/app/{path?}', 'DashboardController@react')
+    ->where('path', '.*')
+    ->name('react');
