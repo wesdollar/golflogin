@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import ReactDOM from "react-dom";
 import Example from "./Example";
 import Dashboard from "./Dashboard";
 import Header from "./Header";
 import NavItem from "./NavItem";
 
+/* eslint-disable no-undef */
 /** @namespace GL.reactBase */
 /** @namespace GL.user.activeGroupTitle */
 const reactBaseHref = `/${GL.reactBase}`;
 const activeGroup = GL.user.activeGroupTitle;
 const appName = GL.appName;
+const reactBase = GL.reactBase;
+/* eslint-enable */
 
 const navItems = [
   {
@@ -110,7 +113,6 @@ class AppMain extends Component {
   }
 }
 
-const target = GL.reactBase;
-if (document.getElementById(target)) {
-  ReactDOM.render(<AppMain />, document.getElementById(target));
+if (document.getElementById(reactBase)) {
+  ReactDOM.render(<AppMain />, document.getElementById(reactBase));
 }
