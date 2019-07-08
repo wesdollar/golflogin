@@ -61157,6 +61157,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Example__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Example */ "./resources/js/components/Example.js");
 /* harmony import */ var _Dashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Dashboard */ "./resources/js/components/Dashboard.jsx");
 /* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Header */ "./resources/js/components/Header.jsx");
+/* harmony import */ var _NavItem__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NavItem */ "./resources/js/components/NavItem.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -61181,7 +61182,43 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var reactBaseHref = "/app";
+
+/** @namespace GL.reactBase */
+
+/** @namespace GL.user.activeGroupTitle */
+
+var reactBaseHref = "/".concat(GL.reactBase);
+var activeGroup = GL.user.activeGroupTitle;
+var appName = GL.appName;
+var navItems = [{
+  title: "Dashboard",
+  component: "dashboard",
+  icon: "dashboard"
+}, {
+  title: "Post Round",
+  component: "example",
+  icon: "dashboard"
+}, {
+  title: "Rankings",
+  component: "dashboard",
+  icon: "dashboard"
+}, {
+  title: "Stats",
+  component: "example",
+  icon: "dashboard"
+}, {
+  title: "Scorecards",
+  component: "dashboard",
+  icon: "dashboard"
+}, {
+  title: "Post Round",
+  component: "example",
+  icon: "dashboard"
+}, {
+  title: "All Golfers",
+  component: "dashboard",
+  icon: "dashboard"
+}];
 
 var AppMain =
 /*#__PURE__*/
@@ -61217,7 +61254,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "navbar-brand",
         href: ".."
-      }, "Golf Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, appName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "navbar-brand hidden",
         href: ".."
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -61227,18 +61264,19 @@ function (_Component) {
         className: "main-menu collapse navbar-collapse"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav navbar-nav"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "".concat(reactBaseHref, "/dashboard")
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "menu-icon fa fa-dashboard"
-      }), "Dashboard"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "".concat(reactBaseHref, "/example")
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "menu-icon fa fa-dashboard"
-      }), "Example")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, navItems.map(function (navItem) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NavItem__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          title: navItem.title,
+          component: navItem.component,
+          icon: navItem.icon,
+          baseHref: reactBaseHref
+        });
+      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "right-panel",
         className: "right-panel"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        activeGroup: activeGroup
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content mt-30"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
@@ -61258,7 +61296,7 @@ function (_Component) {
   return AppMain;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-var target = "app";
+var target = GL.reactBase;
 
 if (document.getElementById(target)) {
   react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AppMain, null), document.getElementById(target));
@@ -61389,8 +61427,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 
 
+/** @namespace GL.user.fullName */
 
-var Header = function Header() {
+var userFullName = GL.user.fullName;
+
+var Header = function Header(_ref) {
+  var activeGroup = _ref.activeGroup;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     id: "header",
     className: "header"
@@ -61405,7 +61447,7 @@ var Header = function Header() {
     className: "fa fa fa-hand-o-left"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "header-left"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "-- ACTIVE GROUP --"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, activeGroup))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-sm-5"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "user-area dropdown float-right",
@@ -61418,7 +61460,7 @@ var Header = function Header() {
     "data-toggle": "dropdown",
     "aria-haspopup": "true",
     "aria-expanded": "false"
-  }, "-- User Name --", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+  }, userFullName, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-caret-down",
     style: {
       marginLeft: '8px'
@@ -61429,23 +61471,103 @@ var Header = function Header() {
     className: "nav-link",
     href: "#"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-user"
+    className: "fa fa-user mr-2"
   }), "Edit Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "nav-link",
     href: "#"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-cog"
+    className: "fa fa-cog mr-2"
   }), "Settings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "nav-link",
     href: "#"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-power-off"
+    className: "fa fa-power-off mr-2"
   }), "Logout"))))));
 };
 
-Header.propTypes = {};
-Header.defaultProps = {};
+Header.propTypes = {
+  activeGroup: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+};
+Header.defaultProps = {
+  activeGroup: "Golf Login"
+};
 /* harmony default export */ __webpack_exports__["default"] = (Header);
+
+/***/ }),
+
+/***/ "./resources/js/components/NavItem.jsx":
+/*!*********************************************!*\
+  !*** ./resources/js/components/NavItem.jsx ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var NavItem =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(NavItem, _Component);
+
+  function NavItem() {
+    _classCallCheck(this, NavItem);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(NavItem).apply(this, arguments));
+  }
+
+  _createClass(NavItem, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          title = _this$props.title,
+          component = _this$props.component,
+          icon = _this$props.icon,
+          baseHref = _this$props.baseHref;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
+        to: "".concat(baseHref, "/").concat(component)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "menu-icon fa fa-".concat(icon)
+      }), title);
+    }
+  }]);
+
+  return NavItem;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+NavItem.propTypes = {
+  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  component: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  icon: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  baseHref: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+};
+/* harmony default export */ __webpack_exports__["default"] = (NavItem);
 
 /***/ }),
 

@@ -1,15 +1,10 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+if (env("APP_ENV") === "local") {
+    Route::get('/phpinfo', function () {
+        return view("phpinfo");
+    });
+}
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,8 +34,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('rounds/create', 'RoundsController@createGui')->name('rounds.createGui');
     Route::post('rounds/create', 'RoundsController@create')->name('rounds.create');
-});
 
-Route::get('/app/{path?}', 'DashboardController@react')
-    ->where('path', '.*')
-    ->name('react');
+    Route::get('/' . env("APP_REACT_BASE") . '/{path?}', 'DashboardController@react')
+        ->where('path', '.*')
+        ->name('react');
+});

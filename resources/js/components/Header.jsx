@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Header = () => {
+/** @namespace GL.user.fullName */
+const userFullName = GL.user.fullName;
+
+const Header = ({activeGroup}) => {
     return (
         <header id="header" className="header">
             <div className="header-menu">
@@ -11,7 +14,7 @@ const Header = () => {
                     </a>
                     <div className="header-left">
                         <h3>
-                            -- ACTIVE GROUP --
+                            {activeGroup}
                         </h3>
                     </div>
                 </div>
@@ -24,21 +27,21 @@ const Header = () => {
                            aria-haspopup="true"
                            aria-expanded="false">
 
-                            -- User Name --
+                            {userFullName}
                             <i className="fa fa-caret-down" style={{marginLeft: '8px'}} />
                         </a>
 
                         <div className="user-menu dropdown-menu">
                             <a className="nav-link" href="#">
-                                <i className="fa fa-user" />
+                                <i className="fa fa-user mr-2" />
                                 Edit Profile
                             </a>
                             <a className="nav-link" href="#">
-                                <i className="fa fa-cog" />
+                                <i className="fa fa-cog mr-2" />
                                 Settings
                             </a>
                             <a className="nav-link" href="#">
-                                <i className="fa fa-power-off" />
+                                <i className="fa fa-power-off mr-2" />
                                 Logout
                             </a>
                         </div>
@@ -51,9 +54,11 @@ const Header = () => {
 };
 
 Header.propTypes = {
+    activeGroup: PropTypes.string.isRequired
 };
 
 Header.defaultProps = {
+    activeGroup: "Golf Login"
 };
 
 export default Header;

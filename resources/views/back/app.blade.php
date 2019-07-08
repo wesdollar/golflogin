@@ -23,7 +23,8 @@
 </head>
 <body>
 
-<div id="app"></div>
+<div id="<?= env("APP_REACT_BASE") ?>"></div>
+
 @include('footer')
 
 <script src="{{ asset('js/sufee/vendor/jquery-2.1.4.min.js') }}"></script>
