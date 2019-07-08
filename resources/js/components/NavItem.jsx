@@ -8,10 +8,12 @@ class NavItem extends Component {
         const {title, component, icon, baseHref} = this.props;
 
         return (
-            <NavLink to={`${baseHref}/${component}`}>
-                <i className={`menu-icon fa fa-${icon}`} />
-                {title}
-            </NavLink>
+            <li>
+                <NavLink to={`${baseHref}/${component}`}>
+                    <i className={`menu-icon fa fa-${icon}`} />
+                    {title}
+                </NavLink>
+            </li>
         )
     }
 }

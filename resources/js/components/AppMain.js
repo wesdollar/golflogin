@@ -76,16 +76,15 @@ class AppMain extends Component {
 
                         <div id="main-menu" className="main-menu collapse navbar-collapse">
                             <ul className="nav navbar-nav">
-                                <li>
-                                    {navItems.map(navItem => (
-                                        <NavItem
-                                            title={navItem.title}
-                                            component={navItem.component}
-                                            icon={navItem.icon}
-                                            baseHref={reactBaseHref}
-                                        />
-                                    ))}
-                                </li>
+                                {navItems.map((navItem, index) => (
+                                    <NavItem
+                                        title={navItem.title}
+                                        component={navItem.component}
+                                        icon={navItem.icon}
+                                        baseHref={reactBaseHref}
+                                        key={`navItem-${index}`}
+                                    />
+                                ))}
                             </ul>
                         </div>
                     </nav>

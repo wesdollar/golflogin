@@ -61264,14 +61264,15 @@ function (_Component) {
         className: "main-menu collapse navbar-collapse"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav navbar-nav"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, navItems.map(function (navItem) {
+      }, navItems.map(function (navItem, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NavItem__WEBPACK_IMPORTED_MODULE_6__["default"], {
           title: navItem.title,
           component: navItem.component,
           icon: navItem.icon,
-          baseHref: reactBaseHref
+          baseHref: reactBaseHref,
+          key: "navItem-".concat(index)
         });
-      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "right-panel",
         className: "right-panel"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -61550,11 +61551,11 @@ function (_Component) {
           component = _this$props.component,
           icon = _this$props.icon,
           baseHref = _this$props.baseHref;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
         to: "".concat(baseHref, "/").concat(component)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "menu-icon fa fa-".concat(icon)
-      }), title);
+      }), title));
     }
   }]);
 
