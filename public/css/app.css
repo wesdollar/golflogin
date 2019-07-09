@@ -7,11 +7,18 @@
   margin-top: 60px;
 }
 
-.half-gutter-top {
+.half-gutter-top,
+.one-half-gutter-top {
   margin-top: 30px;
 }
 
-.quarter-gutter-top {
+.one-third-gutter-top,
+.third-gutter-top {
+  margin-top: 15px;
+}
+
+.quarter-gutter-top,
+.one-quarter-gutter-top {
   margin-top: 15px;
 }
 
@@ -23,16 +30,69 @@
   margin-bottom: 60px;
 }
 
-.half-gutter-bottom {
+.half-gutter-bottom,
+.one-half-gutter-bottom {
   margin-bottom: 30px;
 }
 
-.quarter-gutter-bottom {
+.one-third-gutter-bottom,
+.third-gutter-bottom {
+  margin-bottom: 15px;
+}
+
+.quarter-gutter-bottom,
+.one-quarter-gutter-bottom {
   margin-bottom: 15px;
 }
 
 .small-gutter-bottom {
   margin-bottom: 12px;
+}
+
+.gutter-right {
+  margin-right: 60px;
+}
+
+.half-gutter-right,
+.one-half-gutter-right {
+  margin-right: 30px;
+}
+
+.one-third-gutter-right,
+.third-gutter-right {
+  margin-right: 15px;
+}
+
+.quarter-gutter-right,
+.one-quarter-gutter-right {
+  margin-right: 15px;
+}
+
+.small-gutter-right {
+  margin-right: 12px;
+}
+
+.gutter-left {
+  margin-left: 60px;
+}
+
+.half-gutter-left,
+.one-half-gutter-left {
+  margin-left: 30px;
+}
+
+.one-third-gutter-left,
+.third-gutter-left {
+  margin-left: 15px;
+}
+
+.quarter-gutter-left,
+.one-quarter-gutter-left {
+  margin-left: 15px;
+}
+
+.small-gutter-left {
+  margin-left: 12px;
 }
 
 .align-right {
@@ -108,6 +168,10 @@
 .card-action-button:first-of-type,
 .card-wizard-button:first-of-type {
   margin-top: 0;
+}
+
+.scorecard-entry-row .row {
+  height: 50px;
 }
 
 .btn {

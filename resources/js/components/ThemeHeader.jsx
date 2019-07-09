@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // eslint-disable-next-line no-undef
 const userFullName = GL.user.fullName;
 
-const Header = ({ activeGroup }) => {
+const ThemeHeader = ({ activeGroup }) => {
   return (
     <header id="header" className="header">
       <div className="header-menu">
@@ -55,12 +55,12 @@ const Header = ({ activeGroup }) => {
   );
 };
 
-Header.propTypes = {
+ThemeHeader.propTypes = {
   activeGroup: PropTypes.string.isRequired
 };
 
-Header.defaultProps = {
+ThemeHeader.defaultProps = {
   activeGroup: "Golf Login"
 };
 
-export default Header;
+export default ThemeHeader;

@@ -1,14 +1,21 @@
-@each $side in top, bottom {
+@each $side in top, bottom, right, left {
 
   .gutter-#{$side} {
     margin-#{$side}: $gutter;
   }
 
-  .half-gutter-#{$side} {
+  .half-gutter-#{$side},
+  .one-half-gutter-#{$side} {
     margin-#{$side}: $gutter / 2;
   }
 
-  .quarter-gutter-#{$side} {
+  .one-third-gutter-#{$side},
+  .third-gutter-#{$side} {
+    margin-#{$side}: $gutter / 4;
+  }
+
+  .quarter-gutter-#{$side},
+  .one-quarter-gutter-#{$side} {
     margin-#{$side}: $gutter / 4;
   }
 

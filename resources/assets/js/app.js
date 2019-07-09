@@ -1,13 +1,12 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('../../js/bootstrap');
+require("../../js/bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,13 +14,13 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('card-component', require('./components/CardComponent.vue'));
+Vue.href("example-component", require("./components/ExampleComponent.vue"));
+Vue.href("card-component", require("./components/CardComponent.vue"));
 
-import { Datetime } from 'vue-datetime'
-import 'vue-datetime/dist/vue-datetime.css'
-Vue.component('datetime', Datetime);
+import { Datetime } from "vue-datetime";
+import "vue-datetime/dist/vue-datetime.css";
+Vue.href("datetime", Datetime);
 
 const app = new Vue({
-    el: '#right-panel'
+  el: "#right-panel"
 });

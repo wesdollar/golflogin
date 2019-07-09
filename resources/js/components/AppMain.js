@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import ReactDOM from "react-dom";
 import Example from "./Example";
 import Dashboard from "./Dashboard";
-import Header from "./Header";
+import ThemeHeader from "./ThemeHeader";
 import NavItem from "./NavItem";
+import RoundEntry from "./RoundEntry";
 
 /* eslint-disable no-undef */
 /** @namespace GL.reactBase */
@@ -18,37 +19,37 @@ const reactBase = GL.reactBase;
 const navItems = [
   {
     title: "Dashboard",
-    component: "dashboard",
+    href: "dashboard",
     icon: "dashboard"
   },
   {
     title: "Post Round",
-    component: "example",
+    href: "round-entry",
     icon: "dashboard"
   },
   {
     title: "Rankings",
-    component: "dashboard",
+    href: "dashboard",
     icon: "dashboard"
   },
   {
     title: "Stats",
-    component: "example",
+    href: "example",
     icon: "dashboard"
   },
   {
     title: "Scorecards",
-    component: "dashboard",
+    href: "dashboard",
     icon: "dashboard"
   },
   {
     title: "Post Round",
-    component: "example",
+    href: "example",
     icon: "dashboard"
   },
   {
     title: "All Golfers",
-    component: "dashboard",
+    href: "dashboard",
     icon: "dashboard"
   }
 ];
@@ -84,7 +85,7 @@ class AppMain extends Component {
                 {navItems.map((navItem, index) => (
                   <NavItem
                     title={navItem.title}
-                    component={navItem.component}
+                    href={navItem.href}
                     icon={navItem.icon}
                     baseHref={reactBaseHref}
                     key={`navItem-${index}`}
@@ -96,7 +97,7 @@ class AppMain extends Component {
         </aside>
 
         <div id="right-panel" className="right-panel">
-          <Header activeGroup={activeGroup} />
+          <ThemeHeader activeGroup={activeGroup} />
 
           <div className="content mt-30">
             <Route exact path={`${reactBaseHref}/`} component={Dashboard} />
@@ -106,6 +107,10 @@ class AppMain extends Component {
               component={Dashboard}
             />
             <Route path={`${reactBaseHref}/example`} component={Example} />
+            <Route
+              path={`${reactBaseHref}/round-entry`}
+              component={RoundEntry}
+            />
           </div>
         </div>
       </Router>
