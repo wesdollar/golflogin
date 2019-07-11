@@ -2,33 +2,25 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import CourseSelect from "./round-entry/CourseSelect";
 import TournamentRoundCheckbox from "./round-entry/TournamentRoundCheckbox";
-import EntryRowLabel from "./round-entry/EntryRowLabel";
-import HoleLabel from "./round-entry/HoleLabel";
-import ParLabel from "./round-entry/ParLabel";
-import StrokesEntry from "./round-entry/StrokesEntry";
-import PuttsEntry from "./round-entry/PuttsEntry";
-import GirCheckbox from "./round-entry/GirCheckbox";
-import FirCheckbox from "./round-entry/FirCheckbox";
-import SandSaveSelect from "./round-entry/SandSaveSelect";
-import UpAndDownSelect from "./round-entry/UpAndDownSelect";
-import PenaltyStrokesEntry from "./round-entry/PenaltyStrokesEntry";
+import ScorecardNine from "./round-entry/ScorecardNine";
+import { roundEntry, scorecard } from "../constants/round-entry";
 
 class RoundEntry extends Component {
   constructor() {
     super();
     this.state = {
       rowLabels: [
-        "Hole",
-        "Par",
-        "Stokes",
-        "Putts",
-        "GIR",
-        "FIR",
-        "Up & Down",
-        "Sand Save",
-        "Penalty Strokes"
+        roundEntry.hole,
+        roundEntry.par,
+        roundEntry.strokes,
+        roundEntry.putts,
+        roundEntry.gir,
+        roundEntry.fir,
+        roundEntry.upAndDown,
+        roundEntry.sandSave,
+        roundEntry.penaltyStrokes
       ],
-      frontNine: [
+      courseData: [
         {
           number: "1",
           yardage: "234",
@@ -73,40 +65,89 @@ class RoundEntry extends Component {
           number: "9",
           yardage: "234",
           par: "3"
+        },
+        {
+          number: "10",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "11",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "12",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "13",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "14",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "15",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "16",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "17",
+          yardage: "234",
+          par: "3"
+        },
+        {
+          number: "18",
+          yardage: "234",
+          par: "3"
         }
       ]
     };
+
+    this.getFrontOrBackNineData = this.getFrontOrBackNineData.bind(this);
+  }
+
+  getFrontOrBackNineData(side) {
+    const { courseData } = this.state;
+
+    switch (side) {
+      case scorecard.frontNine:
+        return courseData.slice(0, 9);
+      case scorecard.backNine:
+        return courseData.slice(9, 18);
+    }
+
+    return [];
   }
 
   render() {
-    const { rowLabels, frontNine } = this.state;
+    const { rowLabels } = this.state;
+    const frontNineData = this.getFrontOrBackNineData(scorecard.frontNine);
+    const backNineData = this.getFrontOrBackNineData(scorecard.backNine);
+
     return (
       <div className={"container-fluid half-gutter-top"}>
         <CourseSelect />
         <TournamentRoundCheckbox />
+        <ScorecardNine nineData={frontNineData} rowLabels={rowLabels} />
+        <ScorecardNine nineData={backNineData} rowLabels={rowLabels} />
 
-        <div className={"row gutter-top"}>
-          <div className={"col-md-2 scorecard-entry-row"}>
-            {rowLabels.map((label, index) => (
-              <EntryRowLabel key={`entryRow-${index}`} label={label} />
-            ))}
+        <div className={"row"}>
+          <div className={"col offset-md-2"}>
+            <button className={"btn btn-lg btn-primary half-gutter-top"}>
+              Save
+            </button>
           </div>
-          {frontNine.map((hole, index) => (
-            <div
-              key={`hole-${index}`}
-              className={"col-md-1 scorecard-entry-row"}
-            >
-              <HoleLabel holeNumber={hole.number} />
-              <ParLabel strokes={hole.par} />
-              <StrokesEntry />
-              <PuttsEntry />
-              <GirCheckbox />
-              <FirCheckbox />
-              <UpAndDownSelect />
-              <SandSaveSelect />
-              <PenaltyStrokesEntry />
-            </div>
-          ))}
         </div>
       </div>
     );

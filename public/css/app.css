@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+.right-panel {
+  padding-bottom: 60px;
+}
+
 .gutter-top {
   margin-top: 60px;
 }

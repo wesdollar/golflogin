@@ -3,7 +3,7 @@ import Checkbox from "../inputs/Checkbox";
 
 class TournamentRoundCheckbox extends Component {
   render() {
-    return <Checkbox label={"Tournament Round"} />;
+    return <Checkbox label={"Tournament Round"} id={"isTournamentRound"} />;
   }
 }
 

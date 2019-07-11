@@ -16,7 +16,9 @@ class Checkbox extends Component {
 
 Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
-  hideLabel: PropTypes.bool
+  hideLabel: PropTypes.bool,
+  onHandleChange: PropTypes.func.isRequired,
+  checked: PropTypes.bool
 };
 
 export default Checkbox;
