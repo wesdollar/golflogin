@@ -5,11 +5,12 @@ import HoleLabel from "./HoleLabel";
 import ParLabel from "./ParLabel";
 import StrokesEntry from "./StrokesEntry";
 import PuttsEntry from "./PuttsEntry";
-import GirCheckbox from "./GirCheckbox";
 import FirCheckbox from "./FirCheckbox";
 import UpAndDownSelect from "./UpAndDownSelect";
 import SandSaveSelect from "./SandSaveSelect";
 import PenaltyStrokesEntry from "./PenaltyStrokesEntry";
+import DisplayGirCheckbox from "./DisplayGirCheckbox";
+import { roundEntry } from "../../constants/round-entry";
 
 class ScorecardNine extends Component {
   constructor() {
@@ -29,7 +30,7 @@ class ScorecardNine extends Component {
 
   setupScorecardDataObject() {
     const { nineData, rowLabels } = this.props;
-    let scorecardData = { ...this.state.scorecardData };
+    const scorecardData = { ...this.state.scorecardData };
 
     nineData.map(hole => {
       const { number } = hole;
@@ -64,28 +65,57 @@ class ScorecardNine extends Component {
             <EntryRowLabel key={`entryRow-${index}`} label={label} />
           ))}
         </div>
-        {nineData.map((hole, index) => (
-          <div key={`hole-${index}`} className={"col-md-1 scorecard-entry-row"}>
-            <HoleLabel holeNumber={hole.number} />
-            <ParLabel strokes={hole.par} />
-            <StrokesEntry
-              hole={hole.number}
-              onHandleChange={this.setScorecardValue}
-            />
-            <PuttsEntry
-              hole={hole.number}
-              onHandleChange={this.setScorecardValue}
-            />
-            <GirCheckbox
-              hole={hole.number}
-              onHandleChange={this.setScorecardValue}
-            />
-            <FirCheckbox hole={hole.number} />
-            <UpAndDownSelect hole={hole.number} />
-            <SandSaveSelect hole={hole.number} />
-            <PenaltyStrokesEntry hole={hole.number} />
-          </div>
-        ))}
+        {nineData.map((hole, index) => {
+          const { par, number } = hole;
+          const { scorecardData } = this.state;
+          const holeNumberAsInteger = parseInt(number);
+          let strokes, putts;
+
+          if (
+            scorecardData &&
+            scorecardData[holeNumberAsInteger] &&
+            scorecardData[holeNumberAsInteger][roundEntry.strokes]
+          ) {
+            strokes = scorecardData[holeNumberAsInteger][roundEntry.strokes];
+          }
+
+          if (
+            scorecardData &&
+            scorecardData[holeNumberAsInteger] &&
+            scorecardData[holeNumberAsInteger][roundEntry.putts]
+          ) {
+            putts = scorecardData[holeNumberAsInteger][roundEntry.putts];
+          }
+
+          return (
+            <div
+              key={`hole-${index}`}
+              className={"col-md-1 scorecard-entry-row"}
+            >
+              <HoleLabel holeNumber={number} />
+              <ParLabel strokes={par} />
+              <StrokesEntry
+                hole={number}
+                onHandleChange={this.setScorecardValue}
+              />
+              <PuttsEntry
+                hole={number}
+                onHandleChange={this.setScorecardValue}
+              />
+              <DisplayGirCheckbox
+                hole={number}
+                onHandleChange={this.setScorecardValue}
+                strokes={strokes}
+                putts={putts}
+                par={par}
+              />
+              <FirCheckbox hole={number} />
+              <UpAndDownSelect hole={number} />
+              <SandSaveSelect hole={number} />
+              <PenaltyStrokesEntry hole={number} />
+            </div>
+          );
+        })}
       </div>
     );
   }

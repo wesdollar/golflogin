@@ -16,7 +16,6 @@ class GirCheckbox extends Component {
   }
 
   render() {
-
     return (
       <Checkbox
         onHandleChange={this.onSetGir}
@@ -28,10 +27,5 @@ class GirCheckbox extends Component {
 }
 
 GirCheckbox.propTypes = holeOnHandleChange;
-
-GirCheckbox.defaultProps = {
-  strokes: "0",
-  putts: "0"
-};
 
 export default GirCheckbox;

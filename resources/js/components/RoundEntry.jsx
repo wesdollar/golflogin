@@ -4,6 +4,7 @@ import CourseSelect from "./round-entry/CourseSelect";
 import TournamentRoundCheckbox from "./round-entry/TournamentRoundCheckbox";
 import ScorecardNine from "./round-entry/ScorecardNine";
 import { roundEntry, scorecard } from "../constants/round-entry";
+import { courseData } from "../mock-data/round-entry";
 
 class RoundEntry extends Component {
   constructor() {
@@ -20,98 +21,7 @@ class RoundEntry extends Component {
         roundEntry.sandSave,
         roundEntry.penaltyStrokes
       ],
-      courseData: [
-        {
-          number: "1",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "2",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "3",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "4",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "5",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "6",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "7",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "8",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "9",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "10",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "11",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "12",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "13",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "14",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "15",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "16",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "17",
-          yardage: "234",
-          par: "3"
-        },
-        {
-          number: "18",
-          yardage: "234",
-          par: "3"
-        }
-      ]
+      courseData
     };
 
     this.getFrontOrBackNineData = this.getFrontOrBackNineData.bind(this);

@@ -25,6 +25,26 @@
         "react"
     ],
     "rules": {
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "object-shorthand": ["error", "always"],
+        "prefer-const": ["error", {
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+        }],
+        "prefer-destructuring": ["error", {
+            "array": true,
+            "object": true
+        }, {
+            "enforceForRenamedProperties": false
+        }],
+        "no-use-before-define": ["error", { "functions": true, "classes": true }],
+        "no-undefined": "error",
+        "no-undef-init": "error",
+        "block-scoped-var": "error",
+        "no-duplicate-imports": "error",
+        "no-magic-numbers": ["error", { "enforceConst": true }],
+        "no-alert": "error",
+        "max-classes-per-file": ["error", 1],
+        "curly": "error"
     }
 }
