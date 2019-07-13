@@ -11,6 +11,7 @@ import SandSaveSelect from "./SandSaveSelect";
 import PenaltyStrokesEntry from "./PenaltyStrokesEntry";
 import DisplayGirCheckbox from "./DisplayGirCheckbox";
 import { roundEntry } from "../../constants/round-entry";
+import { getScorecardDataByKey } from "../../helpers/round-entry";
 
 class ScorecardNine extends Component {
   constructor() {
@@ -68,24 +69,13 @@ class ScorecardNine extends Component {
         {nineData.map((hole, index) => {
           const { par, number } = hole;
           const { scorecardData } = this.state;
-          const holeNumberAsInteger = parseInt(number);
-          let strokes, putts;
 
-          if (
-            scorecardData &&
-            scorecardData[holeNumberAsInteger] &&
-            scorecardData[holeNumberAsInteger][roundEntry.strokes]
-          ) {
-            strokes = scorecardData[holeNumberAsInteger][roundEntry.strokes];
-          }
-
-          if (
-            scorecardData &&
-            scorecardData[holeNumberAsInteger] &&
-            scorecardData[holeNumberAsInteger][roundEntry.putts]
-          ) {
-            putts = scorecardData[holeNumberAsInteger][roundEntry.putts];
-          }
+          const strokes = getScorecardDataByKey(
+            scorecardData,
+            number,
+            "strokes"
+          );
+          const putts = getScorecardDataByKey(scorecardData, number, "putts");
 
           return (
             <div

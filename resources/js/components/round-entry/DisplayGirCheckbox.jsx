@@ -32,13 +32,16 @@ class DisplayGirCheckbox extends Component {
 
     switch (parseInt(par)) {
       case par3:
-        gir = strokesAsInt - puttsAsInt === 1;
+        // eslint-disable-next-line no-magic-numbers
+        gir = strokesAsInt - puttsAsInt <= 1;
         break;
       case par4:
-        gir = strokesAsInt - puttsAsInt === 2;
+        // eslint-disable-next-line no-magic-numbers
+        gir = strokesAsInt - puttsAsInt <= 2;
         break;
       case par5:
-        gir = strokesAsInt - puttsAsInt === 3;
+        // eslint-disable-next-line no-magic-numbers
+        gir = strokesAsInt - puttsAsInt <= 3;
         break;
     }
 
