@@ -5,22 +5,13 @@ import TournamentRoundCheckbox from "./round-entry/TournamentRoundCheckbox";
 import ScorecardNine from "./round-entry/ScorecardNine";
 import { roundEntry, scorecard } from "../constants/round-entry";
 import { courseData } from "../mock-data/round-entry";
+import {getScorecardLabels} from "../helpers/round-entry"
 
 class RoundEntry extends Component {
   constructor() {
     super();
     this.state = {
-      rowLabels: [
-        roundEntry.hole,
-        roundEntry.par,
-        roundEntry.strokes,
-        roundEntry.putts,
-        roundEntry.gir,
-        roundEntry.fir,
-        roundEntry.upAndDown,
-        roundEntry.sandSave,
-        roundEntry.penaltyStrokes
-      ],
+      rowLabels: getScorecardLabels(),
       courseData
     };
 

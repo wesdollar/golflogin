@@ -14,3 +14,12 @@ export const getScorecardDataByKey = (scorecardData, holeNumber, key) => {
 
   return entry;
 };
+
+export const getScorecardLabels = () => {
+  const roundLabels = [];
+  for (const label in roundEntry) {
+    roundLabels.push(roundEntry[label]);
+  }
+
+  return roundLabels;
+};

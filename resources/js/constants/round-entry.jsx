@@ -1,5 +1,6 @@
 export const roundEntry = {
   hole: "Hole",
+  yardage: "Yardage",
   par: "Par",
   strokes: "Strokes",
   putts: "Putts",

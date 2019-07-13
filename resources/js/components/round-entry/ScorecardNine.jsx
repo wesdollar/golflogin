@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import EntryRowLabel from "./EntryRowLabel";
 import HoleLabel from "./HoleLabel";
 import ParLabel from "./ParLabel";
+import YardageLabel from "./YardageLabel";
 import StrokesEntry from "./StrokesEntry";
 import PuttsEntry from "./PuttsEntry";
 import FirCheckbox from "./FirCheckbox";
@@ -10,7 +11,6 @@ import UpAndDownSelect from "./UpAndDownSelect";
 import SandSaveSelect from "./SandSaveSelect";
 import PenaltyStrokesEntry from "./PenaltyStrokesEntry";
 import DisplayGirCheckbox from "./DisplayGirCheckbox";
-import { roundEntry } from "../../constants/round-entry";
 import { getScorecardDataByKey } from "../../helpers/round-entry";
 
 class ScorecardNine extends Component {
@@ -31,7 +31,7 @@ class ScorecardNine extends Component {
 
   setupScorecardDataObject() {
     const { nineData, rowLabels } = this.props;
-    const scorecardData = { ...this.state.scorecardData };
+    const { scorecardData } = this.state;
 
     nineData.map(hole => {
       const { number } = hole;
@@ -67,7 +67,7 @@ class ScorecardNine extends Component {
           ))}
         </div>
         {nineData.map((hole, index) => {
-          const { par, number } = hole;
+          const { par, number, yardage } = hole;
           const { scorecardData } = this.state;
 
           const strokes = getScorecardDataByKey(
@@ -83,6 +83,7 @@ class ScorecardNine extends Component {
               className={"col-md-1 scorecard-entry-row"}
             >
               <HoleLabel holeNumber={number} />
+              <YardageLabel yardage={yardage} />
               <ParLabel strokes={par} />
               <StrokesEntry
                 hole={number}
