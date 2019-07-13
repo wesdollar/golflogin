@@ -45,6 +45,13 @@
         "no-magic-numbers": ["error", { "enforceConst": true }],
         "no-alert": "error",
         "max-classes-per-file": ["error", 1],
-        "curly": "error"
+        "curly": "error",
+        "react/destructuring-assignment": [2],
+        "react/jsx-handler-names": [1],
+        "react/no-direct-mutation-state": [1],
+        "react/no-this-in-sfc": [1],
+        "react/no-unused-prop-types": [1],
+        "react/no-unused-state": [1],
+        "react/jsx-pascal-case": [1]
     }
 }

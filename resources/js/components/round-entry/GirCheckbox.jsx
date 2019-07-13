@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Checkbox from "./inputs/Checkbox";
-import { holeOnHandleChange } from "./prop-types/hole-onHandleChange";
+import { holeOnHandleChange } from "./prop-types/round-entry";
 import { roundEntry } from "../../constants/round-entry";
 
 class GirCheckbox extends Component {

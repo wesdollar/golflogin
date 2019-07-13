@@ -5,11 +5,13 @@ import ColumnLabel from "./ColumnLabel";
 
 class DisplayGirCheckbox extends Component {
   render() {
-    if (this.props.displayCheckbox) {
+    const { displayCheckbox, hole, onHandleChange } = this.props;
+
+    if (displayCheckbox) {
       return (
         <GirCheckbox
-          hole={this.props.hole}
-          onHandleChange={this.props.onHandleChange}
+          hole={hole}
+          onHandleChange={onHandleChange}
         />
       );
     }

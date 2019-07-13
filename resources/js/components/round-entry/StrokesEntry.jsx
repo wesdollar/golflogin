@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NumberField from "./inputs/NumberField";
-import { holeOnHandleChange } from "./prop-types/hole-onHandleChange";
+import { holeOnHandleChange } from "./prop-types/round-entry";
 import { roundEntry } from "../../constants/round-entry";
 
 class StrokesEntry extends Component {
