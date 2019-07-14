@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import CourseSelect from "./round-entry/CourseSelect";
 import TournamentRoundCheckbox from "./round-entry/TournamentRoundCheckbox";
 import ScorecardNine from "./round-entry/ScorecardNine";
@@ -23,8 +22,10 @@ class RoundEntry extends Component {
 
     switch (side) {
       case scorecard.frontNine:
+        // eslint-disable-next-line no-magic-numbers
         return courseData.slice(0, 9);
       case scorecard.backNine:
+        // eslint-disable-next-line no-magic-numbers
         return courseData.slice(9, 18);
     }
 
@@ -54,7 +55,5 @@ class RoundEntry extends Component {
     );
   }
 }
-
-RoundEntry.propTypes = {};
 
 export default RoundEntry;

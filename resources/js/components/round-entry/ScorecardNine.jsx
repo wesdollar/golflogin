@@ -12,6 +12,7 @@ import SandSaveSelect from "./SandSaveSelect";
 import PenaltyStrokesEntry from "./PenaltyStrokesEntry";
 import DisplayGirCheckbox from "./DisplayGirCheckbox";
 import { getScorecardDataByKey } from "../../helpers/round-entry";
+import { roundEntry } from "../../constants/round-entry";
 
 class ScorecardNine extends Component {
   constructor() {
@@ -29,6 +30,14 @@ class ScorecardNine extends Component {
     this.setupScorecardDataObject();
   }
 
+  isStatLabel(label) {
+    return !(
+      label === roundEntry.hole ||
+      label === roundEntry.par ||
+      label === roundEntry.yardage
+    );
+  }
+
   setupScorecardDataObject() {
     const { nineData, rowLabels } = this.props;
     const { scorecardData } = this.state;
@@ -38,7 +47,9 @@ class ScorecardNine extends Component {
       scorecardData[number] = {};
 
       rowLabels.map(label => {
-        scorecardData[number][label] = "";
+        if (this.isStatLabel(label)) {
+          scorecardData[number][label] = "";
+        }
       });
     });
 
@@ -46,7 +57,7 @@ class ScorecardNine extends Component {
   }
 
   setScorecardValue(hole, property, value) {
-    const scorecardData = { ...this.state.scorecardData };
+    const { scorecardData } = this.state;
     scorecardData[hole][property] = value;
 
     this.setState({ scorecardData });
