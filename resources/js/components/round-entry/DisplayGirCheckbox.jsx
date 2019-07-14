@@ -2,33 +2,43 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import GirCheckbox from "./GirCheckbox";
 import ColumnLabel from "./ColumnLabel";
+import { roundEntry } from "../../constants/round-entry";
 
 class DisplayGirCheckbox extends Component {
-  render() {
-    const { displayCheckbox, hole, onHandleChange } = this.props;
+  constructor() {
+    super();
 
-    if (displayCheckbox) {
-      return (
-        <GirCheckbox
-          hole={hole}
-          onHandleChange={onHandleChange}
-        />
-      );
-    }
+    this.setGir = this.setGir.bind(this);
+    this.handleUpdateGir = this.handleUpdateGir.bind(this);
+  }
 
+  componentDidUpdate(prevProps) {
+    this.handleUpdateGir(prevProps);
+  }
+
+  handleUpdateGir(prevProps) {
     const { par, strokes, putts } = this.props;
+
+    if (strokes !== prevProps.strokes || putts !== prevProps.putts) {
+      const isGir = this.isGir(par, strokes, putts);
+
+      this.setGir(isGir);
+    }
+  }
+
+  setGir(value) {
+    const { hole, onHandleChange } = this.props;
+    onHandleChange(hole, roundEntry.gir, value);
+  }
+
+  isGir(par, strokes, putts) {
     const strokesAsInt = parseInt(strokes);
     const puttsAsInt = parseInt(putts);
-
-    if (!strokesAsInt && !puttsAsInt) {
-      return <ColumnLabel label={"No"} className={"text-muted"} />;
-    }
-
-    let gir = false;
 
     const par3 = 3;
     const par4 = 4;
     const par5 = 5;
+    let gir = false;
 
     switch (parseInt(par)) {
       case par3:
@@ -45,7 +55,23 @@ class DisplayGirCheckbox extends Component {
         break;
     }
 
-    if (gir) {
+    return gir;
+  }
+
+  render() {
+    const { displayCheckbox, hole, onHandleChange } = this.props;
+
+    if (displayCheckbox) {
+      return <GirCheckbox hole={hole} onHandleChange={onHandleChange} />;
+    }
+
+    const { par, strokes, putts } = this.props;
+
+    if (!strokes && !putts) {
+      return <ColumnLabel label={"No"} className={"text-muted"} />;
+    }
+
+    if (this.isGir(par, strokes, putts)) {
       return <ColumnLabel label={"Yes"} />;
     }
 

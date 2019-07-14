@@ -4,16 +4,19 @@ import PropTypes from "prop-types";
 class Checkbox extends Component {
   constructor(props) {
     super(props);
+    const { checked } = this.props;
     this.state = {
-      checked: this.props.checked
+      checked
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
-    const checked = event.target.checked;
+    const { checked } = event.target;
     this.setState({ checked });
+
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.onHandleChange(checked);
   }
 

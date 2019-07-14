@@ -100,10 +100,22 @@ class ScorecardNine extends Component {
                 putts={putts}
                 par={par}
               />
-              <FirCheckbox hole={number} />
-              <UpAndDownSelect hole={number} />
-              <SandSaveSelect hole={number} />
-              <PenaltyStrokesEntry hole={number} />
+              <FirCheckbox
+                hole={number}
+                onHandleChange={this.setScorecardValue}
+              />
+              <UpAndDownSelect
+                hole={number}
+                onHandleChange={this.setScorecardValue}
+              />
+              <SandSaveSelect
+                hole={number}
+                onHandleChange={this.setScorecardValue}
+              />
+              <PenaltyStrokesEntry
+                hole={number}
+                onHandleChange={this.setScorecardValue}
+              />
             </div>
           );
         })}

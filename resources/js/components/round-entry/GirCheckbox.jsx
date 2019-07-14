@@ -7,10 +7,10 @@ import { roundEntry } from "../../constants/round-entry";
 class GirCheckbox extends Component {
   constructor() {
     super();
-    this.onSetGir = this.onSetGir.bind(this);
+    this.setGir = this.setGir.bind(this);
   }
 
-  onSetGir(value) {
+  setGir(value) {
     const { hole, onHandleChange } = this.props;
     onHandleChange(hole, roundEntry.gir, value);
   }
@@ -18,7 +18,7 @@ class GirCheckbox extends Component {
   render() {
     return (
       <Checkbox
-        onHandleChange={this.onSetGir}
+        onHandleChange={this.setGir}
         label={roundEntry.gir}
         hideLabel={true}
       />

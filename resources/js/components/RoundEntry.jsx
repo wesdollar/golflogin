@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import CourseSelect from "./round-entry/CourseSelect";
 import TournamentRoundCheckbox from "./round-entry/TournamentRoundCheckbox";
 import ScorecardNine from "./round-entry/ScorecardNine";
-import { roundEntry, scorecard } from "../constants/round-entry";
+import { scorecard } from "../constants/round-entry";
 import { courseData } from "../mock-data/round-entry";
-import {getScorecardLabels} from "../helpers/round-entry"
+import { getScorecardLabels } from "../helpers/round-entry";
 
 class RoundEntry extends Component {
   constructor() {

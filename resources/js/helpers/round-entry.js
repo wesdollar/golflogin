@@ -16,9 +16,10 @@ export const getScorecardDataByKey = (scorecardData, holeNumber, key) => {
 };
 
 export const getScorecardLabels = () => {
+  const roundEntryLabels = Object.values(roundEntry);
   const roundLabels = [];
-  for (const label in roundEntry) {
-    roundLabels.push(roundEntry[label]);
+  for (const label of roundEntryLabels) {
+    roundLabels.push(label);
   }
 
   return roundLabels;
