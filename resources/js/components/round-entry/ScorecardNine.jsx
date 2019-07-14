@@ -113,6 +113,7 @@ class ScorecardNine extends Component {
               />
               <FirCheckbox
                 hole={number}
+                par={par}
                 onHandleChange={this.setScorecardValue}
               />
               <UpAndDownSelect

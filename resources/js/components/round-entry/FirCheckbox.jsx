@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import Checkbox from "./inputs/Checkbox";
-import {roundEntry} from "../../constants/round-entry"
-import {holeOnHandleChange} from "./prop-types/round-entry"
+import { roundEntry } from "../../constants/round-entry";
+import { holeOnHandleChange } from "./prop-types/round-entry";
+import ColumnLabel from "./ColumnLabel"
 
 class FirCheckbox extends Component {
   constructor() {
@@ -16,7 +16,21 @@ class FirCheckbox extends Component {
   }
 
   render() {
-    return <Checkbox label={"FIR"} hideLabel={true} onHandleChange={this.setFir} />;
+    const { hole, par } = this.props;
+    const par3 = 3;
+
+    if (parseInt(par) === par3) {
+      return <ColumnLabel label={" "} />;
+    }
+
+    return (
+      <Checkbox
+        id={`fir-${hole}`}
+        label={"FIR"}
+        hideLabel={true}
+        onHandleChange={this.setFir}
+      />
+    );
   }
 }
 

@@ -18,7 +18,8 @@ Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
   hideLabel: PropTypes.bool,
   onHandleChange: PropTypes.func.isRequired,
-  checked: PropTypes.bool
+  checked: PropTypes.bool,
+  id: PropTypes.string.isRequired
 };
 
 export default Checkbox;

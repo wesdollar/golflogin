@@ -11,10 +11,12 @@ class RoundEntry extends Component {
     super();
     this.state = {
       rowLabels: getScorecardLabels(),
-      courseData
+      courseData,
+      isTournamentRound: false
     };
 
     this.getFrontOrBackNineData = this.getFrontOrBackNineData.bind(this);
+    this.setIsTournamentRound = this.setIsTournamentRound.bind(this);
   }
 
   getFrontOrBackNineData(side) {
@@ -32,6 +34,10 @@ class RoundEntry extends Component {
     return [];
   }
 
+  setIsTournamentRound(value) {
+    this.setState({ isTournamentRound: value });
+  }
+
   render() {
     const { rowLabels } = this.state;
     const frontNineData = this.getFrontOrBackNineData(scorecard.frontNine);
@@ -40,7 +46,7 @@ class RoundEntry extends Component {
     return (
       <div className={"container-fluid half-gutter-top"}>
         <CourseSelect />
-        <TournamentRoundCheckbox />
+        <TournamentRoundCheckbox onHandleChange={this.setIsTournamentRound} />
         <ScorecardNine nineData={frontNineData} rowLabels={rowLabels} />
         <ScorecardNine nineData={backNineData} rowLabels={rowLabels} />
 
