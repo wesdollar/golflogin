@@ -32,7 +32,7 @@ export const courseData = [
   {
     number: "7",
     yardage: "475",
-    par: "4"
+    par: "5"
   },
   {
     number: "8",
