@@ -12,11 +12,16 @@ class RoundEntry extends Component {
     this.state = {
       rowLabels: getScorecardLabels(),
       courseData,
-      isTournamentRound: false
+      isTournamentRound: false,
+      courseId: "",
+      scorecardData: {}
     };
 
     this.getFrontOrBackNineData = this.getFrontOrBackNineData.bind(this);
     this.setIsTournamentRound = this.setIsTournamentRound.bind(this);
+    this.setCourse = this.setCourse.bind(this);
+    this.save = this.save.bind(this);
+    this.setScorecardData = this.setScorecardData.bind(this);
   }
 
   getFrontOrBackNineData(side) {
@@ -38,6 +43,25 @@ class RoundEntry extends Component {
     this.setState({ isTournamentRound: value });
   }
 
+  setCourse(value) {
+    this.setState({ courseId: value });
+  }
+
+  setScorecardData(scorecardData) {
+    this.setState({ scorecardData });
+  }
+
+  save() {
+    const { courseId, isTournamentRound, scorecardData } = this.state;
+    const payload = {
+      courseId,
+      isTournamentRound,
+      ...scorecardData
+    };
+
+    console.log(payload);
+  }
+
   render() {
     const { rowLabels } = this.state;
     const frontNineData = this.getFrontOrBackNineData(scorecard.frontNine);
@@ -45,14 +69,25 @@ class RoundEntry extends Component {
 
     return (
       <div className={"container-fluid half-gutter-top"}>
-        <CourseSelect />
+        <CourseSelect onHandleChange={this.setCourse} />
         <TournamentRoundCheckbox onHandleChange={this.setIsTournamentRound} />
-        <ScorecardNine nineData={frontNineData} rowLabels={rowLabels} />
-        <ScorecardNine nineData={backNineData} rowLabels={rowLabels} />
+        <ScorecardNine
+          nineData={frontNineData}
+          rowLabels={rowLabels}
+          setScorecardDataOnParent={this.setScorecardData}
+        />
+        <ScorecardNine
+          nineData={backNineData}
+          rowLabels={rowLabels}
+          setScorecardDataOnParent={this.setScorecardData}
+        />
 
         <div className={"row"}>
           <div className={"col offset-md-2"}>
-            <button className={"btn btn-lg btn-primary half-gutter-top"}>
+            <button
+              className={"btn btn-lg btn-primary half-gutter-top"}
+              onClick={this.save}
+            >
               Save
             </button>
           </div>

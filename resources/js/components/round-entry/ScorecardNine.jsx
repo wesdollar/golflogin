@@ -24,6 +24,7 @@ class ScorecardNine extends Component {
 
     this.setScorecardValue = this.setScorecardValue.bind(this);
     this.setupScorecardDataObject = this.setupScorecardDataObject.bind(this);
+    this.setScorecardValue = this.setScorecardValue.bind(this);
   }
 
   componentDidMount() {
@@ -61,6 +62,8 @@ class ScorecardNine extends Component {
     scorecardData[hole][property] = value;
 
     this.setState({ scorecardData });
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.setScorecardDataOnParent({ scorecardData });
   }
 
   render() {
@@ -138,7 +141,12 @@ class ScorecardNine extends Component {
 
 ScorecardNine.propTypes = {
   nineData: PropTypes.array.isRequired,
-  rowLabels: PropTypes.array.isRequired
+  rowLabels: PropTypes.array.isRequired,
+  setScorecardDataOnParent: PropTypes.func
+};
+
+ScorecardNine.defaultProps = {
+  setScorecardDataOnParent: () => {}
 };
 
 export default ScorecardNine;

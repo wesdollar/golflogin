@@ -90,3 +90,14 @@ export const courseData = [
     par: "4"
   }
 ];
+
+export const coursesData = [
+  {
+    name: "One Course",
+    id: 2
+  },
+  {
+    name: "Two Course",
+    id: 1
+  }
+];
