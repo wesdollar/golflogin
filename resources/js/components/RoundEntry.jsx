@@ -5,6 +5,8 @@ import ScorecardNine from "./round-entry/ScorecardNine";
 import { scorecard } from "../constants/round-entry";
 import { courseData } from "../mock-data/round-entry";
 import { getScorecardLabels } from "../helpers/round-entry";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class RoundEntry extends Component {
   constructor() {
@@ -12,6 +14,7 @@ class RoundEntry extends Component {
     this.state = {
       rowLabels: getScorecardLabels(),
       courseData,
+      datePlayed: "",
       isTournamentRound: false,
       courseId: "",
       scorecardData: {}
@@ -22,6 +25,7 @@ class RoundEntry extends Component {
     this.setCourse = this.setCourse.bind(this);
     this.save = this.save.bind(this);
     this.setScorecardData = this.setScorecardData.bind(this);
+    this.setDatePlayed = this.setDatePlayed.bind(this);
   }
 
   getFrontOrBackNineData(side) {
@@ -51,9 +55,20 @@ class RoundEntry extends Component {
     this.setState({ scorecardData });
   }
 
+  setDatePlayed(value) {
+    this.setState({ datePlayed: value });
+  }
+
   save() {
-    const { courseId, isTournamentRound, scorecardData } = this.state;
+    const {
+      courseId,
+      isTournamentRound,
+      scorecardData,
+      datePlayed
+    } = this.state;
+
     const payload = {
+      datePlayed,
       courseId,
       isTournamentRound,
       ...scorecardData
@@ -63,12 +78,17 @@ class RoundEntry extends Component {
   }
 
   render() {
-    const { rowLabels } = this.state;
+    const { rowLabels, datePlayed } = this.state;
     const frontNineData = this.getFrontOrBackNineData(scorecard.frontNine);
     const backNineData = this.getFrontOrBackNineData(scorecard.backNine);
 
     return (
       <div className={"container-fluid half-gutter-top"}>
+        <DatePicker
+          selected={datePlayed}
+          onSelect={this.setDatePlayed}
+          onChange={this.setDatePlayed}
+        />
         <CourseSelect onHandleChange={this.setCourse} />
         <TournamentRoundCheckbox onHandleChange={this.setIsTournamentRound} />
         <ScorecardNine

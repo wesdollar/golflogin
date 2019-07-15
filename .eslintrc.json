@@ -46,6 +46,7 @@
         "no-alert": "error",
         "max-classes-per-file": ["error", 1],
         "curly": "error",
+        "no-console": "warn",
         "react/destructuring-assignment": [2],
 //        "react/jsx-handler-names": [1],
         "react/no-direct-mutation-state": [1],
