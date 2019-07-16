@@ -5,8 +5,10 @@ import ScorecardNine from "./round-entry/ScorecardNine";
 import { scorecard } from "../constants/round-entry";
 import { courseData } from "../mock-data/round-entry";
 import { getScorecardLabels } from "../helpers/round-entry";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import DatePlayed from "./round-entry/DatePlayed";
+import Button from "./elements/Button";
+import CourseEntry from "./CourseEntry";
 
 class RoundEntry extends Component {
   constructor() {
@@ -78,17 +80,14 @@ class RoundEntry extends Component {
   }
 
   render() {
-    const { rowLabels, datePlayed } = this.state;
+    const { rowLabels } = this.state;
     const frontNineData = this.getFrontOrBackNineData(scorecard.frontNine);
     const backNineData = this.getFrontOrBackNineData(scorecard.backNine);
 
     return (
       <div className={"container-fluid half-gutter-top"}>
-        <DatePicker
-          selected={datePlayed}
-          onSelect={this.setDatePlayed}
-          onChange={this.setDatePlayed}
-        />
+        <CourseEntry />
+        <DatePlayed handleOnChange={this.setDatePlayed} />
         <CourseSelect onHandleChange={this.setCourse} />
         <TournamentRoundCheckbox onHandleChange={this.setIsTournamentRound} />
         <ScorecardNine
@@ -101,17 +100,7 @@ class RoundEntry extends Component {
           rowLabels={rowLabels}
           setScorecardDataOnParent={this.setScorecardData}
         />
-
-        <div className={"row"}>
-          <div className={"col offset-md-2"}>
-            <button
-              className={"btn btn-lg btn-primary half-gutter-top"}
-              onClick={this.save}
-            >
-              Save
-            </button>
-          </div>
-        </div>
+        <Button className={`offset-md-2`} handleOnClick={this.save} />
       </div>
     );
   }

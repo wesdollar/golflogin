@@ -13,6 +13,7 @@ import PenaltyStrokesEntry from "./PenaltyStrokesEntry";
 import DisplayGirCheckbox from "./DisplayGirCheckbox";
 import { getScorecardDataByKey } from "../../helpers/round-entry";
 import { roundEntry } from "../../constants/round-entry";
+import RowLabels from "./RowLabels"
 
 class ScorecardNine extends Component {
   constructor() {
@@ -75,11 +76,7 @@ class ScorecardNine extends Component {
 
     return (
       <div className={"row gutter-top"}>
-        <div className={"col-md-2 scorecard-entry-row text-right"}>
-          {rowLabels.map((label, index) => (
-            <EntryRowLabel key={`entryRow-${index}`} label={label} />
-          ))}
-        </div>
+        <RowLabels rowLabels={rowLabels} />
         {nineData.map((hole, index) => {
           const { par, number, yardage } = hole;
           const { scorecardData } = this.state;
