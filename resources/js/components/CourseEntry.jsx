@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Text from "./inputs/Text";
 import RowLabels from "./round-entry/RowLabels";
 import { getNineInputAttributes } from "../helpers/get-nine-input-attributes";
+import NumberField from "./round-entry/inputs/NumberField";
+import HoleLabel from "./round-entry/HoleLabel";
 
 class CourseEntry extends Component {
   constructor() {
@@ -44,6 +46,14 @@ class CourseEntry extends Component {
 
     const rowLabels = ["Par", "Yardage"];
 
+    const holeStart = 1;
+    let currentHole = holeStart;
+    const frontNine = [];
+    while (currentHole <= 9) {
+      frontNine.push(currentHole);
+      currentHole++;
+    }
+
     return (
       /* eslint-disable react/destructuring-assignment */
       <React.Fragment>
@@ -57,8 +67,31 @@ class CourseEntry extends Component {
             key={field.id}
           />
         ))}
-        <div className={`row gutter-top`}>
+        <div className={`row`}>
+          <div className={`col-md-2`}>&nbsp;</div>
+          {frontNine.map(holeNumber => (
+            <div
+              className={`col-md-1 scorecard-entry-row`}
+              key={`holeEntryRowLabel-${holeNumber}`}
+            >
+              <HoleLabel holeNumber={holeNumber} />
+            </div>
+          ))}
+        </div>
+        <div className={`row`}>
           <RowLabels rowLabels={rowLabels} />
+          {frontNine.map(holeNumber => (
+            <div className={`col-md-1`} key={`courseHole-${holeNumber}`}>
+              <NumberField
+                label={`hole${holeNumber}-par`}
+                onHandleChange={() => {}}
+              />
+              <NumberField
+                label={`hole${holeNumber}-yardage`}
+                onHandleChange={() => {}}
+              />
+            </div>
+          ))}
         </div>
       </React.Fragment>
       /* eslint-enable react/destructuring-assignment */

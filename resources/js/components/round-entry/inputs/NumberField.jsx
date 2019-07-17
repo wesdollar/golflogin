@@ -13,13 +13,15 @@ class NumberField extends Component {
   }
 
   handleChange(event) {
-    const value = event.target.value;
+    const { value } = event.target;
     this.setState({ value });
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.onHandleChange(value);
   }
 
   render() {
     const { label } = this.props;
+    const { value } = this.state;
 
     return (
       <div className="row">
@@ -31,7 +33,7 @@ class NumberField extends Component {
             <input
               type="text"
               className={`form-control text-center`}
-              value={this.state.value}
+              value={value}
               onChange={this.handleChange}
             />
           </div>
