@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Text from "./inputs/Text";
-import RowLabels from "./round-entry/RowLabels";
 import { getNineInputAttributes } from "../helpers/get-nine-input-attributes";
-import NumberField from "./round-entry/inputs/NumberField";
-import HoleLabel from "./round-entry/HoleLabel";
+import CourseNine from "./course-entry/CourseNine";
+
+const FRONT_NINE = "front";
+const BACK_NINE = "back";
 
 class CourseEntry extends Component {
   constructor() {
@@ -36,6 +37,35 @@ class CourseEntry extends Component {
     this.setState({ [name]: value });
   }
 
+  generateNineArray(side) {
+    let holeStart, currentHole, holeEnd;
+
+    /* eslint-disable no-magic-numbers */
+    switch (side) {
+      case FRONT_NINE:
+        holeStart = 1;
+        holeEnd = 9;
+        break;
+
+      case BACK_NINE:
+        holeStart = 10;
+        holeEnd = 18;
+        break;
+    }
+    /* eslint-enable no-magic-numbers */
+
+    currentHole = holeStart;
+    const result = [];
+
+    while (currentHole <= holeEnd) {
+      // courseNine.holeLabel expects number as string
+      result.push(currentHole.toString());
+      currentHole++;
+    }
+
+    return result;
+  }
+
   render() {
     const textFields = [
       { id: "courseTitle", label: "Course Title" },
@@ -44,15 +74,8 @@ class CourseEntry extends Component {
       { id: "slopeRating", label: "Slope Rating" }
     ];
 
-    const rowLabels = ["Par", "Yardage"];
-
-    const holeStart = 1;
-    let currentHole = holeStart;
-    const frontNine = [];
-    while (currentHole <= 9) {
-      frontNine.push(currentHole);
-      currentHole++;
-    }
+    const frontNine = this.generateNineArray(FRONT_NINE);
+    const backNine = this.generateNineArray(BACK_NINE);
 
     return (
       /* eslint-disable react/destructuring-assignment */
@@ -67,32 +90,8 @@ class CourseEntry extends Component {
             key={field.id}
           />
         ))}
-        <div className={`row`}>
-          <div className={`col-md-2`}>&nbsp;</div>
-          {frontNine.map(holeNumber => (
-            <div
-              className={`col-md-1 scorecard-entry-row`}
-              key={`holeEntryRowLabel-${holeNumber}`}
-            >
-              <HoleLabel holeNumber={holeNumber} />
-            </div>
-          ))}
-        </div>
-        <div className={`row`}>
-          <RowLabels rowLabels={rowLabels} />
-          {frontNine.map(holeNumber => (
-            <div className={`col-md-1`} key={`courseHole-${holeNumber}`}>
-              <NumberField
-                label={`hole${holeNumber}-par`}
-                onHandleChange={() => {}}
-              />
-              <NumberField
-                label={`hole${holeNumber}-yardage`}
-                onHandleChange={() => {}}
-              />
-            </div>
-          ))}
-        </div>
+        <CourseNine frontNine={frontNine} onHandleChange={this.setValue} />
+        <CourseNine frontNine={backNine} onHandleChange={this.setValue} />
       </React.Fragment>
       /* eslint-enable react/destructuring-assignment */
     );

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NumberField from "./inputs/NumberField";
+import NumberField from "../inputs/NumberField";
 import { holeOnHandleChange } from "./prop-types/round-entry";
 import { roundEntry } from "../../constants/round-entry";
 
@@ -9,8 +9,10 @@ class PuttsEntry extends Component {
     this.onSetPutts = this.onSetPutts.bind(this);
   }
 
-  onSetPutts(value) {
+  onSetPutts(event) {
     const { hole, onHandleChange } = this.props;
+    const { value } = event.target;
+
     onHandleChange(hole, roundEntry.putts, value);
   }
 

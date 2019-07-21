@@ -8,7 +8,6 @@ import { getScorecardLabels } from "../helpers/round-entry";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePlayed from "./round-entry/DatePlayed";
 import Button from "./elements/Button";
-import CourseEntry from "./CourseEntry";
 
 class RoundEntry extends Component {
   constructor() {
@@ -85,8 +84,7 @@ class RoundEntry extends Component {
     const backNineData = this.getFrontOrBackNineData(scorecard.backNine);
 
     return (
-      <div className={"container-fluid half-gutter-top"}>
-        <CourseEntry />
+      <React.Fragment>
         <DatePlayed handleOnChange={this.setDatePlayed} />
         <CourseSelect onHandleChange={this.setCourse} />
         <TournamentRoundCheckbox onHandleChange={this.setIsTournamentRound} />
@@ -101,7 +99,7 @@ class RoundEntry extends Component {
           setScorecardDataOnParent={this.setScorecardData}
         />
         <Button className={`offset-md-2`} handleOnClick={this.save} />
-      </div>
+      </React.Fragment>
     );
   }
 }

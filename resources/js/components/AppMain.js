@@ -6,14 +6,15 @@ import Dashboard from "./Dashboard";
 import ThemeHeader from "./ThemeHeader";
 import NavItem from "./NavItem";
 import RoundEntry from "./RoundEntry";
+import CourseEntry from "./CourseEntry";
 
 /* eslint-disable no-undef */
 /** @namespace GL.reactBase */
 /** @namespace GL.user.activeGroupTitle */
 const reactBaseHref = `/${GL.reactBase}`;
 const activeGroup = GL.user.activeGroupTitle;
-const appName = GL.appName;
-const reactBase = GL.reactBase;
+const { appName } = GL;
+const { reactBase } = GL;
 /* eslint-enable */
 
 const navItems = [
@@ -99,18 +100,24 @@ class AppMain extends Component {
         <div id="right-panel" className="right-panel">
           <ThemeHeader activeGroup={activeGroup} />
 
-          <div className="content mt-30">
-            <Route exact path={`${reactBaseHref}/`} component={Dashboard} />
-            <Route
-              exact
-              path={`${reactBaseHref}/dashboard`}
-              component={Dashboard}
-            />
-            <Route path={`${reactBaseHref}/example`} component={Example} />
-            <Route
-              path={`${reactBaseHref}/round-entry`}
-              component={RoundEntry}
-            />
+          <div className="content">
+            <div className={"container-fluid half-gutter-top"}>
+              <Route exact path={`${reactBaseHref}/`} component={Dashboard} />
+              <Route
+                exact
+                path={`${reactBaseHref}/dashboard`}
+                component={Dashboard}
+              />
+              <Route path={`${reactBaseHref}/example`} component={Example} />
+              <Route
+                path={`${reactBaseHref}/round-entry`}
+                component={RoundEntry}
+              />
+              <Route
+                path={`${reactBaseHref}/course-entry`}
+                component={CourseEntry}
+              />
+            </div>
           </div>
         </div>
       </Router>
