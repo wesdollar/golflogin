@@ -14,7 +14,7 @@ class AddGroupIdColumnToOptions extends Migration
     public function up()
     {
         Schema::table('options', function (Blueprint $table) {
-            $table->integer('group_id');
+            $table->integer('group_id')->nullable();
         });
     }
 

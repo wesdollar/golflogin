@@ -15,7 +15,7 @@ class AddGroupCodeToGroups extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
 
-            $table->string('group_code')->unique();
+            $table->string('group_code')->nullable()->unique();
         });
     }
 

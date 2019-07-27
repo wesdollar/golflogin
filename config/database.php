@@ -37,6 +37,14 @@ return [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
+            'foreign_key_constraints' => true,
+        ],
+
+        'sqlite_testing' => [
+            'driver' => 'sqlite',
+            'database' => ":memory:",
+            'prefix' => '',
+            'foreign_key_constraints' => true,
         ],
 
         'mysql' => [

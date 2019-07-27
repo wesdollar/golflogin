@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
 use App\Hole;
+use App\Services\CoursesService;
 use App\Services\UserService;
-use App\Tee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,43 +19,27 @@ class CoursesController extends Controller
 
         $user = Auth::user();
 
-        $data = [
-            'title' => $request->input('courseName'),
-            'group_id' => UserService::getActiveGroupId($user),
-            'tee_box' => $request->input('teeBox'),
-            'rating' => $request->input('usgaRating'),
-            'slope' => $request->input('slopeRating'),
-        ];
+        $title = $request->input('courseName');
+        $groupId = UserService::getActiveGroupId($user);
+        $teeBox = $request->input('teeBox');
+        $rating = $request->input('usgaRating');
+        $slope = $request->input('slopeRating');
 
-        $course = Course::create($data);
+        $course = CoursesService::createCourse($title, $groupId, $teeBox, $rating, $slope);
 
-        $yardages = $request->input('yardages');
-        $pars = $request->input('pars');
+        $holesFromRequest = [];
 
-        $holes = [];
-
-        for($i = 1; $i <= 18; $i++) {
-
-            $holes[$i]['par'] = $pars[$i];
-            $holes[$i]['yardage'] = $yardages[$i];
+        for ($i = 1; $i <= 18; $i++) {
+            $par = "hole{$i}-par";
+            $yardage = "hole{$i}-yardage";
+            $holesFromRequest[$par] = $request->input($par);
+            $holesFromRequest[$yardage] = $request->input($yardage);
         }
 
-        $i = 1;
+        $holes = CoursesService::compileHoleDataIntoDbStructure($holesFromRequest);
 
-        foreach ($holes as $hole) {
+        CoursesService::createHoles($course->id, $holes);
 
-            $data = [
-                'course_id' => $course->id,
-                'number' => $i,
-                'par' => $hole['par'],
-                'yardage' => $hole['yardage'],
-            ];
-
-            Hole::create($data);
-
-            $i++;
-        }
-
-        return redirect()->route('dashboard')->with(['alert-success' => 'Course added!']);
+        return response()->json("success");
     }
 }

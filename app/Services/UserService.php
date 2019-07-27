@@ -42,7 +42,7 @@ class UserService {
             'belongsToGroup' => $belongsToGroup,
             'groups' => $groups,
             'activeGroupTitle' => $activeGroupTitle,
-            'fullName' => $user->first_name . ' ' . $user->last_name
+            'fullName' => "{$user->first_name} {$user->last_name}"
         ];
     }
 }
