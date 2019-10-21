@@ -19,10 +19,18 @@ class CreateRoundsDataTable extends Migration
             $table->integer('hole_id');
             $table->tinyInteger('strokes');
             $table->tinyInteger('putts');
-            $table->boolean('gir')->nullable();
-            $table->boolean('fir')->nullable();
-            $table->boolean('up_and_down')->nullable();
-            $table->boolean('sand_save')->nullable();
+
+            $columnsToAdd = [
+                'gir',
+                'fir',
+                'up_and_down',
+                'sand_save'
+            ];
+
+            foreach ($columnsToAdd as $column) {
+                $table->enum($column, ['n/a', 'yes', 'no']);
+            }
+
             $table->tinyInteger('penalty_strokes')->default(0);
             $table->timestamps();
         });
