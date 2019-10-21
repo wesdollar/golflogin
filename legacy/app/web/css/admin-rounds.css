@@ -1,0 +1,145 @@
+/************* Form Fileds Style  *******************/
+.frm input {border: none;}
+.frm input[type="text"], .frm input[type="password"], select, textarea {
+    border: 0 none;
+    float: left;
+    padding: 9px 3px;
+}
+
+.frm label.error {
+    color: red;
+    font-weight: normal;
+    text-align: left;
+    text-transform: none;
+    width: auto;
+    margin: 0 0 0 6px;
+}
+
+.frm .iw64 	{width: 58px;  }
+.frm .iw75 	{width: 69px;  }
+.frm .iw100 {width: 94px;  }
+.frm .iw125 {width: 119px; }
+.frm .iw150 {width: 144px; }
+.frm .iw175 {width: 169px; }
+.frm .iw200 {width: 194px; }
+.frm .iw300 {width: 294px; }
+.frm .iw400 {width: 394px; }
+
+.frm .sw64 	{width: 64px; }
+.frm .sw100 {width: 100px; }
+.frm .sw125 {width: 125px; }
+.frm .sw150 {width: 150px; }
+.frm .sw175 {width: 175px; }
+.frm .sw200 {width: 200px; }
+.frm .sw250 {width: 250px; }
+.frm .sw300 {width: 300px; }
+.frm .sw400 {width: 400px; }
+
+#profile_picture { background: none; }
+
+.alignCenter	{text-align: center}
+.alignLeft		{text-align: left}
+.alignRight		{text-align: right}
+.alignJustify	{text-align: justify}
+
+.lineHeight32 {line-height: 32px}
+
+.bold 	{font-weight: bold}
+.normal {font-weight: normal}
+
+.profile-image-wrapper {position: relative; float: left}
+
+.profile-image-wrapper img {float: left;}
+
+.profile-image-wrapper a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4px !important;
+    width: 16px;
+    height: 16px;
+    background: transparent url(../img/icons/delete.png) no-repeat top left;
+}
+
+.courseCard {border-collapse: collapse; margin: 20px 0; color: #3A3838}
+.courseCard th, .courseCard td {padding: 3px 5px}
+.courseCard th {vertical-align: middle}
+th, td {text-align:left}
+.frmSave p.btnSave input {
+    background: url('../img/btn_save.gif') no-repeat scroll 0px 0px transparent;
+    width: 89px;
+    height: 40px;
+    cursor: pointer;
+}
+.frm input[type="text"], .frm input[type="password"], select, textarea {
+    border: 1px solid #dcdcdc;
+    float: left;
+    padding: 9px 3px;
+}
+.frm .iw64 {
+    background: #fff;
+}
+.frmSave p label {
+    width: 187px;
+    float: left;
+    font-weight: bold;
+    color: #3A3838;
+}
+.contMessage p {
+    padding: 0px 0px 6px;
+}
+.frmSave p {
+    overflow: hidden;
+    padding: 0px 0px 8px;
+    line-height: 22px;
+}
+.box {
+    padding: 10px 20px;
+}
+.tbl-header {
+    background: #385E85;
+    color: #fff;
+    padding: 8px 0 !important;
+}
+.hole-header th {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    background: #F3F9FF;
+}
+.search-input {
+    padding: 10px !important;
+}
+input.button1, input.button2 {
+    border:1px solid #d9e6f0;
+    background:#fff url(../img/form_blue.gif) repeat-x top left !important;
+    color:#375b91;
+    cursor: pointer;
+    padding: 10px !important;
+}
+input.button1:hover, input.button2:hover {
+    color:#000;
+}
+
+.listHole {overflow:hidden; padding:10px 0 }
+.listHole li {width:176px; float:left; background:url(../img/bgd_hole_n.gif) 0 0 no-repeat; height:30px; margin:0 6px 0 0; padding:5px 5px 8px 8px; color:#000; font-size:13px; font-weight:bold; list-style-type: none;}
+.listHole li.current {background:url(../img/bgd_hole_a.gif) 0 0 no-repeat; color:#123044}
+.listHole li a {float:right; background:url(../img/btn_radio_n.gif) 0 0 no-repeat; display:block; width:18px; height:18px}
+.listHole li.current a {background:url(../img/btn_radio_a.gif) 0 0 no-repeat}
+.listHole a:hover {text-decoration:none}
+.listHole label {width: 176px; float: left; line-height: 16px; background: transparent url(../img/radio.png) 160px 0 no-repeat}
+.listHole input {display: none}
+.listHole label:hover {background: transparent url(../img/radio.png) 160px -16px no-repeat}
+.listHole label.radioSelected {background: transparent url(../img/radio.png) 160px -32px no-repeat}
+.frmSave p span.dateSeparator {display:block; float:left; margin:0 6px; line-height: 32px; font-size: 15px}
+
+.rounds-tbl th,
+.rounds-tbl td {
+    padding: 6px 8px !important;
+}
+.rounds-tbl {
+
+}
+.box h3 {
+    margin-bottom: 15px;
+    padding: 6px 14px;
+}

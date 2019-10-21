@@ -1,0 +1,35 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !^.*.(js|css|gif|jpg|jpeg|ico|png|swf|flv)$
+
+RewriteRule ^/?$ index.php?controller=Front&action=index [L]
+RewriteRule ^Front/?$ index.php?controller=Front&action=index [L]
+RewriteRule ^Front/([a-zA-z]+)/?$ index.php?controller=Front&action=$1 [L]
+RewriteRule ^Front/([a-zA-z]+)/(\d+)/?$ index.php?controller=Front&action=$1&id=$2 [L]
+RewriteRule ^Front/([a-zA-z]+)/([a-zA-z_]+)/?$ index.php?controller=Front&action=$1&error=$2 [L]
+
+RewriteRule ^Announcements/?$ index.php?controller=Announcements&action=index [L]
+RewriteRule ^Announcements/([a-zA-z]+)/?$ index.php?controller=Announcements&action=$1 [L]
+RewriteRule ^Announcements/([a-zA-z]+)/(\d+)/?$ index.php?controller=Announcements&action=$1&id=$2 [L]
+RewriteRule ^Announcements/([a-zA-z]+)/([a-zA-z_]+)/?$ index.php?controller=Announcements&action=$1&error=$2 [L]
+RewriteRule ^Announcements/([a-zA-z]+)/(\d+)/([a-zA-z_]+)/?$ index.php?controller=Announcements&action=$1&id=$2&error=$3 [L]
+
+RewriteRule ^News/?$ index.php?controller=News&action=index [L]
+RewriteRule ^News/([a-zA-z]+)/?$ index.php?controller=News&action=$1 [L]
+RewriteRule ^News/([a-zA-z]+)/(\d+)/?$ index.php?controller=News&action=$1&id=$2 [L]
+
+RewriteRule ^Courses/?$ index.php?controller=Courses&action=create [L]
+RewriteRule ^Courses/index/?$ index.php?controller=Courses&action=create [L]
+RewriteRule ^Courses/([a-zA-z]+)/?$ index.php?controller=Courses&action=$1 [L]
+RewriteRule ^Courses/([a-zA-z]+)/(\d+)/?$ index.php?controller=Courses&action=$1&id=$2 [L]
+
+RewriteRule ^Rounds/?$ index.php?controller=Rounds&action=create [L]
+RewriteRule ^Rounds/index/?$ index.php?controller=Rounds&action=create [L]
+RewriteRule ^Rounds/([a-zA-z]+)/?$ index.php?controller=Rounds&action=$1 [L]
+RewriteRule ^Rounds/([a-zA-z]+)/(\d+)/?$ index.php?controller=Rounds&action=$1&id=$2 [L]
+RewriteRule ^Rounds/([a-zA-z]+)/(\d+)/([a-zA-z_]+)/?$ index.php?controller=Rounds&action=$1&id=$2&error=$3 [L]
+
+RewriteRule ^Players/?$ index.php?controller=Players&action=index [L]
+RewriteRule ^Players/([a-zA-z]+)/?$ index.php?controller=Players&action=$1 [L]
+RewriteRule ^Players/([a-zA-z]+)/(\d+)/?$ index.php?controller=Players&action=$1&id=$2 [L]
+RewriteRule ^Players/([a-zA-z]+)/(\d+)/(\d+)/?$ index.php?controller=Players&action=$1&id=$2&page=$3 [L,QSA]

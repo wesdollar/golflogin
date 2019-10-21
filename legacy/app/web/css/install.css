@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+body{
+	background-color: #fff;
+	color: #000;	
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+}
+input.error{
+	background-color: #FF9F9F;
+	border: solid 1px #FF3333;
+}
+input.valid{
+	background-color: #B8F5B1;
+	border: solid 1px #009900;
+}
+label.error{
+	color: #FF3333;
+	display: block;
+	font-size: 12px;
+	text-indent: 120px;
+}
+span.red{
+	color: red;
+}
+/* login */
+#container_cms{
+	margin: 0 auto;
+	overflow: hidden;
+	width: 1000px;
+}
+#container_cms #main{
+	float: none;
+	margin: 40px auto 0;
+	text-align: left;
+	width: 380px;
+}
+.form_install{
+	border: solid 1px #CDCDCD;
+	background-color: #E6E6E6;
+	padding: 10px;
+}
+.form_install p{
+	margin: 0 0 20px 0;
+}
+.form_install label.title{
+	float: left;
+	width: 120px;
+}

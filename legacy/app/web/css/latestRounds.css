@@ -1,0 +1,60 @@
+/**
+ * Slideshow style rules.
+ */
+.slideshow {
+    margin:0 auto;
+    width:215px;
+    position:relative;
+
+}
+.slideshow .slidesContainer {
+    margin:0 auto;
+    width:215px;
+    overflow:hidden; /* hide scrollbar */
+    position:relative;
+}
+.slideshow .slidesContainer .slide {
+    margin:0 auto;
+    width:195px; /* reduce by 20 pixels of #slidesContainer to avoid horizontal scroll */
+}
+
+/**
+* Slideshow controls style rules.
+*/
+
+.leftControl,
+.rightControl,
+.autoplayControl {
+    cursor: pointer;
+}
+
+
+div.slide {
+    width: 195px;
+    display: inline-block;
+}
+div.slide h2,
+div.slide p {
+
+}
+div.slidesContainer {
+}
+#slideNav {
+    width: 100%;
+    text-align: center;
+}
+.autoplayControl {
+    display: inline-block;
+    margin: 30px 0 0;
+}
+.autoplayControl,
+.leftControl,
+.rightControl {
+    padding: 10px;
+}
+#icon_pause,
+#icon_previous,
+#icon_next {
+    display: inline-block;
+    width: 40px;
+}
