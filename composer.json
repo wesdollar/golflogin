@@ -9,8 +9,9 @@
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "^4.0",
         "laracasts/utilities": "^3.0",
-        "laravel/cashier": "~7.0",
-        "laravel/framework": "5.8",
+        "laravel/cashier": "^10.0",
+        "laravel/framework": "^6.0",
+        "laravel/helpers": "^1.1",
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
