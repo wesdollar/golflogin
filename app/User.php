@@ -35,17 +35,20 @@ class User extends Authenticatable
     ];
 
     public function groups() {
-
         return $this->belongsToMany('App\Group');
     }
 
-    public function hasGroup($group) {
+    public function courses() {
+        return $this->hasMany('App\Course');
+    }
 
+    public function hasGroup($group) {
         return $this->groups->contains($group);
     }
 
     public function activeGroup() {
+        $activeGroup = $this->groups()->where('group_id', '=', $this->active_group)->first();
 
-        return $this->groups()->where('group_id', '=', $this->active_group);
+        return $activeGroup;
     }
 }

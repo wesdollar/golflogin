@@ -34,30 +34,30 @@ class CoursesService {
         return Course::create($data);
     }
 
-    public static function compileHoleDataIntoDbStructure($holes) {
+    public static function compileHoleDataIntoDbStructure($pars, $yardages) {
         $result = [];
 
         for ($i = 1; $i <= 18; $i++) {
-            $result[$i]['par'] = $holes['hole' . $i . '-par'];
-            $result[$i]['yardage'] = $holes['hole' . $i . '-yardage'];
+            $result[$i]['par'] = $pars[$i];
+            $result[$i]['yardage'] = $yardages[$i];
         }
 
         return $result;
     }
 
     public static function createHoles(int $courseId, array $holes) {
-        $i = 1;
+        $holeIndex = 1;
 
         foreach ($holes as $hole) {
             $data = [
                 'course_id' => $courseId,
-                'number' => $i,
+                'number' => $holeIndex,
                 'par' => $hole['par'],
                 'yardage' => $hole['yardage'],
             ];
 
             Hole::create($data);
-            $i++;
+            $holeIndex++;
         }
 
         return Hole::where('course_id', $courseId)->get();

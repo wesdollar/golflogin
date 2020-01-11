@@ -11,22 +11,13 @@ class DashboardController extends Controller
 {
 
     public function index() {
-
         $user = UserService::getUserData();
-
-        if (!$user['belongsToGroup']) {
-            return redirect()->route('joinOrCreateGroup');
-        }
 
         return view('back.dashboard', $user);
     }
 
     public function react() {
         $userData = UserService::getUserData();
-
-        if (!$userData['belongsToGroup']) {
-            return redirect()->route('joinOrCreateGroup');
-        }
 
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         JavaScript::put([

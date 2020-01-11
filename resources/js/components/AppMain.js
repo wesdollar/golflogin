@@ -44,8 +44,8 @@ const navItems = [
     icon: "dashboard"
   },
   {
-    title: "Post Round",
-    href: "example",
+    title: "Add Course",
+    href: "course-entry",
     icon: "dashboard"
   },
   {

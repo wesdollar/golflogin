@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { coursesData } from "../../mock-data/round-entry";
 import PropTypes from "prop-types";
 
 class CourseSelect extends Component {
   constructor() {
     super();
     this.state = {
-      courses: coursesData,
       selectValue: ""
     };
 
@@ -22,7 +20,8 @@ class CourseSelect extends Component {
   }
 
   render() {
-    const { courses, selectValue } = this.state;
+    const { selectValue } = this.state;
+    const { courses } = this.props;
 
     return (
       <div className="form-group">
@@ -34,7 +33,7 @@ class CourseSelect extends Component {
         >
           {courses.map((course, index) => (
             <option key={`courseSelect-${index}`} value={course.id}>
-              {course.name}
+              {course.title}
             </option>
           ))}
         </select>
@@ -44,7 +43,8 @@ class CourseSelect extends Component {
 }
 
 CourseSelect.propTypes = {
-  onHandleChange: PropTypes.func.isRequired
+  onHandleChange: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired
 };
 
 export default CourseSelect;

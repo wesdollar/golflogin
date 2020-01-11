@@ -21,7 +21,7 @@ class UserService {
     }
 
     public static function getActiveGroupId($user) {
-        return $user->activeGroup()->first()->id;
+        return $user->activeGroup()->id ?: null;
     }
 
     public static function isOwner($user) {
@@ -31,9 +31,9 @@ class UserService {
     public static function getUserData() {
         $user = User::find(Auth::id());
         $daysLeftInTrial = self::daysLeftInTrial($user);
-        $groups = $user->groups;
+        $groups = $user->groups ?: null;
         $belongsToGroup = ($groups->count()) ? true : false;
-        $activeGroupTitle = ($belongsToGroup) ? $user->activeGroup->first()->title : null;
+        $activeGroupTitle = ($belongsToGroup) ? $user->activeGroup()->title : null;
 
         return [
             'user' => $user,

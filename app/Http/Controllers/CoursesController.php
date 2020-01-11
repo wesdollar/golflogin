@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\Hole;
 use App\Services\CoursesService;
 use App\Services\UserService;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,20 +28,29 @@ class CoursesController extends Controller
         $slope = $request->input('slopeRating');
 
         $course = CoursesService::createCourse($title, $groupId, $teeBox, $rating, $slope);
-
-        $holesFromRequest = [];
-
-        for ($i = 1; $i <= 18; $i++) {
-            $par = "hole{$i}-par";
-            $yardage = "hole{$i}-yardage";
-            $holesFromRequest[$par] = $request->input($par);
-            $holesFromRequest[$yardage] = $request->input($yardage);
-        }
-
-        $holes = CoursesService::compileHoleDataIntoDbStructure($holesFromRequest);
+        $holes = CoursesService::compileHoleDataIntoDbStructure($request->input("pars"), $request->input("yardages"));
 
         CoursesService::createHoles($course->id, $holes);
 
         return response()->json("success");
+    }
+
+    public function get() {
+        $user = Auth::user();
+        $courses = null;
+
+        if ($user->groups()->count()) {
+            $activeGroupId = $user->activeGroup()->id;
+            $courses = Group::findOrFail($activeGroupId)->courses()->get();
+        }
+        else {
+            $courses = $user->courses()->get();
+        }
+
+        $data = [
+            "courses" => $courses
+        ];
+
+        return response()->json($data);
     }
 }

@@ -4,7 +4,7 @@ use App\Services\LayoutService;
 
 $user = Auth::user();
 $userName = $user->first_name . ' ' . $user->last_name;
-$activeGroup = $user->activeGroup->first();
+$activeGroup = $user->activeGroup();
 $mainMenuItems = LayoutService::mainNavItems();
 ?>
 

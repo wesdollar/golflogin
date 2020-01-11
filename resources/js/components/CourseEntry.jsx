@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Text from "./inputs/Text";
+import TextEntry from "./inputs/TextEntry";
 import { getNineInputAttributes } from "../helpers/get-nine-input-attributes";
 import CourseNine from "./course-entry/CourseNine";
+import Button from "./Button";
 
 const FRONT_NINE = "front";
 const BACK_NINE = "back";
@@ -77,11 +78,70 @@ class CourseEntry extends Component {
     const frontNine = this.generateNineArray(FRONT_NINE);
     const backNine = this.generateNineArray(BACK_NINE);
 
+    const handleOnSave = () => {
+      const pars = [
+        /* eslint-disable react/destructuring-assignment,no-magic-numbers */
+        this.state[`hole${1}-par`],
+        this.state[`hole${2}-par`],
+        this.state[`hole${3}-par`],
+        this.state[`hole${4}-par`],
+        this.state[`hole${5}-par`],
+        this.state[`hole${6}-par`],
+        this.state[`hole${7}-par`],
+        this.state[`hole${8}-par`],
+        this.state[`hole${9}-par`],
+        this.state[`hole${10}-par`],
+        this.state[`hole${11}-par`],
+        this.state[`hole${12}-par`],
+        this.state[`hole${13}-par`],
+        this.state[`hole${14}-par`],
+        this.state[`hole${15}-par`],
+        this.state[`hole${16}-par`],
+        this.state[`hole${17}-par`],
+        this.state[`hole${18}-par`]
+      ];
+
+      const yardages = [
+        this.state[`hole${1}-yardage`],
+        this.state[`hole${2}-yardage`],
+        this.state[`hole${3}-yardage`],
+        this.state[`hole${4}-yardage`],
+        this.state[`hole${5}-yardage`],
+        this.state[`hole${6}-yardage`],
+        this.state[`hole${7}-yardage`],
+        this.state[`hole${8}-yardage`],
+        this.state[`hole${9}-yardage`],
+        this.state[`hole${10}-yardage`],
+        this.state[`hole${11}-yardage`],
+        this.state[`hole${12}-yardage`],
+        this.state[`hole${13}-yardage`],
+        this.state[`hole${14}-yardage`],
+        this.state[`hole${15}-yardage`],
+        this.state[`hole${16}-yardage`],
+        this.state[`hole${17}-yardage`],
+        this.state[`hole${18}-yardage`]
+      ];
+      /* eslint-enable react/destructuring-assignment,no-magic-numbers */
+
+      const { courseTitle, teeBox, usgaRating, slopeRating } = this.state;
+
+      const payload = {
+        courseName: courseTitle,
+        teeBox,
+        usgaRating,
+        slopeRating,
+        pars,
+        yardages
+      };
+
+      console.log(payload);
+    };
+
     return (
       /* eslint-disable react/destructuring-assignment */
       <React.Fragment>
         {textFields.map(field => (
-          <Text
+          <TextEntry
             label={field.label}
             id={field.id}
             value={this.state[field.id]}
@@ -92,6 +152,11 @@ class CourseEntry extends Component {
         ))}
         <CourseNine frontNine={frontNine} onHandleChange={this.setValue} />
         <CourseNine frontNine={backNine} onHandleChange={this.setValue} />
+        <div className={"row"}>
+          <div className={"col offset-md-2"}>
+            <Button label={"Save"} handleOnClick={handleOnSave} />
+          </div>
+        </div>
       </React.Fragment>
       /* eslint-enable react/destructuring-assignment */
     );

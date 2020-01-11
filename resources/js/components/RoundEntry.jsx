@@ -7,13 +7,14 @@ import { courseData } from "../mock-data/round-entry";
 import { getScorecardLabels } from "../helpers/round-entry";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePlayed from "./round-entry/DatePlayed";
-import Button from "./elements/Button";
+import Button from "./Button";
 
 class RoundEntry extends Component {
   constructor() {
     super();
     this.state = {
       rowLabels: getScorecardLabels(),
+      courses: [],
       courseData,
       datePlayed: "",
       isTournamentRound: false,
@@ -27,6 +28,17 @@ class RoundEntry extends Component {
     this.save = this.save.bind(this);
     this.setScorecardData = this.setScorecardData.bind(this);
     this.setDatePlayed = this.setDatePlayed.bind(this);
+  }
+
+  async componentDidMount() {
+    try {
+      const result = await fetch("/courses/get");
+      const json = await result.json();
+
+      this.setState({ courses: json.courses });
+    } catch (error) {
+      console.log(`fetch error: ${error}`);
+    }
   }
 
   getFrontOrBackNineData(side) {
@@ -79,14 +91,14 @@ class RoundEntry extends Component {
   }
 
   render() {
-    const { rowLabels } = this.state;
+    const { rowLabels, courses } = this.state;
     const frontNineData = this.getFrontOrBackNineData(scorecard.frontNine);
     const backNineData = this.getFrontOrBackNineData(scorecard.backNine);
 
     return (
       <React.Fragment>
         <DatePlayed handleOnChange={this.setDatePlayed} />
-        <CourseSelect onHandleChange={this.setCourse} />
+        <CourseSelect courses={courses} onHandleChange={this.setCourse} />
         <TournamentRoundCheckbox onHandleChange={this.setIsTournamentRound} />
         <ScorecardNine
           nineData={frontNineData}
