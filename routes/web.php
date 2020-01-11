@@ -15,7 +15,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+//    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/subscribe', 'SubscriptionsController@createNoCcSubscription')->name('subscribeNoCc');
 
     Route::get('user/profile', function () {
@@ -39,4 +39,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/' . env("APP_REACT_BASE") . '/{path?}', 'DashboardController@react')
         ->where('path', '.*')
         ->name('react');
+
+    Route::get('/admin/{path?}', 'DashboardController@argon')
+        ->where('path', '.*')
+        ->name('argon');
 });
