@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import TextEntry from "./inputs/TextEntry";
 import { getNineInputAttributes } from "../helpers/get-nine-input-attributes";
 import CourseNine from "./course-entry/CourseNine";
-import Button from "./Button";
+import Button from "./Button/Button";
+import ContentContainer from "../Argon/components/ContentContainer/ContentContainer";
+import Header from "../Argon/components/Headers/Header";
+import { Row, Col } from "reactstrap";
+import { courseEntry } from "../mock-data/course-entry";
+import { handlePost } from "../helpers/fetch/handle-post";
+import { app } from "../constants/app";
 
 const FRONT_NINE = "front";
 const BACK_NINE = "back";
@@ -14,10 +20,12 @@ class CourseEntry extends Component {
       courseTitle: "",
       teeBox: "",
       usgaRating: "",
-      slopeRating: ""
+      slopeRating: "",
+      courseData: { frontNine: [], backNine: [] }
     };
 
     this.setValue = this.setValue.bind(this);
+    this.setDummyData = this.setDummyData.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +75,22 @@ class CourseEntry extends Component {
     return result;
   }
 
+  setDummyData() {
+    // eslint-disable-next-line no-undef
+    if (process.env.MIX_ENV === app.env.develop) {
+      this.setState({
+        courseData: {
+          frontNine: courseEntry.frontNine,
+          backNine: courseEntry.backNine
+        },
+        courseTitle: "The Patch",
+        teeBox: "Purple",
+        usgaRating: "67.2",
+        slopeRating: "106"
+      });
+    }
+  }
+
   render() {
     const textFields = [
       { id: "courseTitle", label: "Course Title" },
@@ -78,7 +102,7 @@ class CourseEntry extends Component {
     const frontNine = this.generateNineArray(FRONT_NINE);
     const backNine = this.generateNineArray(BACK_NINE);
 
-    const handleOnSave = () => {
+    const handleOnSave = async () => {
       const pars = [
         /* eslint-disable react/destructuring-assignment,no-magic-numbers */
         this.state[`hole${1}-par`],
@@ -134,30 +158,57 @@ class CourseEntry extends Component {
         yardages
       };
 
-      console.log(payload);
+      const request = {
+        url: "/courses/create",
+        payload
+      };
+
+      try {
+        handlePost(request);
+      } catch (error) {
+        console.log(error);
+      }
     };
+
+    const { courseData } = this.state;
 
     return (
       /* eslint-disable react/destructuring-assignment */
-      <React.Fragment>
-        {textFields.map(field => (
-          <TextEntry
-            label={field.label}
-            id={field.id}
-            value={this.state[field.id]}
-            name={field.id}
-            handleOnChange={this.setValue}
-            key={field.id}
+      <>
+        <Header />
+        <ContentContainer>
+          <Row>
+            <Col md={{ offset: 2, size: 9 }}>
+              {textFields.map(field => (
+                <TextEntry
+                  label={field.label}
+                  id={field.id}
+                  value={this.state[field.id]}
+                  name={field.id}
+                  handleOnChange={this.setValue}
+                  key={field.id}
+                  handleDoubleClick={this.setDummyData}
+                />
+              ))}
+            </Col>
+          </Row>
+          <CourseNine
+            courseData={courseData.frontNine}
+            frontNine={frontNine}
+            onHandleChange={this.setValue}
           />
-        ))}
-        <CourseNine frontNine={frontNine} onHandleChange={this.setValue} />
-        <CourseNine frontNine={backNine} onHandleChange={this.setValue} />
-        <div className={"row"}>
-          <div className={"col offset-md-2"}>
-            <Button label={"Save"} handleOnClick={handleOnSave} />
+          <CourseNine
+            courseData={courseData.backNine}
+            frontNine={backNine}
+            onHandleChange={this.setValue}
+          />
+          <div className={"row"}>
+            <div className={"col offset-md-2"}>
+              <Button label={"Save"} handleOnClick={handleOnSave} />
+            </div>
           </div>
-        </div>
-      </React.Fragment>
+        </ContentContainer>
+      </>
       /* eslint-enable react/destructuring-assignment */
     );
   }

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ReactDOM from "react-dom";
-import Example from "./Example";
 import Dashboard from "./Dashboard";
-import ThemeHeader from "./ThemeHeader";
-import NavItem from "./NavItem";
-import RoundEntry from "./RoundEntry";
-import CourseEntry from "./CourseEntry";
+import { Container } from "reactstrap";
+import Sidebar from "../Argon/components/Sidebar/Sidebar";
+import AdminNavbar from "../Argon/components/Navbars/AdminNavbar";
+import routes from "../Argon/routes";
+import Index from "../Argon/views";
+import AdminFooter from "../Argon/components/Footers/AdminFooter";
 
 /* eslint-disable no-undef */
 /** @namespace GL.reactBase */
@@ -56,75 +57,65 @@ const navItems = [
 ];
 
 class AppMain extends Component {
+  componentDidUpdate(e) {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
+    this.refs.mainContent.scrollTop = 0;
+  }
+
+  getRoutes = routes => {
+    return routes.map((prop, key) => {
+      if (prop.layout === "/admin") {
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+      } else {
+        return null;
+      }
+    });
+  };
+  getBrandText = path => {
+    for (let i = 0; i < routes.length; i++) {
+      if (
+        this.props.location.pathname.indexOf(
+          routes[i].layout + routes[i].path
+        ) !== -1
+      ) {
+        return routes[i].name;
+      }
+    }
+    return "Brand";
+  };
   render() {
+    console.log(this.props);
+    console.log("this.props");
+
     return (
-      <Router>
-        <aside id="left-panel" className="left-panel">
-          <nav className="navbar navbar-expand-sm navbar-default">
-            <div className="navbar-header">
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#main-menu"
-                aria-controls="main-menu"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <i className="fa fa-bars" />
-              </button>
-              <a className="navbar-brand" href="..">
-                {appName}
-              </a>
-              <a className="navbar-brand hidden" href="..">
-                <i className="fa fa-beer" />
-              </a>
-            </div>
-
-            <div id="main-menu" className="main-menu collapse navbar-collapse">
-              <ul className="nav navbar-nav">
-                {navItems.map((navItem, index) => (
-                  <NavItem
-                    title={navItem.title}
-                    href={navItem.href}
-                    icon={navItem.icon}
-                    baseHref={reactBaseHref}
-                    key={`navItem-${index}`}
-                  />
-                ))}
-              </ul>
-            </div>
-          </nav>
-        </aside>
-
-        <div id="right-panel" className="right-panel">
-          <ThemeHeader activeGroup={activeGroup} />
-
-          <div className="content">
-            <div className={"container-fluid half-gutter-top"}>
-              <Route exact path={`${reactBaseHref}/`} component={Dashboard} />
-              <Route
-                exact
-                path={`${reactBaseHref}/dashboard`}
-                component={Dashboard}
-              />
-              <Route path={`${reactBaseHref}/example`} component={Example} />
-              <Route
-                path={`${reactBaseHref}/round-entry`}
-                component={RoundEntry}
-              />
-              <Route
-                path={`${reactBaseHref}/course-entry`}
-                component={CourseEntry}
-              />
-            </div>
-          </div>
+      <>
+        <Sidebar
+          {...this.props}
+          routes={routes}
+          logo={{
+            innerLink: "/admin/index",
+            imgSrc: require(`../Argon/assets/img/brand/argon-react.png`),
+            imgAlt: "..."
+          }}
+        />
+        <div className="main-content" ref="mainContent">
+          <AdminNavbar
+            {...this.props}
+            pageTitle={this.getBrandText(this.props.location.pathname)}
+          />
+          <Switch>{this.getRoutes(routes)}</Switch>
+          <Container fluid>
+            <AdminFooter />
+          </Container>
         </div>
-      </Router>
+      </>
     );
   }
-}
-
-if (document.getElementById(reactBase)) {
-  ReactDOM.render(<AppMain />, document.getElementById(reactBase));
 }

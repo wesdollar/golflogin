@@ -27,6 +27,21 @@ class DashboardController extends Controller
             'user' => $userData
         ]);
 
-        return view('back.app');
+        return view('back.argon');
+    }
+
+    public function argon() {
+        $userData = UserService::getUserData();
+
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        JavaScript::put([
+            'www' => env('APP_URL'),
+            'reactBase' => env('APP_REACT_BASE'),
+            'appName' => config('app.name'),
+            'user' => $userData,
+            'csrfToken' => csrf_token()
+        ]);
+
+        return view('back.argon');
     }
 }

@@ -15,7 +15,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+//    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/subscribe', 'SubscriptionsController@createNoCcSubscription')->name('subscribeNoCc');
 
     Route::get('user/profile', function () {
@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('courses/create', 'CoursesController@createGui')->name('courses.createGui');
     Route::post('courses/create', 'CoursesController@create')->name('courses.create');
     Route::get('courses/get', 'CoursesController@get')->name('courses.get');
+    Route::get('courses/get-course-data/{courseId}', 'CoursesController@getCourseData')->name('courses.getCourseData');
 
     Route::get('rounds/create', 'RoundsController@createGui')->name('rounds.createGui');
     Route::post('rounds/create', 'RoundsController@create')->name('rounds.create');
@@ -39,4 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/' . env("APP_REACT_BASE") . '/{path?}', 'DashboardController@react')
         ->where('path', '.*')
         ->name('react');
+
+    Route::get('/admin/{path?}', 'DashboardController@argon')
+        ->where('path', '.*')
+        ->name('argon');
 });

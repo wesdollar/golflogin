@@ -45,4 +45,8 @@ class UserService {
             'fullName' => "{$user->first_name} {$user->last_name}"
         ];
     }
+
+    public static function getUser() {
+        return Auth::user();
+    }
 }

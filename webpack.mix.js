@@ -16,4 +16,11 @@ mix
   .sass("resources/sass/app.scss", "public/css")
   .sourceMaps();
 
-mix.browserSync("golflogin.local:8080");
+// mix.browserSync("golflogin.local:8080");
+
+mix.options({
+  hmrOptions: {
+    port: 8181,
+    host: "localhost"
+  }
+});

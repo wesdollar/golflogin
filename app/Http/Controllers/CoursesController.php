@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Group;
-use App\Hole;
 use App\Services\CoursesService;
 use App\Services\UserService;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CoursesController extends Controller
 {
@@ -19,24 +17,39 @@ class CoursesController extends Controller
 
     public function create(Request $request) {
 
-        $user = Auth::user();
+        $user = UserService::getUser();
 
-        $title = $request->input('courseName');
-        $groupId = UserService::getActiveGroupId($user);
-        $teeBox = $request->input('teeBox');
-        $rating = $request->input('usgaRating');
-        $slope = $request->input('slopeRating');
+        try {
+            $title = $request->input('courseName');
+            $groupId = UserService::getActiveGroupId($user);
+            $teeBox = $request->input('teeBox');
+            $rating = $request->input('usgaRating');
+            $slope = $request->input('slopeRating');
 
-        $course = CoursesService::createCourse($title, $groupId, $teeBox, $rating, $slope);
-        $holes = CoursesService::compileHoleDataIntoDbStructure($request->input("pars"), $request->input("yardages"));
+            $course = CoursesService::createCourse($title, $groupId, $teeBox, $rating, $slope);
+            $holes = CoursesService::compileHoleDataIntoDbStructure($request->input("pars"), $request->input("yardages"));
 
-        CoursesService::createHoles($course->id, $holes);
+            CoursesService::createHoles($course->id, $holes);
+        }
+        catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage()
+            ];
 
-        return response()->json("success");
+            return response()->json($response);
+        }
+
+        $response = [
+            'success' => true,
+            'courseId' => $course->id
+        ];
+
+        return response()->json($response);
     }
 
     public function get() {
-        $user = Auth::user();
+        $user = UserService::getUser();
         $courses = null;
 
         if ($user->groups()->count()) {
@@ -52,5 +65,11 @@ class CoursesController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function getCourseData($courseId) {
+        $course = Course::findOrFail($courseId);
+
+        return response()->json($course->holes);
     }
 }
