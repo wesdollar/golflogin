@@ -1,52 +1,50 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { Row, Col } from "reactstrap";
 
-class NumberField extends Component {
-  constructor() {
-    super();
+const handleChange = (event, setValue, handleOnChange) => {
+  const { value } = event.target;
+  setValue(value);
+  // eslint-disable-next-line react/destructuring-assignment
+  handleOnChange(event);
+};
 
-    this.state = {
-      value: ""
-    };
+const NumberField = ({ label, handleOnChange, inputValue }) => {
+  const [value, setValue] = useState("");
 
-    this.handleChange = this.handleChange.bind(this);
-  }
+  useEffect(() => {
+    const fakeEvent = { target: { value: inputValue, name: label } };
+    handleChange(fakeEvent, setValue, handleOnChange);
+  }, [inputValue]);
 
-  handleChange(event) {
-    const { value } = event.target;
-    this.setState({ value });
-    // eslint-disable-next-line react/destructuring-assignment
-    this.props.onHandleChange(event);
-  }
-
-  render() {
-    const { label } = this.props;
-    const { value } = this.state;
-
-    return (
-      <div className="row">
-        <div className={"col"}>
-          <div className="form-group">
-            <label htmlFor="" className={"sr-only"}>
-              {label}
-            </label>
-            <input
-              type="text"
-              className={`form-control text-center`}
-              value={value}
-              onChange={this.handleChange}
-              name={label}
-            />
-          </div>
+  return (
+    <Row>
+      <Col>
+        <div className="form-group">
+          <label htmlFor="" className={"sr-only"}>
+            {label}
+          </label>
+          <input
+            type="text"
+            className={`form-control text-center`}
+            value={value}
+            onChange={() => handleChange(event, setValue, handleOnChange)}
+            name={label}
+          />
         </div>
-      </div>
-    );
-  }
-}
+      </Col>
+    </Row>
+  );
+};
 
 NumberField.propTypes = {
   label: PropTypes.string.isRequired,
-  onHandleChange: PropTypes.func.isRequired
+  handleOnChange: PropTypes.func.isRequired,
+  inputValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+};
+
+NumberField.defaultProps = {
+  inputValue: ""
 };
 
 export default NumberField;

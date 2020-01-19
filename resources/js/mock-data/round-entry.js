@@ -1,3 +1,195 @@
+import { roundTypes } from "../components/RoundEntry/constants/roundTypes";
+
+export const mockRoundEntryData = {
+  datePlayed: "Fri Jan 31 2020 00:00:00 GMT-0500",
+  courseId: "1",
+  isTournamentRound: false,
+  isStatsRound: true,
+  roundType: roundTypes.all,
+  scorecardData: {
+    "1": {
+      Strokes: "4",
+      Putts: "2",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 1
+    },
+    "2": {
+      Strokes: "4",
+      Putts: "1",
+      GIR: false,
+      FIR: true,
+      "Up & Down": "yes",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 2
+    },
+    "3": {
+      Strokes: "3",
+      Putts: "2",
+      GIR: true,
+      FIR: "",
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 3
+    },
+    "4": {
+      Strokes: "5",
+      Putts: "2",
+      GIR: false,
+      FIR: "",
+      "Up & Down": "no",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 4
+    },
+    "5": {
+      Strokes: "4",
+      Putts: "2",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 5
+    },
+    "6": {
+      Strokes: "3",
+      Putts: "1",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 6
+    },
+    "7": {
+      Strokes: "3",
+      Putts: "2",
+      GIR: true,
+      FIR: "",
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 7
+    },
+    "8": {
+      Strokes: "4",
+      Putts: "1",
+      GIR: false,
+      FIR: "",
+      "Up & Down": "yes",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 8
+    },
+    "9": {
+      Strokes: "5",
+      Putts: "2",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 9
+    },
+    "10": {
+      Strokes: "2",
+      Putts: "1",
+      GIR: true,
+      FIR: "",
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 10
+    },
+    "11": {
+      Strokes: "3",
+      Putts: "1",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 11
+    },
+    "12": {
+      Strokes: "5",
+      Putts: "2",
+      GIR: false,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "no",
+      "Penalty Strokes": "",
+      holeId: 12
+    },
+    "13": {
+      Strokes: "3",
+      Putts: "1",
+      GIR: false,
+      FIR: "",
+      "Up & Down": "yes",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 13
+    },
+    "14": {
+      Strokes: "5",
+      Putts: "1",
+      GIR: false,
+      FIR: false,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "1",
+      holeId: 14
+    },
+    "15": {
+      Strokes: "5",
+      Putts: "2",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 15
+    },
+    "16": {
+      Strokes: "4",
+      Putts: "2",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 16
+    },
+    "17": {
+      Strokes: "3",
+      Putts: "1",
+      GIR: true,
+      FIR: true,
+      "Up & Down": "",
+      "Sand Save": "",
+      "Penalty Strokes": "",
+      holeId: 17
+    },
+    "18": {
+      Strokes: "4",
+      Putts: "1",
+      GIR: false,
+      FIR: "",
+      "Up & Down": "",
+      "Sand Save": "yes",
+      "Penalty Strokes": "",
+      holeId: 18
+    }
+  }
+};
+
 export const courseData = [
   {
     number: "1",

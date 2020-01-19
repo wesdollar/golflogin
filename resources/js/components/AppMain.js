@@ -91,6 +91,9 @@ class AppMain extends Component {
     return "Brand";
   };
   render() {
+    console.log(this.props);
+    console.log("this.props");
+
     return (
       <>
         <Sidebar
@@ -105,7 +108,7 @@ class AppMain extends Component {
         <div className="main-content" ref="mainContent">
           <AdminNavbar
             {...this.props}
-            brandText={this.getBrandText(this.props.location.pathname)}
+            pageTitle={this.getBrandText(this.props.location.pathname)}
           />
           <Switch>{this.getRoutes(routes)}</Switch>
           <Container fluid>

@@ -1,9 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TextEntry = ({ label, id, value, name, handleOnChange, className }) => (
+const TextEntry = ({
+  label,
+  id,
+  value,
+  name,
+  handleOnChange,
+  className,
+  handleDoubleClick
+}) => (
   <div className={`form-group`}>
-    <label htmlFor="course-title">{label}</label>
+    <label htmlFor={id} onDoubleClick={handleDoubleClick}>
+      {label}
+    </label>
     <input
       type="text"
       id={id}
@@ -21,11 +31,13 @@ TextEntry.propTypes = {
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   handleOnChange: PropTypes.func.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  handleDoubleClick: PropTypes.func
 };
 
 TextEntry.defaultProps = {
-  className: ""
+  className: "",
+  handleDoubleClick: () => {}
 };
 
 export default TextEntry;

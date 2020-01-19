@@ -38,7 +38,8 @@ class DashboardController extends Controller
             'www' => env('APP_URL'),
             'reactBase' => env('APP_REACT_BASE'),
             'appName' => config('app.name'),
-            'user' => $userData
+            'user' => $userData,
+            'csrfToken' => csrf_token()
         ]);
 
         return view('back.argon');

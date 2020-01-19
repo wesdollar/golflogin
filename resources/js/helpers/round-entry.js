@@ -15,11 +15,16 @@ export const getScorecardDataByKey = (scorecardData, holeNumber, key) => {
   return entry;
 };
 
-export const getScorecardLabels = () => {
+export const getScorecardLabels = isStatsRound => {
   const roundEntryLabels = Object.values(roundEntry);
   const roundLabels = [];
   for (const label of roundEntryLabels) {
     roundLabels.push(label);
+  }
+
+  if (!isStatsRound) {
+    // eslint-disable-next-line no-magic-numbers
+    roundLabels.splice(5);
   }
 
   return roundLabels;

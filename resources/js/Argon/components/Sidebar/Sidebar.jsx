@@ -1,27 +1,6 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
-// nodejs library to set properties for components
 import { PropTypes } from "prop-types";
-
-// reactstrap components
 import {
   Button,
   Card,
@@ -51,6 +30,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import Logo from "../../../svg/Logo/Logo";
 
 var ps;
 
@@ -125,16 +105,9 @@ class Sidebar extends React.Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          {/* Brand */}
-          {logo ? (
-            <NavbarBrand className="pt-0" {...navbarBrandProps}>
-              <img
-                alt={logo.imgAlt}
-                className="navbar-brand-img"
-                src={logo.imgSrc}
-              />
-            </NavbarBrand>
-          ) : null}
+          <NavbarBrand className="pt-0" {...navbarBrandProps}>
+            <Logo />
+          </NavbarBrand>
           {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
@@ -246,7 +219,7 @@ class Sidebar extends React.Component {
             {/* Navigation */}
             <Nav className="mb-md-3" navbar>
               <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/overview?ref=adr-admin-sidebar">
+                <NavLink href="https://demos.creative-tim.com/argon-dashboard-pro-react/#/documentation/overview">
                   <i className="ni ni-spaceship" />
                   Getting started
                 </NavLink>
@@ -276,20 +249,7 @@ Sidebar.defaultProps = {
 };
 
 Sidebar.propTypes = {
-  // links that will be displayed inside the component
-  routes: PropTypes.arrayOf(PropTypes.object),
-  logo: PropTypes.shape({
-    // innerLink is for links that will direct the user within the app
-    // it will be rendered as <Link to="...">...</Link> tag
-    innerLink: PropTypes.string,
-    // outterLink is for links that will direct the user outside the app
-    // it will be rendered as simple <a href="...">...</a> tag
-    outterLink: PropTypes.string,
-    // the image src of the logo
-    imgSrc: PropTypes.string.isRequired,
-    // the alt for the img
-    imgAlt: PropTypes.string.isRequired
-  })
+  routes: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Sidebar;

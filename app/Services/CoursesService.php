@@ -37,7 +37,7 @@ class CoursesService {
     public static function compileHoleDataIntoDbStructure($pars, $yardages) {
         $result = [];
 
-        for ($i = 1; $i <= 18; $i++) {
+        for ($i = 0; $i <= 17; $i++) {
             $result[$i]['par'] = $pars[$i];
             $result[$i]['yardage'] = $yardages[$i];
         }

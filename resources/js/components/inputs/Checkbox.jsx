@@ -12,8 +12,15 @@ class Checkbox extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    const { checked } = event.target;
+  static getDerivedStateFromProps(props) {
+    return {
+      checked: props.checked
+    };
+  }
+
+  handleChange() {
+    // eslint-disable-next-line react/destructuring-assignment
+    const checked = !this.state.checked;
     this.setState({ checked });
 
     // eslint-disable-next-line react/destructuring-assignment
@@ -22,21 +29,23 @@ class Checkbox extends Component {
 
   render() {
     const { label, hideLabel, id } = this.props;
+    const { checked } = this.state;
 
     return (
-      <div className="form-check">
+      <div className="custom-control custom-checkbox mb-3">
         <input
-          className="form-check-input"
+          className="custom-control-input"
           type="checkbox"
-          checked={this.state.checked}
+          checked={checked}
           id={id}
-          onChange={this.handleChange}
+          onChange={() => {}}
         />
         <label
-          className={`form-check-label ${hideLabel && "sr-only"}`}
+          onClick={this.handleChange}
+          className={`custom-control-label`}
           htmlFor={id}
         >
-          {label}
+          {!hideLabel && label}
         </label>
       </div>
     );

@@ -18,7 +18,7 @@
 import React from "react";
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 class UserHeader extends React.Component {
   render() {
@@ -41,13 +41,6 @@ class UserHeader extends React.Component {
                   This is your profile page. You can see the progress you've
                   made with your work and manage your projects or assigned tasks
                 </p>
-                <Button
-                  color="info"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                >
-                  Edit profile
-                </Button>
               </Col>
             </Row>
           </Container>

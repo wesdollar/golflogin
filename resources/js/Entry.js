@@ -9,6 +9,15 @@ import "./Argon/assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "./Argon/layouts/Admin.jsx";
 import AuthLayout from "./Argon/layouts/Auth.jsx";
 
+/* eslint-disable no-undef */
+/** @namespace GL.reactBase */
+/** @namespace GL.user.activeGroupTitle */
+const reactBaseHref = `/${GL.reactBase}`;
+const activeGroup = GL.user.activeGroupTitle;
+const { appName } = GL;
+const { reactBase } = GL;
+/* eslint-enable */
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>

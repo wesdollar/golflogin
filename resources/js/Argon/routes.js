@@ -1,10 +1,11 @@
 import Index from "./views/Index.jsx";
 import Profile from "./views/examples/Profile.jsx";
-import Maps from "./views/examples/Maps.jsx";
 import Register from "./views/examples/Register.jsx";
 import Login from "./views/examples/Login.jsx";
 import Tables from "./views/examples/Tables.jsx";
 import Icons from "./views/examples/Icons.jsx";
+import RoundEntry from "../components/RoundEntry";
+import CourseEntry from "../components/CourseEntry";
 
 const routes = [
   {
@@ -15,17 +16,24 @@ const routes = [
     layout: "/admin"
   },
   {
+    path: "/post-round",
+    name: "Post Round",
+    icon: "ni ni-planet text-blue",
+    component: RoundEntry,
+    layout: "/admin"
+  },
+  {
+    path: "/add-course",
+    name: "Add Course",
+    icon: "ni ni-planet text-blue",
+    component: CourseEntry,
+    layout: "/admin"
+  },
+  {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
     layout: "/admin"
   },
   {
