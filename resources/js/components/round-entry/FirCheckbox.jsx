@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Checkbox from "./inputs/Checkbox";
 import { roundEntry } from "../../constants/round-entry";
 import { holeOnHandleChange } from "./prop-types/round-entry";
-import ColumnLabel from "./ColumnLabel"
+import ColumnLabel from "./ColumnLabel";
 
 class FirCheckbox extends Component {
   constructor() {

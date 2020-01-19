@@ -13,7 +13,7 @@ import PenaltyStrokesEntry from "./PenaltyStrokesEntry";
 import DisplayGirCheckbox from "./DisplayGirCheckbox";
 import { getScorecardDataByKey } from "../../helpers/round-entry";
 import { roundEntry } from "../../constants/round-entry";
-import RowLabels from "./RowLabels"
+import RowLabels from "./RowLabels";
 
 class ScorecardNine extends Component {
   constructor() {
