@@ -17,6 +17,7 @@ import { roundTypes } from "./RoundEntry/constants/roundTypes";
 import { mockRoundEntryData } from "../mock-data/round-entry";
 import { app } from "../constants/app";
 import moment from "moment";
+import { handlePost } from "../helpers/fetch/handle-post";
 
 class RoundEntry extends Component {
   constructor() {
@@ -179,7 +180,16 @@ class RoundEntry extends Component {
       scorecardData
     };
 
-    console.log(payload);
+    const request = {
+      url: "/rounds/create",
+      payload
+    };
+
+    try {
+      handlePost(request);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   setDummyData() {

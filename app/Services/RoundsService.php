@@ -16,7 +16,6 @@ class RoundsService {
     // starting_side    "front" or "back" (default front)
     // stats            boolean (default false)
     // tournament       boolean (default false)
-
     public static function createRound(
         int $userId,
         int $courseId,
@@ -53,7 +52,6 @@ class RoundsService {
     // up_and_down      enum [n/a, yes, no]
     // sand_save        enum [n/a, yes, no]
     // penalty_strokes  smallInt (default 0)
-
     public static function createHoleData(
         int $roundId,
         int $holeId,
@@ -87,5 +85,30 @@ class RoundsService {
         $round = Round::findOrFail($roundId);
 
         return $round;
+    }
+
+    public static function getRoundType($requestRoundType) {
+        if ($requestRoundType === "frontNine" || $requestRoundType === "backNine") {
+            return 9;
+        }
+
+        return 18;
+    }
+
+    public static function getStartingSide($requestRoundType) {
+        $startingSide = "front";
+
+        switch ($requestRoundType) {
+            case "all":
+                break;
+            case "frontNine":
+                $startingSide = "front";
+                break;
+            case "backNine":
+                $startingSide = "back";
+                break;
+        }
+
+        return $startingSide;
     }
 }
