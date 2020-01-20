@@ -178,7 +178,7 @@ class CourseEntry extends Component {
         <Header />
         <ContentContainer>
           <Row>
-            <Col md={{ offset: 2, size: 9 }}>
+            <Col md={{ offset: 2, size: 5 }}>
               {textFields.map(field => (
                 <TextEntry
                   label={field.label}

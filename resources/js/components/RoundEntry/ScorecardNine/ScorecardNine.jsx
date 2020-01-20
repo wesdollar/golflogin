@@ -105,7 +105,11 @@ class ScorecardNine extends Component {
           const putts = getScorecardDataByKey(scorecardData, number, "putts");
 
           return (
-            <StyledEntryRow key={`hole-${index}`} className={"col-md-1"}>
+            <StyledEntryRow
+              offsetRows={4}
+              key={`hole-${index}`}
+              className={"col-md-1"}
+            >
               <HoleLabel holeNumber={number} />
               <YardageLabel yardage={yardage} />
               <ParLabel strokes={par} />

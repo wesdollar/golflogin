@@ -5,7 +5,7 @@ export const StyledEntryRow = styled.div`
     height: 35px;
   }
 
-  > .row:nth-child(n + 4) {
+  > .row:nth-child(n + ${({ offsetRows }) => offsetRows}) {
     height: 65px;
     align-items: center;
 
