@@ -13,10 +13,15 @@ const mix = require("laravel-mix");
 
 mix
   .react("resources/js/app.js", "public/js")
-  .sass("resources/sass/app.scss", "public/css")
-  .sourceMaps();
+  .sass("resources/sass/app.scss", "public/css");
 
-// mix.browserSync("golflogin.local:8080");
+if (!mix.inProduction()) {
+  mix.sourceMaps();
+}
+
+if (mix.inProduction()) {
+  mix.version();
+}
 
 mix.options({
   hmrOptions: {
