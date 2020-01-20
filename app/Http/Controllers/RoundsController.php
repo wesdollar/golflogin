@@ -12,32 +12,26 @@ use Illuminate\Support\Facades\Auth;
 
 class RoundsController extends Controller
 {
-    public function createGui() {
+    public function roundEntry() {
 
-        $user = Auth::user();
+        $user = UserService::getUser();
         $activeGroupId = UserService::getActiveGroupId($user);
-
         $courses = Course::where('group_id', '=', $activeGroupId)->get();
 
         if ($courses->count() === 0) {
-
             return redirect()->route('courses.createGui')->with('alert-info', 'You need to create a course before adding a round!');
         }
 
         $holes = [];
 
         foreach ($courses as $course) {
-
             $tmpHoles = Hole::where('course_id', '=', $course->id)->get();
-
-            // $currentHoles = array_combine(range(1, count($currentHoles)), array_values($currentHoles));
 
             // nudge holes index up by one
             $offsetHoles = [];
             $i = 1;
 
             foreach ($tmpHoles as $hole) {
-
                 $offsetHoles[$i] = $hole;
                 $i++;
             }
@@ -49,8 +43,6 @@ class RoundsController extends Controller
             'isOwner' => UserService::isOwner($user),
             'players' => Group::find($activeGroupId)->users()->get()
         ];
-
-        // dd($meta);
 
         $data = [
             'courses' => $courses,

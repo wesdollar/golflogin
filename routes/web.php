@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('courses/get', 'CoursesController@get')->name('courses.get');
     Route::get('courses/get-course-data/{courseId}', 'CoursesController@getCourseData')->name('courses.getCourseData');
 
-    Route::get('rounds/create', 'RoundsController@createGui')->name('rounds.createGui');
+    Route::get('rounds/create', 'RoundsController@roundEntry')->name('rounds.roundEntry');
     Route::post('rounds/create', 'RoundsController@create')->name('rounds.create');
 
     Route::get('/' . env("APP_REACT_BASE") . '/{path?}', 'DashboardController@react')

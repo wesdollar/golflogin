@@ -223,7 +223,7 @@ class RoundEntry extends Component {
         <Header />
         <ContentContainer>
           <Row>
-            <Col md={{ offset: 2, size: 4 }}>
+            <Col md={{ offset: 2, size: 5 }}>
               <DatePlayed
                 selectedDate={moment(datePlayed)}
                 handleOnChange={this.setDatePlayed}
