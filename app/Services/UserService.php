@@ -6,9 +6,7 @@ use App\User;
 use Carbon\Carbon;
 
 class UserService {
-
     public static function daysLeftInTrial($user) {
-
         if ($user->onTrial()) {
             $trialEnds = Carbon::parse($user->trial_ends_at);
             $daysLeftInTrial = $trialEnds->diffInDays(Carbon::now());
@@ -29,7 +27,13 @@ class UserService {
     }
 
     public static function getUserData() {
-        $user = User::find(Auth::id());
+        try {
+            $user = User::find(Auth::id());
+        }
+        catch (\Exception $e) {
+            return false;
+        }
+
         $daysLeftInTrial = self::daysLeftInTrial($user);
         $groups = $user->groups ?: null;
         $belongsToGroup = ($groups->count()) ? true : false;
@@ -42,6 +46,7 @@ class UserService {
             'belongsToGroup' => $belongsToGroup,
             'groups' => $groups,
             'activeGroupTitle' => $activeGroupTitle,
+            'activeGroupId' => $user->activeGroup()->id ?: null,
             'fullName' => "{$user->first_name} {$user->last_name}"
         ];
     }
