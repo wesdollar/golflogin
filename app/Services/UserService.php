@@ -1,17 +1,24 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Support\Facades\Auth;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserService {
-    public static function daysLeftInTrial($user) {
-        if ($user->onTrial()) {
-            $trialEnds = Carbon::parse($user->trial_ends_at);
-            $daysLeftInTrial = $trialEnds->diffInDays(Carbon::now());
+    var $carbon;
+    var $user;
 
-            return $daysLeftInTrial;
+    function __construct() {
+        $this->carbon = new Carbon();
+        $this->user = new User();
+    }
+
+    public function daysLeftInTrial($user) {
+        if ($user->onTrial()) {
+            $trialEnds = $this->carbon->parse($user->trial_ends_at);
+
+            return $trialEnds->diffInDays($this->carbon->now());
         }
         else {
             return false;
@@ -26,15 +33,15 @@ class UserService {
         return ($user->role === 'owner') ? true : false;
     }
 
-    public static function getUserData() {
+    public function getUserData() {
         try {
-            $user = User::find(Auth::id());
+            $user = $this->user->find(Auth::id());
         }
         catch (\Exception $e) {
             return false;
         }
 
-        $daysLeftInTrial = self::daysLeftInTrial($user);
+        $daysLeftInTrial = $this->daysLeftInTrial($user);
         $groups = $user->groups ?: null;
         $belongsToGroup = ($groups->count()) ? true : false;
         $activeGroupTitle = ($belongsToGroup) ? $user->activeGroup()->title : null;
@@ -51,7 +58,7 @@ class UserService {
         ];
     }
 
-    public static function getUser() {
+    public function getUser() {
         return Auth::user();
     }
 }

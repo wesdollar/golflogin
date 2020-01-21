@@ -11,11 +11,21 @@ use Illuminate\Http\Request;
 
 class RoundsController extends Controller
 {
+    var $userService;
+    var $roundsService;
+    var $course;
+
+    function __construct() {
+        $this->userService = new UserService();
+        $this->roundsService = new RoundsService();
+        $this->course = new Course();
+    }
+
     public function roundEntry() {
 
-        $user = UserService::getUser();
-        $activeGroupId = UserService::getActiveGroupId($user);
-        $courses = Course::where('group_id', '=', $activeGroupId)->get();
+        $user = $this->userService->getUser();
+        $activeGroupId = $this->userService->getActiveGroupId($user);
+        $courses = $this->course->where('group_id', '=', $activeGroupId)->get();
 
         if ($courses->count() === 0) {
             return redirect()->route('courses.createGui')->with('alert-info', 'You need to create a course before adding a round!');
@@ -39,7 +49,7 @@ class RoundsController extends Controller
         }
 
         $meta = [
-            'isOwner' => UserService::isOwner($user),
+            'isOwner' => $this->userService->isOwner($user),
             'players' => Group::find($activeGroupId)->users()->get()
         ];
 
@@ -53,21 +63,28 @@ class RoundsController extends Controller
     }
 
     public function create(Request $request) {
-        $user = UserService::getUserData();
+        $user = $this->userService->getUserData();
         $requestRoundType = $request->get("roundType");
 
-        $roundData = [
-            "user_id" => $user["user"]->id,
-            "group_id" => $user["activeGroupId"],
-            "course_id" => (int) $request->get("courseId"),
-            "date_played" => $request->get("datePlayed"),
-            "type" => RoundsService::getRoundType($requestRoundType),
-            "starting_side" => RoundsService::getStartingSide($requestRoundType),
-            "stats" => $request->get("isStatsRound"),
-            "tournament" => $request->get("isTournamentRound")
-        ];
+        $userId = $user["user"]->id;
+        $groupId = $user["activeGroupId"];
+        $courseId = (int) $request->get("courseId");
+        $datePlayed = $request->get("datePlayed");
+        $type = $this->roundsService->getRoundType($requestRoundType);
+        $startingSide = $this->roundsService->getStartingSide($requestRoundType);
+        $stats = $request->get("isStatsRound");
+        $tournament = $request->get("isTournamentRound");
 
-        dd($roundData);
+        $round = $this->roundsService->createRound(
+            $userId,
+            $groupId,
+            $courseId,
+            $datePlayed,
+            $type,
+            $startingSide,
+            $stats,
+            $tournament
+        );
 
         /*
          * Example Request

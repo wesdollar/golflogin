@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\User;
 use App\Services\UserService;
 Use JavaScript;
 
 class DashboardController extends Controller
 {
+    var $userService;
+    
+    function __construct() {
+        $this->userService = new UserService();
+    }
 
     public function index() {
-        $user = UserService::getUserData();
+        $user = $this->userService->getUserData();
 
         return view('back.dashboard', $user);
     }
 
     public function react() {
-        $userData = UserService::getUserData();
+        $userData = $this->userService->getUserData();
 
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         JavaScript::put([
@@ -31,7 +34,7 @@ class DashboardController extends Controller
     }
 
     public function argon() {
-        $userData = UserService::getUserData();
+        $userData = $this->userService->getUserData();
 
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         JavaScript::put([

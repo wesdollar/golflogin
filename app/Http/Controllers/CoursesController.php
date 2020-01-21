@@ -10,6 +10,18 @@ use Illuminate\Http\Request;
 
 class CoursesController extends Controller
 {
+    var $userService;
+    var $coursesService;
+    var $group;
+    var $course;
+    
+    function __construct() {
+        $this->userService = new UserService();
+        $this->coursesService = new CoursesService();
+        $this->group = new Group();
+        $this->course = new Course();
+    }
+
     public function createGui() {
 
         return view('back.courses.create');
@@ -17,19 +29,19 @@ class CoursesController extends Controller
 
     public function create(Request $request) {
 
-        $user = UserService::getUser();
+        $user = $this->userService->getUser();
 
         try {
             $title = $request->input('courseName');
-            $groupId = UserService::getActiveGroupId($user);
+            $groupId = $this->userService->getActiveGroupId($user);
             $teeBox = $request->input('teeBox');
             $rating = $request->input('usgaRating');
             $slope = $request->input('slopeRating');
 
-            $course = CoursesService::createCourse($title, $groupId, $teeBox, $rating, $slope);
-            $holes = CoursesService::compileHoleDataIntoDbStructure($request->input("pars"), $request->input("yardages"));
+            $course = $this->coursesService->createCourse($title, $groupId, $teeBox, $rating, $slope);
+            $holes = $this->coursesService->compileHoleDataIntoDbStructure($request->input("pars"), $request->input("yardages"));
 
-            CoursesService::createHoles($course->id, $holes);
+            $this->coursesService->createHoles($course->id, $holes);
         }
         catch (\Exception $e) {
             $response = [
@@ -49,12 +61,12 @@ class CoursesController extends Controller
     }
 
     public function get() {
-        $user = UserService::getUser();
+        $user = $this->userService->getUser();
         $courses = null;
 
         if ($user->groups()->count()) {
             $activeGroupId = $user->activeGroup()->id;
-            $courses = Group::findOrFail($activeGroupId)->courses()->get();
+            $courses = $this->group->findOrFail($activeGroupId)->courses()->get();
         }
         else {
             $courses = $user->courses()->get();
@@ -68,7 +80,7 @@ class CoursesController extends Controller
     }
 
     public function getCourseData($courseId) {
-        $course = Course::findOrFail($courseId);
+        $course = $this->course->findOrFail($courseId);
 
         return response()->json($course->holes);
     }

@@ -28,14 +28,16 @@ class RoundsService {
     ) {
         $data = [
             'user_id' => $userId,
-            'course_id' => $courseId,
             'group_id' => $groupId,
+            'course_id' => $courseId,
             'date_played' => $datePlayed,
             'type' => $roundType,
             'starting_side' => $startingSide,
             'stats' => $statsRound,
             'tournament' => $tournamentRound
         ];
+
+        dd($data);
 
         $round = Round::create($data);
 

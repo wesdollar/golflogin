@@ -6,6 +6,13 @@ use App\Course;
 use App\Hole;
 
 class CoursesService {
+    var $course;
+    var $hole;
+    
+    function __construct() {
+        $this->course = new Course();
+        $this->hole = new Hole();
+    }
 
     /**
      * @param string $title
@@ -16,7 +23,7 @@ class CoursesService {
      *
      * @return object
      */
-    public static function createCourse(
+    public function createCourse(
         string $title,
         int $groupId,
         string $teeBox,
@@ -31,10 +38,10 @@ class CoursesService {
             'slope' => $slope
         ];
 
-        return Course::create($data);
+        return $this->course->create($data);
     }
 
-    public static function compileHoleDataIntoDbStructure($pars, $yardages) {
+    public function compileHoleDataIntoDbStructure($pars, $yardages) {
         $result = [];
 
         for ($i = 0; $i <= 17; $i++) {
@@ -45,7 +52,7 @@ class CoursesService {
         return $result;
     }
 
-    public static function createHoles(int $courseId, array $holes) {
+    public function createHoles(int $courseId, array $holes) {
         $holeIndex = 1;
 
         foreach ($holes as $hole) {
@@ -56,10 +63,10 @@ class CoursesService {
                 'yardage' => $hole['yardage'],
             ];
 
-            Hole::create($data);
+            $this->hole->create($data);
             $holeIndex++;
         }
 
-        return Hole::where('course_id', $courseId)->get();
+        return $this->hole->where('course_id', $courseId)->get();
     }
 }
