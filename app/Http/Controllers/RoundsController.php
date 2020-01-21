@@ -6,6 +6,7 @@ use App\Course;
 use App\Group;
 use App\Hole;
 use App\Services\RoundsService;
+use App\Services\StatsService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -14,11 +15,13 @@ class RoundsController extends Controller
     var $userService;
     var $roundsService;
     var $course;
+    var $statsService;
 
     function __construct() {
         $this->userService = new UserService();
         $this->roundsService = new RoundsService();
         $this->course = new Course();
+        $this->statsService = new StatsService();
     }
 
     public function roundEntry() {
@@ -75,16 +78,40 @@ class RoundsController extends Controller
         $stats = $request->get("isStatsRound");
         $tournament = $request->get("isTournamentRound");
 
-        $round = $this->roundsService->createRound(
-            $userId,
-            $groupId,
-            $courseId,
-            $datePlayed,
-            $type,
-            $startingSide,
-            $stats,
-            $tournament
-        );
+        $roundId = 1;
+//        $roundId = $this->roundsService->createRound(
+//            $userId,
+//            $groupId,
+//            $courseId,
+//            $datePlayed,
+//            $type,
+//            $startingSide,
+//            $stats,
+//            $tournament
+//        );
+
+        foreach($request->get("scorecardData") as $hole) {
+            $holeId = $hole["holeId"];
+            $strokes = (int) $hole["Strokes"];
+            $putts = (int) $hole["Putts"];
+            $gir = $this->statsService->getYesNoValue($hole["GIR"]);
+            $fir = $this->statsService->getYesNoValue($hole["FIR"]);
+            $upAndDown = $this->statsService->getYesNoValue($hole["Up & Down"]);
+            $sandSave = $this->statsService->getYesNoValue($hole["Sand Save"]);
+            $penaltyStrokes = is_null($hole["Penalty Strokes"]) ? 0 : (int) $hole["Sand Save"];
+
+            $this->roundsService->createHoleData(
+                $roundId,
+                $holeId,
+                $strokes,
+                $putts,
+                $gir,
+                $fir,
+                $upAndDown,
+                $sandSave,
+                $penaltyStrokes
+            );
+        }
 
         /*
          * Example Request

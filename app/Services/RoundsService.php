@@ -37,11 +37,9 @@ class RoundsService {
             'tournament' => $tournamentRound
         ];
 
-        dd($data);
-
         $round = Round::create($data);
 
-        return $round;
+        return $round->id;
     }
 
     // DB structure for RoundsData
@@ -54,7 +52,7 @@ class RoundsService {
     // up_and_down      enum [n/a, yes, no]
     // sand_save        enum [n/a, yes, no]
     // penalty_strokes  smallInt (default 0)
-    public static function createHoleData(
+    public function createHoleData(
         int $roundId,
         int $holeId,
         int $strokes,
@@ -77,6 +75,8 @@ class RoundsService {
             'sand_save' => $sandSave,
             'penalty_strokes' => $penaltyStrokes
         ];
+
+        dd($data);
 
         $holeData = RoundData::create($data);
 
