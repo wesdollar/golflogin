@@ -4,8 +4,17 @@ namespace App\Services;
 
 use App\Round;
 use App\RoundData;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class RoundsService {
+    var $userService;
+    var $statsService;
+
+    function __construct() {
+        $this->userService = new UserService();
+        $this->statsService = new StatsService();
+    }
 
     // DB structure for Rounds
     // user_id          int
@@ -76,8 +85,6 @@ class RoundsService {
             'penalty_strokes' => $penaltyStrokes
         ];
 
-        dd($data);
-
         $holeData = RoundData::create($data);
 
         return $holeData;
@@ -112,5 +119,80 @@ class RoundsService {
         }
 
         return $startingSide;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return int
+     */
+    public function createRoundFromRequest(Request $request):int {
+        $user = $this->userService->getUserData();
+        $requestRoundType = $request->get("roundType");
+
+        $userId = $user["user"]->id;
+        $groupId = $user["activeGroupId"];
+        $courseId = (int) $request->get("courseId");
+        $datePlayed = Carbon::parse($request->get("datePlayed"))->toDateTimeString();
+        $type = $this->getRoundType($requestRoundType);
+        $startingSide = $this->getStartingSide($requestRoundType);
+        $stats = $request->get("isStatsRound");
+        $tournament = $request->get("isTournamentRound");
+
+        $roundId = $this->createRound(
+            $userId,
+            $courseId,
+            $groupId,
+            $datePlayed,
+            $type,
+            $startingSide,
+            $stats,
+            $tournament
+        );
+
+        return $roundId;
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $roundId
+     *
+     * @return bool
+     */
+    public function createHoleDataFromRequest(Request $request, int $roundId): bool {
+
+        try {
+            foreach ($request->get("scorecardData") as $hole) {
+                $holeId = $hole["holeId"];
+                $strokes = (int) $hole["Strokes"];
+                $putts = (int) $hole["Putts"];
+                $gir = $this->statsService->getGirValue($hole["GIR"]);
+                $fir = $this->statsService->getFirValue($holeId, $hole["FIR"]);
+                $upAndDown = $this->statsService->getYesNoValue($hole["Up & Down"]);
+                $sandSave = $this->statsService->getYesNoValue($hole["Sand Save"]);
+
+                $penaltyStrokesKey = "Penalty Strokes";
+                $penaltyStrokes = is_null($hole[$penaltyStrokesKey]) ? 0 : (int) $hole[$penaltyStrokesKey];
+
+                $this->createHoleData(
+                    $roundId,
+                    $holeId,
+                    $strokes,
+                    $putts,
+                    $gir,
+                    $fir,
+                    $upAndDown,
+                    $sandSave,
+                    $penaltyStrokes
+                );
+            }
+
+            return true;
+        }
+        catch (\Exception $e) {
+            // $e->getMessage()
+
+            return false;
+        }
     }
 }

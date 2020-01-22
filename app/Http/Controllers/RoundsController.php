@@ -66,53 +66,6 @@ class RoundsController extends Controller
     }
 
     public function create(Request $request) {
-        $user = $this->userService->getUserData();
-        $requestRoundType = $request->get("roundType");
-
-        $userId = $user["user"]->id;
-        $groupId = $user["activeGroupId"];
-        $courseId = (int) $request->get("courseId");
-        $datePlayed = $request->get("datePlayed");
-        $type = $this->roundsService->getRoundType($requestRoundType);
-        $startingSide = $this->roundsService->getStartingSide($requestRoundType);
-        $stats = $request->get("isStatsRound");
-        $tournament = $request->get("isTournamentRound");
-
-        $roundId = 1;
-//        $roundId = $this->roundsService->createRound(
-//            $userId,
-//            $groupId,
-//            $courseId,
-//            $datePlayed,
-//            $type,
-//            $startingSide,
-//            $stats,
-//            $tournament
-//        );
-
-        foreach($request->get("scorecardData") as $hole) {
-            $holeId = $hole["holeId"];
-            $strokes = (int) $hole["Strokes"];
-            $putts = (int) $hole["Putts"];
-            $gir = $this->statsService->getYesNoValue($hole["GIR"]);
-            $fir = $this->statsService->getYesNoValue($hole["FIR"]);
-            $upAndDown = $this->statsService->getYesNoValue($hole["Up & Down"]);
-            $sandSave = $this->statsService->getYesNoValue($hole["Sand Save"]);
-            $penaltyStrokes = is_null($hole["Penalty Strokes"]) ? 0 : (int) $hole["Sand Save"];
-
-            $this->roundsService->createHoleData(
-                $roundId,
-                $holeId,
-                $strokes,
-                $putts,
-                $gir,
-                $fir,
-                $upAndDown,
-                $sandSave,
-                $penaltyStrokes
-            );
-        }
-
         /*
          * Example Request
          * [
@@ -310,5 +263,35 @@ class RoundsController extends Controller
          *      such that it doesn't need to be included for 18,
          *      is used to denote 9 holes front or back
          */
+
+        try {
+            $roundId = $this->roundsService->createRoundFromRequest($request);
+        }
+        catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage()
+            ];
+
+            return response()->json($response);
+        }
+
+        $roundDataCreated = $this->roundsService->createHoleDataFromRequest($request, $roundId);
+
+        if ($roundDataCreated) {
+            $response = [
+                'success' => true,
+            ];
+
+            return response()->json($response);
+        }
+        else {
+            $response = [
+                'success' => false,
+                'error' => "Failed at create round data"
+            ];
+
+            return response()->json($response);
+        }
     }
 }
