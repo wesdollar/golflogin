@@ -51,4 +51,12 @@ class User extends Authenticatable
 
         return $activeGroup;
     }
+
+    public function rounds() {
+        return $this->hasMany('App\Round');
+    }
+
+    public function roundData() {
+        return $this->hasManyThrough('App\RoundData', 'App\Round');
+    }
 }

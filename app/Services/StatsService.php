@@ -1,7 +1,9 @@
 <?php
 namespace App\Services;
 
+use App;
 use App\Hole;
+use App\User;
 
 class StatsService {
 
@@ -42,4 +44,6 @@ class StatsService {
 
         return $requestValue;
     }
+
+
 }
