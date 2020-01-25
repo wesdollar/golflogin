@@ -27,7 +27,7 @@ class RoundsController extends Controller
     public function roundEntry() {
 
         $user = $this->userService->getUser();
-        $activeGroupId = $this->userService->getActiveGroupId($user);
+        $activeGroupId = $this->userService->getActiveGroupIdFromUser($user);
         $courses = $this->course->where('group_id', '=', $activeGroupId)->get();
 
         if ($courses->count() === 0) {

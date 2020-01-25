@@ -27,8 +27,12 @@ class UserService {
         }
     }
 
-    public static function getActiveGroupId(User $user): int {
+    public static function getActiveGroupIdFromUser(User $user): int {
         return $user->activeGroup()->id ?: null;
+    }
+
+    public static function getActiveGroupId(int $userId): int {
+        return User::find($userId)->activeGroup()->id ?: null;
     }
 
     public static function isOwner(User $user): bool {
@@ -64,76 +68,60 @@ class UserService {
         return Auth::user();
     }
 
-    public static function getTotalRounds(?int $userId): int {
-        if (App::environment('local') && is_null($userId)) {
-            $userId = 1;
-        }
-
+    public static function getTotalRounds(int $userId): int {
         $totalRounds = User::find($userId)->rounds()->count();
 
         return $totalRounds;
     }
 
-    public static function getTotalStatsRounds(?int $userId): int {
-        if (App::environment('local') && is_null($userId)) {
-            $userId = 1;
-        }
-
+    public static function getTotalStatsRounds(int $userId): int {
         $totalRounds = User::find($userId)->rounds()->where("stats", true)->count();
 
         return $totalRounds;
     }
 
-    public static function getTotalHolesPlayed(?int $userId): int {
-        if (App::environment('local') && is_null($userId)) {
-            $userId = 1;
-        }
-
+    public static function getTotalHolesPlayed(int $userId): int {
         $totalHoles = User::find($userId)->roundData()->count();
 
         return $totalHoles;
     }
 
-    public static function getTotalPutts(?int $userId): int {
-        if (App::environment('local') && is_null($userId)) {
-            $userId = 1;
-        }
-
-        $totalPutts = User::find($userId)->roundData()->sum("putts");
+    public static function getTotalPutts(int $userId): int {
+        $totalPutts = User::find($userId)->roundData()->where("stats", true)->sum("putts");
 
         return $totalPutts;
     }
 
-    public static function getPuttsPerGreen(?int $userId): float {
-        if (App::environment('local') && is_null($userId)) {
-            $userId = 1;
-        }
-
+    public static function getPuttsPerGreen(int $userId): float {
         $totalPutts = self::getTotalPutts($userId);
         $totalHolesPlayed = self::getTotalHolesPlayed($userId);
 
-        return $totalPutts / $totalHolesPlayed;
+        return number_format($totalPutts / $totalHolesPlayed, 2);
     }
 
-    public static function getPuttsPerRound(?int $userId): float {
-        if (App::environment('local') && is_null($userId)) {
-            $userId = 1;
-        }
-
+    public static function getPuttsPerRound(int $userId): float {
         $totalPutts = self::getTotalPutts($userId);
         $totalRoundsPlayed = self::getTotalRounds($userId);
 
-        return $totalPutts / $totalRoundsPlayed;
+        return number_format($totalPutts / $totalRoundsPlayed, 2);
     }
 
-    public static function getParThreeAverage(?int $userId): float {
-        if (App::environment('local') && is_null($userId)) {
-            $userId = 1;
-        }
+    public static function getHoleAverageByType(int $userId, int $holeType): float {
+        [$totalHolesPlay, $totalStrokes] = self::getHolesPlayedByType($userId, $holeType);
 
-        [$totalHolesPlay, $totalStrokes] = self::getHolesPlayedByType($userId, 3);
+        return number_format($totalStrokes / $totalHolesPlay, 2);
+    }
 
-        return $totalStrokes / $totalHolesPlay;
+    public static function getParThreeAverage(int $userId): float {
+        return self::getHoleAverageByType($userId, 3);
+    }
+
+    public static function getParFourAverage(int $userId): float {
+        return self::getHoleAverageByType($userId, 4);
+    }
+
+    public static function getParFiveAverage(int $userId): float {
+        return self::getHoleAverageByType($userId, 5);
     }
 
     public static function getHolesPlayedByType(int $userId, int $holeType): array {
@@ -141,11 +129,103 @@ class UserService {
             ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
             ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
             ->join('users', 'rounds.user_id',  '=', 'users.id')
-            ->select("holes.par")
+            ->select("holes.par", "rounds_data.strokes")
             ->where("users.id", $userId)
             ->where("par", $holeType)
             ->get();
 
-        return [$query->count(), $query->sum("par")];
+        return [$query->count(), $query->sum("strokes")];
+    }
+
+    public static function getScoringAverage(int $userId, string $roundType): float {
+        try {
+            $query = DB::table('holes')
+                ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
+                ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
+                ->join('users', 'rounds.user_id',  '=', 'users.id')
+                ->where("users.id", $userId)
+                ->where("rounds.type", $roundType)
+                ->select("rounds_data.strokes")
+                ->get();
+
+            $totalStrokes = $query->sum("strokes");
+
+            $roundsQuery = DB::table("rounds")
+                ->where("user_id", $userId)
+                ->where("type", $roundType)
+                ->select("id")
+                ->get();
+
+            $totalRounds = $roundsQuery->count();
+
+            return number_format($totalStrokes / $totalRounds, 2);
+        }
+        catch (\Exception $e) {
+            return number_format(0, 2);
+        }
+    }
+
+    public static function getYesNoStat(?int $userId, string $stat): float {
+        switch ($stat) {
+            case "gir":
+                $statRef = "gir";
+                break;
+            case "fir":
+                $statRef = "fir";
+                break;
+            case "upAndDown":
+                $statRef = "up_and_down";
+                break;
+            case "sandSave":
+                $statRef = "sand_save";
+                break;
+            default:
+                $statRef = "gir";
+        }
+
+        $statColumn = "rounds_data.$statRef";
+
+        $stats = DB::table('holes')
+            ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
+            ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
+            ->join('users', 'rounds.user_id',  '=', 'users.id')
+            ->where("users.id", $userId)
+            ->where($statColumn, "!=", "n/a")
+            ->where("rounds.stats", true)
+            ->select($statColumn)
+            ->get();
+
+        $totalPossible = $stats->count();
+        $totalHit = 0;
+
+        foreach ($stats as $stat) {
+            if ($stat->{$statRef} === "yes") {
+                $totalHit++;
+            }
+        }
+
+        return number_format(($totalHit / $totalPossible) * 100, 2);
+    }
+
+    public static function getParOrBetter(int $userId): float {
+        $holes = DB::table('holes')
+            ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
+            ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
+            ->join('users', 'rounds.user_id',  '=', 'users.id')
+            ->where("users.id", $userId)
+            ->where("rounds.stats", true)
+            ->select("rounds_data.strokes", "holes.par")
+            ->get();
+
+        $holesPlayed = $holes->count();
+        $parOrBetter = 0;
+
+        foreach ($holes as $hole) {
+            if ($hole->strokes <= $hole->par) {
+                $parOrBetter++;
+            }
+        }
+
+        return number_format(($parOrBetter / $holesPlayed) * 100, 2);
     }
 }

@@ -33,7 +33,7 @@ class CoursesController extends Controller
 
         try {
             $title = $request->input('courseName');
-            $groupId = $this->userService->getActiveGroupId($user);
+            $groupId = $this->userService->getActiveGroupIdFromUser($user);
             $teeBox = $request->input('teeBox');
             $rating = $request->input('usgaRating');
             $slope = $request->input('slopeRating');
