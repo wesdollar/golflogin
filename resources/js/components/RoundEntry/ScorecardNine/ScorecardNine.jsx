@@ -158,7 +158,7 @@ class ScorecardNine extends Component {
             </StyledEntryRow>
           );
         })}
-        <StyledEntryRow className={"col"}>
+        <StyledEntryRow offsetRows={4} className={"col"}>
           <ColumnLabel label={" "} />
           <ColumnLabel label={" "} />
           <ColumnLabel label={" "} />

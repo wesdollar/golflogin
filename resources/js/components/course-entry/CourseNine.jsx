@@ -4,6 +4,7 @@ import HoleLabel from "../RoundEntry/HoleLabel";
 import RowLabels from "../RoundEntry/RowLabels";
 import NumberField from "../inputs/NumberField";
 import { StyledEntryRow } from "../RoundEntry/ScorecardNine/ScorecardNine.styled";
+import { Row } from "reactstrap";
 
 const rowLabels = ["Par", "Yardage"];
 
@@ -16,15 +17,15 @@ const CourseNine = ({ frontNine, onHandleChange, courseData }) => {
 
   return (
     <React.Fragment>
-      <div className={`row half-gutter-top`}>
+      <Row className={"mt-5"}>
         <div className={`col-md-2`}>&nbsp;</div>
         {frontNine.map(holeNumber => (
           <div className={`col-md-1`} key={`holeEntryRowLabel-${holeNumber}`}>
             <HoleLabel holeNumber={holeNumber} />
           </div>
         ))}
-      </div>
-      <div className={`row`}>
+      </Row>
+      <Row>
         <RowLabels offsetRows={1} rowLabels={rowLabels} />
         {frontNine.map((holeNumber, index) => {
           const hole = `hole${holeNumber}`;
@@ -50,7 +51,7 @@ const CourseNine = ({ frontNine, onHandleChange, courseData }) => {
             </StyledEntryRow>
           );
         })}
-      </div>
+      </Row>
     </React.Fragment>
   );
 };
