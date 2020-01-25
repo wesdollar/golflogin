@@ -34,4 +34,4 @@ Additional commands are available via [Laravel Mix](https://laravel.com/docs/6.x
 
 &nbsp;
 
-&copy; 2020 Wes Dollar. All Rights Reserved.
+&copy; 2020 Wes Dollar. All Rights Reserved. No portion of this code may be used without prior permission.

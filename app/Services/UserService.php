@@ -16,6 +16,113 @@ class UserService {
         $this->user = new User();
     }
 
+    /**
+     * @param int $userId
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getHolesWithStrokesAndPar(int $userId): \Illuminate\Support\Collection {
+        $holes = DB::table('holes')
+            ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
+            ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
+            ->join('users', 'rounds.user_id', '=', 'users.id')
+            ->where("users.id", $userId)
+            ->where("rounds.stats", true)
+            ->select("rounds_data.strokes", "holes.par")
+            ->get();
+
+        return $holes;
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $holes
+     *
+     * @return array
+     */
+    public static function getParOrBetterAndParBusters(\Illuminate\Support\Collection $holes): array {
+        $holesPlayed = $holes->count();
+        $parOrBetter = 0;
+        $parBusters = 0;
+
+        foreach ($holes as $hole) {
+            if ($hole->strokes <= $hole->par) {
+                $parOrBetter++;
+            }
+
+            if ($hole->strokes < $hole->par) {
+                $parBusters++;
+            }
+        }
+
+        $parOrBetter = number_format(($parOrBetter / $holesPlayed) * 100, 2);
+        $parBusters = number_format(($parBusters / $holesPlayed) * 100, 2);
+
+        return array((float) $parOrBetter, (float) $parBusters);
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $holes
+     *
+     * @return array
+     */
+    public static function getTotalsRelativeToPar(\Illuminate\Support\Collection $holes): array {
+        $totalPars = 0;
+        $totalBirdies = 0;
+        $totalEaglesOrBetter = 0;
+        $totalBogies = 0;
+        $totalDoubleBogies = 0;
+        $totalOthers = 0;
+
+        foreach ($holes as $hole) {
+            $par = $hole->par;
+            $strokes = $hole->strokes;
+
+            if ($strokes === $par) {
+                $totalPars++;
+            }
+
+            if ($strokes == $par - 1) {
+                $totalBirdies++;
+            }
+
+            if ($strokes <= $par - 2) {
+                $totalEaglesOrBetter++;
+            }
+
+            if ($strokes === $par + 1) {
+                $totalBogies++;
+            }
+
+            if ($strokes === $par + 2) {
+                $totalDoubleBogies++;
+            }
+
+            if ($strokes >= $par + 3) {
+                $totalOthers++;
+            }
+        }
+
+        return array($totalPars, $totalBirdies, $totalEaglesOrBetter, $totalBogies, $totalDoubleBogies, $totalOthers);
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $holes
+     * @param int $par
+     *
+     * @return float
+     */
+    public static function getAverageStrokesByParFromCollection(\Illuminate\Support\Collection $holes, int $par): float {
+        $parThrees = $holes->filter(function ($hole) use ($par) {
+            return $hole->par === $par;
+        })->all();
+
+        $totalStrokes = array_sum(array_column($parThrees, "strokes"));
+        $totalParThrees = count($parThrees);
+        $parThreeAverage = (float) number_format($totalStrokes / $totalParThrees, 2);
+
+        return $parThreeAverage;
+    }
+
     public function daysLeftInTrial(User $user) {
         if ($user->onTrial()) {
             $trialEnds = $this->carbon->parse($user->trial_ends_at);
@@ -208,24 +315,56 @@ class UserService {
     }
 
     public static function getParOrBetter(int $userId): float {
-        $holes = DB::table('holes')
-            ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
-            ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
-            ->join('users', 'rounds.user_id',  '=', 'users.id')
-            ->where("users.id", $userId)
-            ->where("rounds.stats", true)
-            ->select("rounds_data.strokes", "holes.par")
-            ->get();
+        $array = self::getHoleStrokesStats($userId);
 
-        $holesPlayed = $holes->count();
-        $parOrBetter = 0;
+        return $array["parOrBetter"];
+    }
 
-        foreach ($holes as $hole) {
-            if ($hole->strokes <= $hole->par) {
-                $parOrBetter++;
-            }
-        }
+    public static function getParBusters(int $userId): float {
+        $array = self::getHoleStrokesStats($userId);
 
-        return number_format(($parOrBetter / $holesPlayed) * 100, 2);
+        return $array["parBusters"];
+    }
+
+    public static function getHoleStrokesStats(int $userId): array {
+        $holes = self::getHolesWithStrokesAndPar($userId);
+
+        [$parOrBetter, $parBusters] = self::getParOrBetterAndParBusters($holes);
+        [$totalPars, $totalBirdies, $totalEaglesOrBetter, $totalBogies, $totalDoubleBogies, $totalOthers] = self::getTotalsRelativeToPar($holes);
+
+        $parThreeAverage = self::getAverageStrokesByParFromCollection($holes, 3);
+        $parFourAverage = self::getAverageStrokesByParFromCollection($holes, 4);
+        $parFiveAverage = self::getAverageStrokesByParFromCollection($holes, 5);
+
+        return compact(
+            "parOrBetter",
+            "parBusters",
+            "totalPars",
+            "totalBirdies",
+            "totalEaglesOrBetter",
+            "totalBogies",
+            "totalDoubleBogies",
+            "totalOthers",
+            "parThreeAverage",
+            "parFourAverage",
+            "parFiveAverage"
+        );
+    }
+
+    public static function getAllStats(int $userId): array {
+        $holeStats = self::getHoleStrokesStats($userId);
+
+        $data = [
+            "totalRounds" => self::getTotalRounds($userId),
+            "totalStatsRounds" => self::getTotalStatsRounds($userId),
+            "fir" => self::getYesNoStat($userId, "fir"),
+            "gir" => self::getYesNoStat($userId, "gir"),
+            "puttsPerGreen" => self::getPuttsPerGreen($userId),
+            "puttsPerRound" => self::getPuttsPerRound($userId),
+            "parSaves" => self::getYesNoStat($userId, "upAndDown"),
+            "sandSaves" => self::getYesNoStat($userId, "sandSave")
+        ];
+
+        return array_merge($data, $holeStats);
     }
 }
