@@ -68,10 +68,12 @@ class UserService {
     public static function getTotalsRelativeToPar(\Illuminate\Support\Collection $holes): array {
         $totalPars = 0;
         $totalBirdies = 0;
-        $totalEaglesOrBetter = 0;
+        $totalEagles = 0;
+        $totalDoubleEagles = 0;
         $totalBogies = 0;
         $totalDoubleBogies = 0;
         $totalOthers = 0;
+        $holeInOnes = 0;
 
         foreach ($holes as $hole) {
             $par = $hole->par;
@@ -81,12 +83,16 @@ class UserService {
                 $totalPars++;
             }
 
-            if ($strokes == $par - 1) {
+            if ($strokes === $par - 1) {
                 $totalBirdies++;
             }
 
-            if ($strokes <= $par - 2) {
-                $totalEaglesOrBetter++;
+            if ($strokes === $par - 2) {
+                $totalEagles++;
+            }
+
+            if ($strokes === $par - 3) {
+                $totalDoubleEagles++;
             }
 
             if ($strokes === $par + 1) {
@@ -100,9 +106,13 @@ class UserService {
             if ($strokes >= $par + 3) {
                 $totalOthers++;
             }
+
+            if ($strokes === 1) {
+                $holeInOnes++;
+            }
         }
 
-        return array($totalPars, $totalBirdies, $totalEaglesOrBetter, $totalBogies, $totalDoubleBogies, $totalOthers);
+        return array($totalPars, $totalBirdies, $totalEagles, $totalDoubleEagles, $totalBogies, $totalDoubleBogies, $totalOthers, $holeInOnes);
     }
 
     /**
@@ -121,6 +131,30 @@ class UserService {
         $parThreeAverage = (float) number_format($totalStrokes / $totalParThrees, 2);
 
         return $parThreeAverage;
+    }
+
+    /**
+     * @param string                         $roundType
+     * @param \Illuminate\Support\Collection $holes
+     *
+     * @return string
+     */
+    public static function getRoundsScoringAveragesFromCollection(\Illuminate\Support\Collection $holes, int $roundType): string {
+        $roundsData = $holes->filter(function ($hole) use ($roundType) {
+            return $hole->type == $roundType;
+        });
+
+        $holesCount = count($roundsData);
+
+        if (!$holesCount) {
+            return number_format(0, 2);
+        }
+
+        $totalRounds = $holesCount / $roundType;
+        $totalStrokes = $roundsData->sum("strokes");
+        $scoringAverage = number_format($totalStrokes / $totalRounds, 2);
+
+        return $scoringAverage;
     }
 
     public function daysLeftInTrial(User $user) {
@@ -244,32 +278,19 @@ class UserService {
         return [$query->count(), $query->sum("strokes")];
     }
 
-    public static function getScoringAverage(int $userId, string $roundType): float {
-        try {
-            $query = DB::table('holes')
-                ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
-                ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
-                ->join('users', 'rounds.user_id',  '=', 'users.id')
-                ->where("users.id", $userId)
-                ->where("rounds.type", $roundType)
-                ->select("rounds_data.strokes")
-                ->get();
+    public static function getScoringAverage(int $userId): array {
+        $holes = DB::table('holes')
+            ->join('rounds_data', 'holes.id', '=', 'rounds_data.hole_id')
+            ->join('rounds', 'rounds_data.round_id', '=', 'rounds.id')
+            ->join('users', 'rounds.user_id', '=', 'users.id')
+            ->where("users.id", $userId)
+            ->select("rounds_data.strokes", "holes.par", "rounds.type")
+            ->get();
 
-            $totalStrokes = $query->sum("strokes");
+        $scoringAverage18 = (float) self::getRoundsScoringAveragesFromCollection($holes, 18);
+        $scoringAverage9 = (float) self::getRoundsScoringAveragesFromCollection($holes, 9);
 
-            $roundsQuery = DB::table("rounds")
-                ->where("user_id", $userId)
-                ->where("type", $roundType)
-                ->select("id")
-                ->get();
-
-            $totalRounds = $roundsQuery->count();
-
-            return number_format($totalStrokes / $totalRounds, 2);
-        }
-        catch (\Exception $e) {
-            return number_format(0, 2);
-        }
+        return compact("scoringAverage18", "scoringAverage9");
     }
 
     public static function getYesNoStat(?int $userId, string $stat): float {
@@ -330,7 +351,7 @@ class UserService {
         $holes = self::getHolesWithStrokesAndPar($userId);
 
         [$parOrBetter, $parBusters] = self::getParOrBetterAndParBusters($holes);
-        [$totalPars, $totalBirdies, $totalEaglesOrBetter, $totalBogies, $totalDoubleBogies, $totalOthers] = self::getTotalsRelativeToPar($holes);
+        [$totalPars, $totalBirdies, $totalEagles, $totalDoubleEagles, $totalBogies, $totalDoubleBogies, $totalOthers, $holeInOnes] = self::getTotalsRelativeToPar($holes);
 
         $parThreeAverage = self::getAverageStrokesByParFromCollection($holes, 3);
         $parFourAverage = self::getAverageStrokesByParFromCollection($holes, 4);
@@ -341,7 +362,9 @@ class UserService {
             "parBusters",
             "totalPars",
             "totalBirdies",
-            "totalEaglesOrBetter",
+            "totalEagles",
+            "totalDoubleEagles",
+            "holeInOnes",
             "totalBogies",
             "totalDoubleBogies",
             "totalOthers",
@@ -352,6 +375,7 @@ class UserService {
     }
 
     public static function getAllStats(int $userId): array {
+        $scoringAveragesByRound = self::getScoringAverage($userId);
         $holeStats = self::getHoleStrokesStats($userId);
 
         $data = [
@@ -365,6 +389,55 @@ class UserService {
             "sandSaves" => self::getYesNoStat($userId, "sandSave")
         ];
 
-        return array_merge($data, $holeStats);
+        return array_merge($scoringAveragesByRound, $data, $holeStats);
+    }
+
+    public static function compileStatsForDb(int $userId): array {
+        $stats = self::getAllStats($userId);
+
+        $dbData = [
+            "rounds_played" => $stats["totalRounds"],
+            "rounds_played_stats" => $stats["totalStatsRounds"],
+            "18_tournament_avg" => $stats["tournamentScoringAverage18"] ?? 0, // todo: create
+            "18_avg" => $stats["scoringAverage18"],
+            "9_avg" => $stats["scoringAverage9"],
+            "fir" => $stats["fir"],
+            "gir" => $stats["gir"],
+            "ppg" => $stats["puttsPerGreen"],
+            "ppr" => $stats["puttsPerRound"],
+            "up_and_downs" => $stats["parSaves"],
+            "par_saves_per_round" => $stats["parSavesPerRound"] ?? 0, // todo: create
+            "sand_saves" => $stats["sandSaves"],
+            "par_or_better" => $stats["parOrBetter"],
+            "par_breakers" => $stats["parBusters"],
+            "par_3_avg" => $stats["parThreeAverage"],
+            "par_4_avg" => $stats["parFourAverage"],
+            "par_5_avg" => $stats["parFiveAverage"],
+            "hole_in_ones" => $stats["holeInOnes"],
+            "double_eagles" => $stats["totalDoubleEagles"],
+            "eagles" => $stats["totalEagles"],
+            "birdies" => $stats["totalBirdies"],
+            "pars" => $stats["totalPars"],
+            "bogies" => $stats["totalBogies"],
+            "double_bogies" => $stats["totalDoubleBogies"],
+            "three_over_plus" => $stats["totalOthers"],
+            "handicap_index" => 0 // todo: create
+        ];
+
+        return $dbData;
+    }
+
+    public static function updateStats(int $userId): array {
+        $dbData = self::compileStatsForDb($userId);
+        $groupId = self::getActiveGroupId($userId);
+
+        $dbData = array_merge($dbData, ["group_id" => $groupId]);
+
+        $userStats = App\Stat::updateOrCreate(
+            ["user_id" => $userId],
+            $dbData
+        );
+
+        return $userStats->first()->toArray();
     }
 }

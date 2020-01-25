@@ -16,11 +16,14 @@ Laravel backend. React frontend.
 - Composer (latest)
 - NodeJS (latest)
 - NPM (latest)
+- Postgres or MySQL
 
 #### Installation
 1. `git clone https://github.com/wesdollar/golflogin.git`
 1. `composer install`
 1. `npm install`
+1. Set appropriate `.env` vars
+1. `php artisan migrate` to setup DB
 
 Run one of the commands below to build the frontend.
 
