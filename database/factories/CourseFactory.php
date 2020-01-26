@@ -3,12 +3,13 @@
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
-$factory->define(App\Group::class, function (Faker $faker) {
+$factory->define(App\Course::class, function (Faker $faker) {
     return [
-        "owner_id" => 1,
+        "group_id" => 3,
         "title" => $faker->company,
-        "enabled" => true,
-        "subscribed" => true,
-        "group_code" => Str::random(6)
+        "tee_box" => $faker->colorName,
+        "rating" => 73.2,
+        "slope" => 130,
+        "user_id" => 1
     ];
 });
