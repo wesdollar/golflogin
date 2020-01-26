@@ -122,6 +122,7 @@ class UserService {
      * @return float
      */
     public static function getAverageStrokesByParFromCollection(\Illuminate\Support\Collection $holes, int $par): float {
+        // todo: refactor "parThrees" to generic name
         $parThrees = $holes->filter(function ($hole) use ($par) {
             return $hole->par === $par;
         })->all();

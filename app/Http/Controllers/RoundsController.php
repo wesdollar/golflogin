@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Group;
 use App\Hole;
+use App\Jobs\ProcessUserStats;
 use App\Services\RoundsService;
 use App\Services\StatsService;
 use App\Services\UserService;
@@ -262,7 +263,7 @@ class RoundsController extends Controller
          * "starting_side" is enum front|back, defaults to front
          *      such that it doesn't need to be included for 18,
          *      is used to denote 9 holes front or back
-         */
+         */ // example request
 
         try {
             $roundId = $this->roundsService->createRoundFromRequest($request);
@@ -270,28 +271,40 @@ class RoundsController extends Controller
         catch (\Exception $e) {
             $response = [
                 'success' => false,
-                'error' => $e->getMessage()
+                'error' => "Unable to create round."
             ];
 
-            return response()->json($response);
+            return response()->json($response, 406);
         }
 
-        $roundDataCreated = $this->roundsService->createHoleDataFromRequest($request, $roundId);
-
-        if ($roundDataCreated) {
-            $response = [
-                'success' => true,
-            ];
-
-            return response()->json($response);
+        try {
+            $this->roundsService->createHoleDataFromRequest($request, $roundId);
         }
-        else {
+        catch (\Exception $e) {
             $response = [
                 'success' => false,
-                'error' => "Failed at create round data"
+                'error' => "Unable to save round stats, but the round's scorecard was saved."
             ];
 
-            return response()->json($response);
+            return response()->json($response, 406);
         }
+
+        $userId = $user = $this->userService->getUser()->id;
+
+        try {
+            ProcessUserStats::dispatch($userId);
+        }
+        catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => "Unable to update stats at this time."
+            ];
+
+            return response()->json($response, 422);
+        }
+
+        return response()->json([
+            "success" => true
+        ]);
     }
 }
