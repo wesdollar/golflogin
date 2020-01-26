@@ -16,15 +16,18 @@ class RoundsService {
         $this->statsService = new StatsService();
     }
 
-    // DB structure for Rounds
-    // user_id          int
-    // course_id        int
-    // group_id         int
-    // date_played      date
-    // type             "18" or "9"
-    // starting_side    "front" or "back" (default front)
-    // stats            boolean (default false)
-    // tournament       boolean (default false)
+    /**
+     * @param int    $userId
+     * @param int    $courseId
+     * @param int    $groupId
+     * @param string $datePlayed
+     * @param string $roundType
+     * @param string $startingSide
+     * @param bool   $statsRound
+     * @param bool   $tournamentRound
+     *
+     * @return int   $roundId
+     */
     public static function createRound(
         int $userId,
         int $courseId,
@@ -51,16 +54,19 @@ class RoundsService {
         return $round->id;
     }
 
-    // DB structure for RoundsData
-    // round_id         int
-    // hole_id          int
-    // strokes          smallInt
-    // putts            smallInt
-    // gir              enum [n/a, yes, no]
-    // fir              enum [n/a, yes, no]
-    // up_and_down      enum [n/a, yes, no]
-    // sand_save        enum [n/a, yes, no]
-    // penalty_strokes  smallInt (default 0)
+    /**
+     * @param int    $roundId
+     * @param int    $holeId
+     * @param int    $strokes
+     * @param int    $putts
+     * @param string $gir
+     * @param string $fir
+     * @param string $upAndDown
+     * @param string $sandSave
+     * @param int    $penaltyStrokes
+     *
+     * @return RoundData
+     */
     public function createHoleData(
         int $roundId,
         int $holeId,
@@ -90,12 +96,22 @@ class RoundsService {
         return $holeData;
     }
 
+    /**
+     * @param $roundId
+     *
+     * @return Round
+     */
     public static function getRoundById($roundId) {
         $round = Round::findOrFail($roundId);
 
         return $round;
     }
 
+    /**
+     * @param $requestRoundType - round type from $request
+     *
+     * @return int
+     */
     public static function getRoundType($requestRoundType) {
         if ($requestRoundType === "frontNine" || $requestRoundType === "backNine") {
             return 9;
@@ -104,6 +120,11 @@ class RoundsService {
         return 18;
     }
 
+    /**
+     * @param $requestRoundType - round type from $request
+     *
+     * @return string
+     */
     public static function getStartingSide($requestRoundType) {
         $startingSide = "front";
 
