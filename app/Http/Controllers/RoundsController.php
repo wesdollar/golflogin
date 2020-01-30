@@ -6,6 +6,7 @@ use App\Course;
 use App\Group;
 use App\Hole;
 use App\Jobs\ProcessUserStats;
+use App\Round;
 use App\Services\RoundsService;
 use App\Services\StatsService;
 use App\Services\UserService;
@@ -306,5 +307,13 @@ class RoundsController extends Controller
         return response()->json([
             "success" => true
         ]);
+    }
+
+    public function get(Request $request) {
+        $user = UserService::getUserData();
+        $roundId = $request->route('group_id');
+        $activeGroupId = $user["activeGroupId"];
+
+
     }
 }

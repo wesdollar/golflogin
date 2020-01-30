@@ -158,11 +158,11 @@ class UserService {
         return $scoringAverage;
     }
 
-    public function daysLeftInTrial(User $user) {
+    public static function daysLeftInTrial(User $user) {
         if ($user->onTrial()) {
-            $trialEnds = $this->carbon->parse($user->trial_ends_at);
+            $trialEnds = Carbon::parse($user->trial_ends_at);
 
-            return $trialEnds->diffInDays($this->carbon->now());
+            return $trialEnds->diffInDays(Carbon::now());
         }
         else {
             return false;
@@ -181,15 +181,15 @@ class UserService {
         return ($user->role === 'owner') ? true : false;
     }
 
-    public function getUserData(): array {
+    public static function getUserData(): array {
         try {
-            $user = $this->user->find(Auth::id());
+            $user = User::find(Auth::id());
         }
         catch (\Exception $e) {
             return null;
         }
 
-        $daysLeftInTrial = $this->daysLeftInTrial($user);
+        $daysLeftInTrial = self::daysLeftInTrial($user);
         $groups = $user->groups ?: null;
         $belongsToGroup = ($groups->count()) ? true : false;
         $activeGroupTitle = ($belongsToGroup) ? $user->activeGroup()->title : null;
@@ -206,7 +206,7 @@ class UserService {
         ];
     }
 
-    public function getUser() {
+    public static function getUser() {
         return Auth::user();
     }
 

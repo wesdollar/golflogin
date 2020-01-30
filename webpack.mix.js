@@ -17,7 +17,7 @@ mix
 
 if (!mix.inProduction()) {
   mix.sourceMaps();
-  mix.browserSync("golflogin.local:8080");
+  mix.browserSync("golflogin.wes:8080");
 }
 
 if (mix.inProduction()) {

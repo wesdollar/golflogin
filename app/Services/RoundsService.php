@@ -6,6 +6,7 @@ use App\Round;
 use App\RoundData;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class RoundsService {
     var $userService;
@@ -101,7 +102,7 @@ class RoundsService {
      *
      * @return Round
      */
-    public static function getRoundById($roundId) {
+    public static function getRoundById(int $roundId): Round {
         $round = Round::findOrFail($roundId);
 
         return $round;
@@ -215,5 +216,14 @@ class RoundsService {
 
             return false;
         }
+    }
+
+    public static function getRoundAndRoundDataById(int $roundId) {
+        $round = Round::find($roundId);
+        $roundData = RoundData::where("round_id", $roundId)->with("hole")->get();
+
+        $data = ["round" => $round->toArray(), "roundData" => $roundData->toArray()];
+
+        return $data;
     }
 }

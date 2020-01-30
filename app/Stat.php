@@ -10,12 +10,10 @@ class Stat extends Model
     public $timestamps = true;
 
     public function user() {
-
         return $this->belongsTo('App\User');
     }
 
     public function group() {
-
         return $this->belongsTo('App\Group');
     }
 }

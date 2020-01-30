@@ -11,6 +11,7 @@ import {
   Col
 } from "reactstrap";
 import UserHeader from "../../components/Headers/UserHeader.jsx";
+import Header from "../../components/Headers/Header";
 
 const shirtSizes = ["XS", "SM", "MD", "LG", "XL", "XXL", "XXXL"];
 const gloveSizes = ["XS", "SM", "MD", "LG", "XL", "XXL"];
@@ -20,8 +21,7 @@ class Profile extends React.Component {
   render() {
     return (
       <>
-        <UserHeader />
-        {/* Page content */}
+        <Header />
         <Container className="mt--7" fluid>
           <Row>
             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
@@ -42,18 +42,14 @@ class Profile extends React.Component {
                 <CardBody className="pt-0 pt-md-4">
                   <Row>
                     <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
+                      <div className="card-profile-stats d-flex justify-content-center mt-md-7">
                         <div>
                           <span className="heading">22</span>
-                          <span className="description">Friends</span>
+                          <span className="description">Rounds</span>
                         </div>
                         <div>
                           <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
+                          <span className="description">Holes</span>
                         </div>
                       </div>
                     </div>
