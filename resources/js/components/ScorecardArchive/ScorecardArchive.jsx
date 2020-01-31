@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import Header from "../../Argon/components/Headers/Header";
 import ContentContainer from "../../Argon/components/ContentContainer/ContentContainer";
 import { Card, CardHeader, Col, Row, Table } from "reactstrap";
+import { withRouter, useParams } from "react-router-dom";
 
 const ScorecardArchive = () => {
   const [scorecards, setScorecards] = useState([]);
+  const { userId } = useParams();
 
   useEffect(() => {
     const getScorecardArchiveByUser = async () => {
       try {
-        const response = await fetch("/scorecard-archive/1");
+        const response = await fetch(`/scorecard-archive/${userId}`);
         const json = await response.json();
 
         if (json.success) {
@@ -21,7 +23,7 @@ const ScorecardArchive = () => {
     };
 
     getScorecardArchiveByUser();
-  }, []);
+  }, [userId]);
 
   return (
     <React.Fragment>
@@ -64,4 +66,4 @@ const ScorecardArchive = () => {
   );
 };
 
-export default ScorecardArchive;
+export default withRouter(ScorecardArchive);

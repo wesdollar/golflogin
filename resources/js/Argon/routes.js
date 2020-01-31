@@ -33,7 +33,8 @@ const routes = [
     name: "Scorecard Archive",
     icon: "ni ni-planet text-blue",
     component: ScorecardArchive,
-    layout: "/admin"
+    layout: "/admin",
+    param: "userId"
   },
   {
     path: "/user-profile",

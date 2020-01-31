@@ -61,10 +61,17 @@ class Sidebar extends React.Component {
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
     return routes.map((prop, key) => {
+      let to = `${prop.layout}${prop.path}`;
+
+      if (prop.path === "/scorecard-archive") {
+        const userId = window.GL.user.user.id;
+        to = `${prop.layout}${prop.path}/${userId}`;
+      }
+
       return (
         <NavItem key={key}>
           <NavLink
-            to={prop.layout + prop.path}
+            to={to}
             tag={NavLinkRRD}
             onClick={this.closeCollapse}
             activeClassName="active"
