@@ -12,6 +12,10 @@ class Course extends Model
         return $this->belongsTo('App\Group');
     }
 
+    public function rounds() {
+        return $this->hasMany('App\Round');
+    }
+
     public function user() {
         return $this->belongsTo('App\User');
     }

@@ -218,12 +218,42 @@ class RoundsService {
         }
     }
 
-    public static function getRoundAndRoundDataById(int $roundId) {
+    public static function getRoundAndRoundDataById(int $roundId): array {
         $round = Round::find($roundId);
         $roundData = RoundData::where("round_id", $roundId)->with("hole")->get();
 
-        $data = ["round" => $round->toArray(), "roundData" => $roundData->toArray()];
+        $data = ["roundDetails" => $round->toArray(), "roundData" => $roundData->toArray()];
 
         return $data;
+    }
+
+    public static function getAllRoundsByUserId(int $userId) {
+        $rounds = Round::where("user_id", $userId)
+            ->with("course")
+            ->with("roundData")
+            ->orderBy("date_played")
+            ->get()
+            ->toArray();
+
+        $return = [];
+
+        foreach ($rounds as $round) {
+            $strokes = 0;
+
+            foreach ($round["round_data"] as $hole) {
+                $strokes = $strokes + $hole["strokes"];
+            }
+
+            $data = [
+                "userId" => $round["user_id"],
+                "datePlayed" => $round["date_played"],
+                "courseTitle" => $round["course"]["title"],
+                "strokes" => $strokes
+            ];
+
+            array_push($return, $data);
+        }
+
+        return $return;
     }
 }

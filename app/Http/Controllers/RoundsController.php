@@ -310,10 +310,32 @@ class RoundsController extends Controller
     }
 
     public function get(Request $request) {
-        $user = UserService::getUserData();
-        $roundId = $request->route('group_id');
-        $activeGroupId = $user["activeGroupId"];
+        $activeGroupId = UserService::getUserData()['activeGroupTitle'];
+        $roundId = $request->route('roundId');
+        $data = RoundsService::getRoundAndRoundDataById($roundId);
 
+        if ($activeGroupId !== $data["roundDetails"]["group_id"]) {
+            $response = [
+                'success' => false,
+                'error' => "Round belongs to a group you don't have access to."
+            ];
 
+            return response()->json($response, 403);
+        }
+
+        return response()->json([
+            "success" => true,
+            "data" => $data
+        ]);
+    }
+
+    public function scorecardArchive(Request $request) {
+        $userId = $request->route('userId');
+        $data = RoundsService::getAllRoundsByUserId($userId);
+
+        return response()->json([
+            "success" => true,
+            "data" => $data
+        ]);
     }
 }

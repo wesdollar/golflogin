@@ -38,7 +38,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('rounds/create', 'RoundsController@roundEntry')->name('rounds.roundEntry');
     Route::post('rounds/create', 'RoundsController@create')->name('rounds.create');
-    Route::post('rounds/{roundId}', 'RoundsController@get')->name('rounds.get');
+    Route::get('rounds/{roundId}', 'RoundsController@get')->name('rounds.get');
+
+    Route::get('scorecard-archive/{userId}', 'RoundsController@scorecardArchive')->name('scorecardArchive');
 
     Route::get('/' . env("APP_REACT_BASE") . '/{path?}', 'DashboardController@react')
         ->where('path', '.*')

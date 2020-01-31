@@ -2,10 +2,9 @@ import Index from "./views/Index.jsx";
 import Profile from "./views/examples/Profile.jsx";
 import Register from "./views/examples/Register.jsx";
 import Login from "./views/examples/Login.jsx";
-import Tables from "./views/examples/Tables.jsx";
-import Icons from "./views/examples/Icons.jsx";
 import RoundEntry from "../components/RoundEntry";
 import CourseEntry from "../components/CourseEntry";
+import ScorecardArchive from "../components/ScorecardArchive/ScorecardArchive";
 
 const routes = [
   {
@@ -27,6 +26,13 @@ const routes = [
     name: "Add Course",
     icon: "ni ni-planet text-blue",
     component: CourseEntry,
+    layout: "/admin"
+  },
+  {
+    path: "/scorecard-archive",
+    name: "Scorecard Archive",
+    icon: "ni ni-planet text-blue",
+    component: ScorecardArchive,
     layout: "/admin"
   },
   {
