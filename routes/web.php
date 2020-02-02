@@ -6,13 +6,99 @@ if (env("APP_ENV") === "local") {
     });
 }
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', function() {
+    $pageTitle = 'Golf Login | Golf Team Management Software';
+    $pageDesc = 'Golf team software perfect for High School and College. Offers player statistics, rankings, score card archive, and more. Cloud-based = no install required!';
+
+    return view('front.static.home', compact('pageTitle', 'pageDesc'));
+})->name("home");
+
+Route::get('/demo', function() {
+    $pageTitle = 'Golf Login | Golf Team Management Software';
+    $pageDesc = 'Golf team software perfect for High School and College. Offers player statistics, rankings, score card archive, and more. Cloud-based = no install required!';
+
+    return view('front.static.home', compact('pageTitle', 'pageDesc'));
+})->name("demo");
+
+Route::get('/golf-team-software-features', function() {
+    $pageTitle = 'Golf Login Features';
+
+    return view('front.static.features', compact('pageTitle'));
+})->name("features");
+
+Route::get('/golf-login-pricing', function() {
+    $pageTitle = 'Golf Login Pricing';
+
+    return view('front.static.pricing', compact('pageTitle'));
+})->name("pricing");
+
+Route::get('/buy-golf-login', function() {
+    $pageTitle = 'Purchase a Golf Login Subscription';
+
+    return view('front.static.purchase', compact('pageTitle'));
+})->name("buy");
+
+Route::get('/purchase-golf-login', function() {
+    $pageTitle = 'Purchase a Golf Login Subscription';
+
+    return view('front.static.purchase', compact('pageTitle'));
+})->name("purchase");
+
+Route::get('/golf-login-software-free-trial', function() {
+    $pageTitle = '14 Days Free, No Strings Attached! Golf Login!';
+
+    return view('front.static.freeTrial', compact('pageTitle'));
+})->name("freeTrial");
+
+Route::get('/support', function() {
+    $pageTitle = 'Golf Login Support';
+
+    return view('front.static.support', compact('pageTitle'));
+})->name("support");
+
+Route::get('/contact-golf-login', function() {
+    $pageTitle = 'Contact Us';
+
+    return view('front.static.support', compact('pageTitle'));
+})->name("contact");
+
+Route::get('/frequently-asked-questions', function() {
+    $pageTitle = 'Frequently Asked Questions';
+
+    return view('front.static.faqs', compact('pageTitle'));
+})->name("faqs");
+
+Route::get('/contact-golf-login', function() {
+    $pageTitle = 'Contact Us';
+
+    return view('front.static.support', compact('pageTitle'));
+})->name("contact");
+
+Route::get('/golf-team-software', function() {
+    $pageTitle = 'Golf Team, Group, &amp; Club Software';
+
+    return view('front.static.golfLoginStory', compact('pageTitle'));
+})->name("about");
+
+Route::get('/thanks-for-contacting-us', function() {
+    $pageTitle = 'Contact Us :: Message Received!';
+
+    return view('front.static.contactThanks', compact('pageTitle'));
+})->name("contactThanks");
+
+Route::get('/registration-complete', function() {
+    $pageTitle = 'Registration Complete!';
+
+    return view('front.static.signupConfirmation', compact('pageTitle'));
+})->name("signupConfirmation");
+
+//Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
 //    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
