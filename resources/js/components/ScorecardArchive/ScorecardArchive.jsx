@@ -4,6 +4,7 @@ import ContentContainer from "../../Argon/components/ContentContainer/ContentCon
 import { Card, CardHeader, Col, Row, Table } from "reactstrap";
 import { withRouter, useParams, Redirect } from "react-router-dom";
 import { StyledTableRow } from "./ScorecardArchive.styled";
+import { app } from "../../constants/app";
 
 const handleRoundClick = (roundId, setRoundId, setRoundClicked) => {
   setRoundId(roundId);
@@ -34,7 +35,7 @@ const ScorecardArchive = () => {
   }, [userId]);
 
   if (roundClicked) {
-    return <Redirect to={`/admin/scorecard/${roundId}`} push />;
+    return <Redirect to={`${app.baseUrl}/scorecard/${roundId}`} push />;
   }
 
   return (

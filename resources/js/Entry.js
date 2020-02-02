@@ -8,22 +8,21 @@ import "./Argon/assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "./Argon/layouts/Admin.jsx";
 import AuthLayout from "./Argon/layouts/Auth.jsx";
+import { app } from "./constants/app";
 
 /* eslint-disable no-undef */
 /** @namespace GL.reactBase */
 /** @namespace GL.user.activeGroupTitle */
 const reactBaseHref = `/${GL.reactBase}`;
 const activeGroup = GL.user.activeGroupTitle;
-const { appName } = GL;
-const { reactBase } = GL;
+const { appName, reactBase } = GL;
 /* eslint-enable */
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Route path="/auth" render={props => <AuthLayout {...props} />} />
-      <Redirect from="/" to="/admin/index" />
+      <Route path={app.baseUrl} render={props => <AdminLayout {...props} />} />
+      <Redirect from="/" to={app.dashboard} />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
