@@ -1,7 +1,5 @@
 import Index from "./views/Index.jsx";
 import Profile from "./views/examples/Profile.jsx";
-import Register from "./views/examples/Register.jsx";
-import Login from "./views/examples/Login.jsx";
 import RoundEntry from "../components/RoundEntry";
 import CourseEntry from "../components/CourseEntry";
 import ScorecardArchive from "../components/ScorecardArchive/ScorecardArchive";
@@ -9,7 +7,7 @@ import Scorecard from "../components/Scorecard/Scorecard";
 
 const routes = [
   {
-    path: "/index",
+    path: "/dashboard",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
@@ -18,21 +16,21 @@ const routes = [
   {
     path: "/post-round",
     name: "Post Round",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-sound-wave text-purple",
     component: RoundEntry,
     layout: "/admin"
   },
   {
     path: "/add-course",
     name: "Add Course",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-compass-04 text-orange",
     component: CourseEntry,
     layout: "/admin"
   },
   {
     path: "/scorecard-archive",
     name: "Scorecard Archive",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-books text-yellow",
     component: ScorecardArchive,
     layout: "/admin",
     param: "userId"
@@ -40,7 +38,7 @@ const routes = [
   {
     path: "/scorecard",
     name: "Scorecard",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-planet text-red",
     component: Scorecard,
     layout: "/admin",
     param: "scorecardId",
@@ -49,23 +47,9 @@ const routes = [
   {
     path: "/user-profile",
     name: "Golfer Profile",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "ni ni-single-02 text-green",
     component: Profile,
     layout: "/admin"
-  },
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: Login,
-    layout: "/auth"
-  },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
-    layout: "/auth"
   }
 ];
 export default routes;
