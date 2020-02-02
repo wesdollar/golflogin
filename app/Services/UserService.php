@@ -6,6 +6,7 @@ use App\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Avatar;
 
 class UserService {
     var $carbon;
@@ -193,6 +194,7 @@ class UserService {
         $groups = $user->groups ?: null;
         $belongsToGroup = ($groups->count()) ? true : false;
         $activeGroupTitle = ($belongsToGroup) ? $user->activeGroup()->title : null;
+        $fullName = "{$user->first_name} {$user->last_name}";
 
         return [
             'user' => $user,
@@ -202,7 +204,8 @@ class UserService {
             'groups' => $groups,
             'activeGroupTitle' => $activeGroupTitle,
             'activeGroupId' => $user->activeGroup()->id ?: null,
-            'fullName' => "{$user->first_name} {$user->last_name}"
+            'fullName' => $fullName,
+            'avatar' => Avatar::create($fullName)->toBase64()
         ];
     }
 

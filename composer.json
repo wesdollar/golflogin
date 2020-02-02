@@ -12,7 +12,8 @@
         "laravel/cashier": "^10.0",
         "laravel/framework": "^6.0",
         "laravel/helpers": "^1.1",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "laravolt/avatar": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.4",

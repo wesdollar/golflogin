@@ -33,6 +33,7 @@ import {
 import Logo from "../../../svg/Logo/Logo";
 
 var ps;
+const { user } = GL;
 
 class Sidebar extends React.Component {
   state = {
@@ -137,10 +138,7 @@ class Sidebar extends React.Component {
               <DropdownToggle nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img
-                      alt="..."
-                      src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                    />
+                    <img alt={user.fullName} src={user.avatar.encoded} />
                   </span>
                 </Media>
               </DropdownToggle>
