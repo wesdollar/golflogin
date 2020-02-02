@@ -9,7 +9,7 @@
                     ['Total Team Management', 'Send players notifications, keep track of their scorecards, see how they rank amongst the team and more from any computer instantly!', 'totalteam'],
                     ['Player Rankings', 'Players are ranked against each other in over 15 categories, including FIR, GIR, Putts Per Green, and more exposing areas for improvements and serving as constant motivation.', 'playerranks'],
                     ['Statistics Tracking', 'Players and coaches will get instant feedback after each round with statistics in over 20 different categories just like the Pros!', 'statanalysis'],
-                    ['Scorecard Archives', 'All rounds are stored in the system for the duration of the playe\'s playing career, providing the ability to see the rewards of their practice and efforts!', 'scorecard'],
+                    ['Scorecard Archives', 'All rounds are stored in the system for the duration of the player\'s playing career, providing the ability to see the rewards of their practice and efforts!', 'scorecard'],
                     ['Designed to Impress', 'We developed Golf Login to be flexible enough to the meet the individual needs of each team and user. To save coaches time, players can manage every aspect of their data entry, but we understand not all players have the time nor do all coaches want their players controlling their data. Options are great to have!', 'teamcustomize'],
                     ['Stay in the Know', 'You\'ll no longer have to wait to collect scorecards! Each player enters their round from their own computer, iPad, or tablet. Receive notifications each time a player posts a round and immediately see problem areas within their game.', 'stayintheknow'],
                 ];
