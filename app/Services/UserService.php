@@ -205,7 +205,7 @@ class UserService {
             'activeGroupTitle' => $activeGroupTitle,
             'activeGroupId' => $user->activeGroup()->id ?: null,
             'fullName' => $fullName,
-            'avatar' => Avatar::create($fullName)->toBase64()
+            'avatar' => Avatar::create($fullName)->setFontSize(80)->setDimension(200)->toBase64()
         ];
     }
 

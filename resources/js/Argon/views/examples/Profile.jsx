@@ -19,6 +19,7 @@ const dexterity = ["Right", "Left"];
 
 class Profile extends React.Component {
   render() {
+    const { fullName, avatar } = GL.user;
     return (
       <>
         <Header />
@@ -29,13 +30,11 @@ class Profile extends React.Component {
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                        />
-                      </a>
+                      <img
+                        alt={fullName}
+                        className="rounded-circle"
+                        src={avatar.encoded}
+                      />
                     </div>
                   </Col>
                 </Row>
@@ -55,10 +54,7 @@ class Profile extends React.Component {
                     </div>
                   </Row>
                   <div className="text-center">
-                    <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
-                    </h3>
+                    <h3>{fullName}</h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
                       Bucharest, Romania

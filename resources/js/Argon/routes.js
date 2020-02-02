@@ -3,7 +3,7 @@ import Profile from "./views/examples/Profile.jsx";
 import RoundEntry from "../components/RoundEntry";
 import CourseEntry from "../components/CourseEntry";
 import ScorecardArchive from "../components/ScorecardArchive/ScorecardArchive";
-import Scorecard from "../components/Scorecard/Scorecard";
+import Scorecard from "../pages/Scorecard/Scorecard";
 import { app } from "../constants/app";
 
 const { baseUrl } = app;

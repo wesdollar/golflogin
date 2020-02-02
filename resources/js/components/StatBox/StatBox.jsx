@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, CardHeader, Col, Row, Table } from "reactstrap";
+import { Card, CardHeader, Col, Row, Table } from "reactstrap";
 import GolferRow from "./GolferRow/GolferRow";
 import PropTypes from "prop-types";
 import { orderBy } from "lodash";
+import Loading from "../Loading/Loading";
 
 const twoDecimals = 2;
 const one = 1;
@@ -72,7 +73,7 @@ const statBoxTitles = {
   }
 };
 
-const StatBox = ({ statKey, golferStats }) => {
+const StatBox = ({ statKey, golferStats, isLoading }) => {
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
@@ -102,31 +103,33 @@ const StatBox = ({ statKey, golferStats }) => {
             </Col>
           </Row>
         </CardHeader>
-        <Table className="align-items-center table-flush" responsive>
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">Rank</th>
-              <th scope="col">Golfer</th>
-              <th scope="col" />
-            </tr>
-          </thead>
-          <tbody>
-            {stats.map((golfer, index) => {
-              const metric = statBoxTitles[statKey].numberFormat(
-                golfer[statKey]
-              );
+        <Loading isLoading={isLoading} iconSize={"2x"} fullHeight={false}>
+          <Table className="align-items-center table-flush" responsive>
+            <thead className="thead-light">
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Golfer</th>
+                <th scope="col" />
+              </tr>
+            </thead>
+            <tbody>
+              {stats.map((golfer, index) => {
+                const metric = statBoxTitles[statKey].numberFormat(
+                  golfer[statKey]
+                );
 
-              return (
-                <GolferRow
-                  key={`statBox-${index}`}
-                  golferName={golfer.golfer}
-                  metric={metric}
-                  rank={index + one}
-                />
-              );
-            })}
-          </tbody>
-        </Table>
+                return (
+                  <GolferRow
+                    key={`statBox-${index}`}
+                    golferName={golfer.golfer}
+                    metric={metric}
+                    rank={index + one}
+                  />
+                );
+              })}
+            </tbody>
+          </Table>
+        </Loading>
       </Card>
     </Col>
   );
@@ -134,7 +137,8 @@ const StatBox = ({ statKey, golferStats }) => {
 
 StatBox.propTypes = {
   statKey: PropTypes.string.isRequired,
-  golferStats: PropTypes.array.isRequired
+  golferStats: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool
 };
 
 export default StatBox;

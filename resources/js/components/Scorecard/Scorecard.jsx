@@ -1,35 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { withRouter, useParams } from "react-router-dom";
-import Header from "../../Argon/components/Headers/Header";
-import ContentContainer from "../../Argon/components/ContentContainer/ContentContainer";
+import React from "react";
+import PropTypes from "prop-types";
 import { Row, Col } from "reactstrap";
 import { get } from "lodash";
 import ScorecardTable from "./ScorecardTable/ScorecardTable";
 import { scorecard } from "./Scorecard.constants";
 
-const Scorecard = () => {
-  const [roundDetails, setRoundDetails] = useState({});
-  const [roundData, setRoundData] = useState([]);
-  const { scorecardId } = useParams();
-
-  useEffect(() => {
-    const getScorecard = async () => {
-      try {
-        const response = await fetch(`/rounds/${scorecardId}`);
-        const json = await response.json();
-
-        console.log(json);
-
-        setRoundDetails(json.data.roundDetails);
-        setRoundData(json.data.roundData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getScorecard();
-  }, []);
-
+const Scorecard = ({ roundData, roundDetails }) => {
   if (!roundData.length) {
     return null;
   }
@@ -59,34 +35,41 @@ const Scorecard = () => {
 
   return (
     <>
-      <Header />
-      <ContentContainer>
-        <Row>
+      <Row>
+        <Col>
+          <h3 className={"mb-4"}>
+            {get(roundDetails, "course.title", "")} –{" "}
+            {get(roundDetails, "course.tee_box", "")} |{" "}
+            {get(roundDetails, "date_played", "")}
+          </h3>
+        </Col>
+      </Row>
+      {displayFront && (
+        <Row className={"mb-5"}>
           <Col>
-            <h3 className={"mb-4"}>
-              {get(roundDetails, "course.title", "")} –{" "}
-              {get(roundDetails, "course.tee_box", "")} |{" "}
-              {get(roundDetails, "date_played", "")}
-            </h3>
+            <ScorecardTable nineData={frontNine} side={scorecard.front} />
           </Col>
         </Row>
-        {displayFront && (
-          <Row className={"mb-5"}>
-            <Col>
-              <ScorecardTable nineData={frontNine} side={scorecard.front} />
-            </Col>
-          </Row>
-        )}
-        {displayBack && (
-          <Row>
-            <Col>
-              <ScorecardTable nineData={backNine} side={scorecard.back} />
-            </Col>
-          </Row>
-        )}
-      </ContentContainer>
+      )}
+      {displayBack && (
+        <Row>
+          <Col>
+            <ScorecardTable nineData={backNine} side={scorecard.back} />
+          </Col>
+        </Row>
+      )}
     </>
   );
 };
 
-export default withRouter(Scorecard);
+Scorecard.propTypes = {
+  roundDetails: PropTypes.object.isRequired,
+  roundData: PropTypes.array.isRequired
+};
+
+Scorecard.defaultProps = {
+  roundDetails: {},
+  roundData: []
+};
+
+export default Scorecard;

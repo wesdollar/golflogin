@@ -18,6 +18,7 @@ import { mockRoundEntryData } from "../mock-data/round-entry";
 import { app } from "../constants/app";
 import moment from "moment";
 import { handlePost } from "../helpers/fetch/handle-post";
+import Loading from "./Loading/Loading";
 
 class RoundEntry extends Component {
   constructor() {
@@ -27,6 +28,7 @@ class RoundEntry extends Component {
       courseData: [],
       datePlayed: moment(),
       isTournamentRound: false,
+      isLoading: false,
       isStatsRound: true,
       courseId: "",
       scorecardData: {},
@@ -92,12 +94,14 @@ class RoundEntry extends Component {
       return this.setState({ courseData: [] });
     }
 
-    this.setState({ courseId });
+    this.setState({ courseId, isLoading: true });
 
     const getCourseData = async courseId => {
       try {
         const response = await fetch(`/courses/get-course-data/${courseId}`);
         const json = await response.json();
+
+        this.setState({ isLoading: false });
 
         return json;
       } catch (error) {
@@ -216,7 +220,8 @@ class RoundEntry extends Component {
       isEditing,
       datePlayed,
       scorecardData,
-      totals
+      totals,
+      isLoading
     } = this.state;
     const frontNineData = this.getFrontOrBackNineData(scorecard.frontNine);
     const backNineData = this.getFrontOrBackNineData(scorecard.backNine);
@@ -254,42 +259,44 @@ class RoundEntry extends Component {
               />
             </Col>
           </Row>
-          <Row onDoubleClick={this.setDummyData}>
-            <Col>
-              {hasHoleData && (
-                <>
-                  {showFrontNine && (
-                    <ScorecardNine
-                      nineData={frontNineData}
-                      rowLabels={rowLabels}
-                      setScorecardDataOnParent={this.setScorecardData}
-                      isStatsRound={isStatsRound}
-                      courseData={courseData}
-                      scorecardData={scorecardData}
-                      totals={totals}
+          <Loading isLoading={isLoading} alignItems={"top"}>
+            <Row onDoubleClick={this.setDummyData}>
+              <Col>
+                {hasHoleData && (
+                  <>
+                    {showFrontNine && (
+                      <ScorecardNine
+                        nineData={frontNineData}
+                        rowLabels={rowLabels}
+                        setScorecardDataOnParent={this.setScorecardData}
+                        isStatsRound={isStatsRound}
+                        courseData={courseData}
+                        scorecardData={scorecardData}
+                        totals={totals}
+                      />
+                    )}
+                    {showBackNine && (
+                      <ScorecardNine
+                        nineData={backNineData}
+                        rowLabels={rowLabels}
+                        setScorecardDataOnParent={this.setScorecardData}
+                        isStatsRound={isStatsRound}
+                        courseData={courseData}
+                        setDummyData={this.setDummyData}
+                        scorecardData={scorecardData}
+                        totals={totals}
+                      />
+                    )}
+                    <Button
+                      label={buttonText.save}
+                      className={`offset-md-2`}
+                      handleOnClick={this.save}
                     />
-                  )}
-                  {showBackNine && (
-                    <ScorecardNine
-                      nineData={backNineData}
-                      rowLabels={rowLabels}
-                      setScorecardDataOnParent={this.setScorecardData}
-                      isStatsRound={isStatsRound}
-                      courseData={courseData}
-                      setDummyData={this.setDummyData}
-                      scorecardData={scorecardData}
-                      totals={totals}
-                    />
-                  )}
-                  <Button
-                    label={buttonText.save}
-                    className={`offset-md-2`}
-                    handleOnClick={this.save}
-                  />
-                </>
-              )}
-            </Col>
-          </Row>
+                  </>
+                )}
+              </Col>
+            </Row>
+          </Loading>
         </ContentContainer>
       </React.Fragment>
     );

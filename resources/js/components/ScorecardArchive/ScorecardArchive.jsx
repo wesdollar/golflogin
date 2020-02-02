@@ -5,6 +5,7 @@ import { Card, CardHeader, Col, Row, Table } from "reactstrap";
 import { withRouter, useParams, Redirect } from "react-router-dom";
 import { StyledTableRow } from "./ScorecardArchive.styled";
 import { app } from "../../constants/app";
+import Loading from "../Loading/Loading";
 
 const handleRoundClick = (roundId, setRoundId, setRoundClicked) => {
   setRoundId(roundId);
@@ -14,6 +15,7 @@ const handleRoundClick = (roundId, setRoundId, setRoundClicked) => {
 const ScorecardArchive = () => {
   const [scorecards, setScorecards] = useState([]);
   const [roundClicked, setRoundClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [roundId, setRoundId] = useState();
   const { userId } = useParams();
 
@@ -25,6 +27,7 @@ const ScorecardArchive = () => {
 
         if (json.success) {
           setScorecards(json.data);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error(error);
@@ -52,37 +55,48 @@ const ScorecardArchive = () => {
                   </Col>
                 </Row>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Date Played</th>
-                    <th scope="col">Course</th>
-                    <th scope="col">Strokes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {scorecards.map((scorecard, index) => {
-                    const {
-                      roundId,
-                      datePlayed,
-                      courseTitle,
-                      strokes
-                    } = scorecard;
-                    return (
-                      <StyledTableRow
-                        key={`scorecard-row-${index}`}
-                        onClick={() =>
-                          handleRoundClick(roundId, setRoundId, setRoundClicked)
-                        }
-                      >
-                        <th scope="col">{datePlayed}</th>
-                        <th scope="col">{courseTitle}</th>
-                        <th scope="col">{strokes}</th>
-                      </StyledTableRow>
-                    );
-                  })}
-                </tbody>
-              </Table>
+              <Loading
+                alignItems={"top"}
+                fullHeight={false}
+                isLoading={isLoading}
+                iconSize={"3x"}
+              >
+                <Table className="align-items-center table-flush" responsive>
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col">Date Played</th>
+                      <th scope="col">Course</th>
+                      <th scope="col">Strokes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {scorecards.map((scorecard, index) => {
+                      const {
+                        roundId,
+                        datePlayed,
+                        courseTitle,
+                        strokes
+                      } = scorecard;
+                      return (
+                        <StyledTableRow
+                          key={`scorecard-row-${index}`}
+                          onClick={() =>
+                            handleRoundClick(
+                              roundId,
+                              setRoundId,
+                              setRoundClicked
+                            )
+                          }
+                        >
+                          <th scope="col">{datePlayed}</th>
+                          <th scope="col">{courseTitle}</th>
+                          <th scope="col">{strokes}</th>
+                        </StyledTableRow>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </Loading>
             </Card>
           </Col>
         </Row>

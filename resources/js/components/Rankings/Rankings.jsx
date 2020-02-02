@@ -17,14 +17,20 @@ const rankingKeys = [
   "par5Avg"
 ];
 
-const Rankings = ({ golferStats }) => {
+const Rankings = ({ golferStats, isLoading }) => {
   return rankingKeys.map((key, index) => (
-    <StatBox key={`statBox-${index}`} golferStats={golferStats} statKey={key} />
+    <StatBox
+      key={`statBox-${index}`}
+      isLoading={isLoading}
+      golferStats={golferStats}
+      statKey={key}
+    />
   ));
 };
 
 Rankings.propTypes = {
-  golferStats: PropTypes.array.isRequired
+  golferStats: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 Rankings.defaultProps = {
