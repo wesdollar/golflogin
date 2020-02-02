@@ -61,6 +61,10 @@ class Sidebar extends React.Component {
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
     return routes.map((prop, key) => {
+      if (prop.hideInSidebar) {
+        return null;
+      }
+
       let to = `${prop.layout}${prop.path}`;
 
       if (prop.path === "/scorecard-archive") {
@@ -118,9 +122,6 @@ class Sidebar extends React.Component {
           {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
-              <DropdownToggle nav className="nav-link-icon">
-                <i className="ni ni-bell-55" />
-              </DropdownToggle>
               <DropdownMenu
                 aria-labelledby="navbar-default_dropdown_1"
                 className="dropdown-menu-arrow"

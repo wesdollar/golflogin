@@ -219,7 +219,7 @@ class RoundsService {
     }
 
     public static function getRoundAndRoundDataById(int $roundId): array {
-        $round = Round::find($roundId);
+        $round = Round::where("id", $roundId)->with("course")->first();
         $roundData = RoundData::where("round_id", $roundId)->with("hole")->get();
 
         $data = ["roundDetails" => $round->toArray(), "roundData" => $roundData->toArray()];
@@ -245,6 +245,7 @@ class RoundsService {
             }
 
             $data = [
+                "roundId" => $round["id"],
                 "userId" => $round["user_id"],
                 "datePlayed" => $round["date_played"],
                 "courseTitle" => $round["course"]["title"],

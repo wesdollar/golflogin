@@ -310,7 +310,7 @@ class RoundsController extends Controller
     }
 
     public function get(Request $request) {
-        $activeGroupId = UserService::getUserData()['activeGroupTitle'];
+        $activeGroupId = UserService::getUserData()['activeGroupId'];
         $roundId = $request->route('roundId');
         $data = RoundsService::getRoundAndRoundDataById($roundId);
 

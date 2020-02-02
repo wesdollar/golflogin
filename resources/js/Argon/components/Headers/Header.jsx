@@ -1,11 +1,12 @@
 import React from "react";
 import { Container } from "reactstrap";
+import { StyledHeader } from "./Header.styled";
 
 class Header extends React.Component {
   render() {
     return (
       <>
-        <div className="header bg-gradient-info pb-8 pt-6">
+        <StyledHeader className="header bg-gradient-info pb-8 pt-6">
           <Container fluid>
             <div className="header-body">
               {/* Card stats */}
@@ -16,7 +17,7 @@ class Header extends React.Component {
               {/*</Row>*/}
             </div>
           </Container>
-        </div>
+        </StyledHeader>
       </>
     );
   }

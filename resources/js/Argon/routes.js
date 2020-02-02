@@ -5,6 +5,7 @@ import Login from "./views/examples/Login.jsx";
 import RoundEntry from "../components/RoundEntry";
 import CourseEntry from "../components/CourseEntry";
 import ScorecardArchive from "../components/ScorecardArchive/ScorecardArchive";
+import Scorecard from "../components/Scorecard/Scorecard";
 
 const routes = [
   {
@@ -35,6 +36,15 @@ const routes = [
     component: ScorecardArchive,
     layout: "/admin",
     param: "userId"
+  },
+  {
+    path: "/scorecard",
+    name: "Scorecard",
+    icon: "ni ni-planet text-blue",
+    component: Scorecard,
+    layout: "/admin",
+    param: "scorecardId",
+    hideInSidebar: true
   },
   {
     path: "/user-profile",
