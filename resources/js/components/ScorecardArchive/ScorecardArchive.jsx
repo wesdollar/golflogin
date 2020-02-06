@@ -51,7 +51,12 @@ const ScorecardArchive = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <Col>
-                    <h3 className="mb-0">Scorecards</h3>
+                    <h3 className="mb-0">
+                      Scorecards{" "}
+                      <span className={"font-weight-300"}>
+                        | {GL.user.fullName}
+                      </span>
+                    </h3>
                   </Col>
                 </Row>
               </CardHeader>

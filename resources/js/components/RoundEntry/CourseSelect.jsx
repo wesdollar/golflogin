@@ -1,35 +1,44 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import LoadingInline from "../LoadingInline/LoadingInline";
 
-class CourseSelect extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectValue: ""
+const handleCourseSelect = (event, setSelectValue, handleOnChange) => {
+  const { value } = event.target;
+  setSelectValue(value);
+  handleOnChange(value);
+};
+
+const CourseSelect = ({ handleOnChange }) => {
+  const [selectValue, setSelectValue] = useState();
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getCourses = async () => {
+      try {
+        const result = await fetch("/courses/get");
+        const json = await result.json();
+
+        setCourses(json.courses);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(`fetch error: ${error}`);
+      }
     };
 
-    this.handleOnChange = this.handleOnChange.bind(this);
-  }
+    getCourses();
+  }, []);
 
-  handleOnChange(event) {
-    const { value } = event.target;
-    this.setState({ selectValue: value });
-
-    // eslint-disable-next-line react/destructuring-assignment
-    this.props.handleOnChange(value);
-  }
-
-  render() {
-    const { selectValue } = this.state;
-    const { courses } = this.props;
-
-    return (
-      <div className="form-group">
-        <label htmlFor="">Course</label>
+  return (
+    <div className="form-group">
+      <label htmlFor="">Course</label>
+      <LoadingInline isLoading={isLoading}>
         <select
           value={selectValue}
           className="form-control"
-          onChange={this.handleOnChange}
+          onChange={event =>
+            handleCourseSelect(event, setSelectValue, handleOnChange)
+          }
         >
           <option value={""} />
           {courses.map((course, index) => (
@@ -38,14 +47,13 @@ class CourseSelect extends Component {
             </option>
           ))}
         </select>
-      </div>
-    );
-  }
-}
+      </LoadingInline>
+    </div>
+  );
+};
 
 CourseSelect.propTypes = {
-  handleOnChange: PropTypes.func.isRequired,
-  courses: PropTypes.array.isRequired
+  handleOnChange: PropTypes.func.isRequired
 };
 
 export default CourseSelect;

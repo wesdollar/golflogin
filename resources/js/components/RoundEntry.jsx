@@ -51,17 +51,6 @@ class RoundEntry extends Component {
     this.setDummyData = this.setDummyData.bind(this);
   }
 
-  async componentDidMount() {
-    try {
-      const result = await fetch("/courses/get");
-      const json = await result.json();
-
-      this.setState({ courses: json.courses });
-    } catch (error) {
-      console.log(`fetch error: ${error}`);
-    }
-  }
-
   getFrontOrBackNineData(side) {
     const { courseData } = this.state;
 

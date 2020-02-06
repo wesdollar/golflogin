@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const LoadingContainer = styled.div`
+export const StyledLoadingContainer = styled.div`
   display: flex;
   width: 100%;
   height: calc(100vh - 200px);

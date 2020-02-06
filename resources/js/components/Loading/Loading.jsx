@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { LoadingContainer } from "./Loading.styled";
+import { StyledLoadingContainer } from "./Loading.styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Loading = ({ children, isLoading, iconSize, fullHeight, alignItems }) => {
   if (isLoading) {
     return (
-      <LoadingContainer alignItems={alignItems} fullHeight={fullHeight}>
+      <StyledLoadingContainer alignItems={alignItems} fullHeight={fullHeight}>
         <FontAwesomeIcon icon="spinner" size={`${iconSize}`} spin />
-      </LoadingContainer>
+      </StyledLoadingContainer>
     );
   }
 
