@@ -9,16 +9,20 @@ const Scorecard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [roundDetails, setRoundDetails] = useState({});
   const [roundData, setRoundData] = useState([]);
+  const [golfer, setGolfer] = useState("");
   const { scorecardId } = useParams();
 
   useEffect(() => {
     const getScorecard = async () => {
       try {
         const response = await fetch(`/rounds/${scorecardId}`);
-        const json = await response.json();
+        const {
+          data: { roundDetails, roundData, golfer }
+        } = await response.json();
 
-        setRoundDetails(json.data.roundDetails);
-        setRoundData(json.data.roundData);
+        setRoundDetails(roundDetails);
+        setRoundData(roundData);
+        setGolfer(golfer);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -36,6 +40,7 @@ const Scorecard = () => {
           <ScorecardComponent
             roundData={roundData}
             roundDetails={roundDetails}
+            golfer={golfer}
           />
         </Loading>
       </ContentContainer>

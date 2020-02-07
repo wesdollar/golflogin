@@ -17,16 +17,27 @@ const ScorecardArchive = () => {
   const [roundClicked, setRoundClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [roundId, setRoundId] = useState();
+  const [displayName, setDisplayName] = useState("");
   const { userId } = useParams();
 
   useEffect(() => {
+    /* eslint-disable no-undef */
+    // double parseInt used because either could change independent of UI
+    if (parseInt(GL.user.user.id) === parseInt(userId)) {
+      setDisplayName(GL.user.fullName);
+    }
+    /* eslint-enable no-undef */
+
     const getScorecardArchiveByUser = async () => {
       try {
         const response = await fetch(`/scorecard-archive/${userId}`);
         const json = await response.json();
 
         if (json.success) {
-          setScorecards(json.data);
+          const { data } = json;
+          setScorecards(data);
+          // eslint-disable-next-line no-magic-numbers
+          setDisplayName(data[0].golfer);
           setIsLoading(false);
         }
       } catch (error) {
@@ -41,6 +52,8 @@ const ScorecardArchive = () => {
     return <Redirect to={`${app.baseUrl}/scorecard/${roundId}`} push />;
   }
 
+  const displayNameTitle = displayName.length ? `| ${displayName}` : "";
+
   return (
     <React.Fragment>
       <Header />
@@ -54,7 +67,7 @@ const ScorecardArchive = () => {
                     <h3 className="mb-0">
                       Scorecards{" "}
                       <span className={"font-weight-300"}>
-                        | {GL.user.fullName}
+                        {displayNameTitle}
                       </span>
                     </h3>
                   </Col>

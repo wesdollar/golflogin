@@ -5,7 +5,7 @@ import { get } from "lodash";
 import ScorecardTable from "./ScorecardTable/ScorecardTable";
 import { scorecard } from "./Scorecard.constants";
 
-const Scorecard = ({ roundData, roundDetails }) => {
+const Scorecard = ({ roundData, roundDetails, golfer }) => {
   if (!roundData.length) {
     return null;
   }
@@ -38,6 +38,7 @@ const Scorecard = ({ roundData, roundDetails }) => {
       <Row>
         <Col>
           <h3 className={"mb-4"}>
+            <span className={"font-weight-300"}>{golfer}</span>{" "}
             {get(roundDetails, "course.title", "")} –{" "}
             {get(roundDetails, "course.tee_box", "")} |{" "}
             {get(roundDetails, "date_played", "")}
@@ -64,12 +65,14 @@ const Scorecard = ({ roundData, roundDetails }) => {
 
 Scorecard.propTypes = {
   roundDetails: PropTypes.object.isRequired,
-  roundData: PropTypes.array.isRequired
+  roundData: PropTypes.array.isRequired,
+  golfer: PropTypes.string.isRequired
 };
 
 Scorecard.defaultProps = {
   roundDetails: {},
-  roundData: []
+  roundData: [],
+  golfer: ""
 };
 
 export default Scorecard;

@@ -59,4 +59,9 @@ class User extends Authenticatable
     public function roundData() {
         return $this->hasManyThrough('App\RoundData', 'App\Round');
     }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }
